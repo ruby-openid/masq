@@ -11,22 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130626220915) do
+ActiveRecord::Schema.define(:version => 20130704205532) do
 
   create_table "masq_accounts", :force => true do |t|
-    t.boolean  "enabled",                                       :default => true
-    t.string   "login",                                                            :null => false
-    t.string   "email",                                                            :null => false
-    t.string   "crypted_password",                :limit => 40,                    :null => false
-    t.string   "salt",                            :limit => 40,                    :null => false
+    t.boolean  "enabled",                                     :default => true
+    t.string   "login",                                                          :null => false
+    t.string   "email",                                                          :null => false
+    t.string   "crypted_password",              :limit => 40,                    :null => false
+    t.string   "salt",                          :limit => 40,                    :null => false
     t.string   "remember_token"
-    t.string   "password_reset_code",             :limit => 40
-    t.string   "activation_code",                 :limit => 40
-    t.string   "yubico_identity",                 :limit => 12
+    t.string   "password_reset_code",           :limit => 40
+    t.string   "activation_code",               :limit => 40
+    t.string   "yubico_identity",               :limit => 12
     t.integer  "public_persona_id"
     t.datetime "last_authenticated_at"
     t.boolean  "last_authenticated_by_yubikey"
-    t.boolean  "yubikey_mandatory",                             :default => false, :null => false
+    t.boolean  "yubikey_mandatory",                           :default => false, :null => false
     t.datetime "remember_token_expires_at"
     t.datetime "activated_at"
     t.datetime "created_at"
@@ -103,6 +103,8 @@ ActiveRecord::Schema.define(:version => 20130626220915) do
     t.boolean  "deletable",                                :default => true, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "firstname"
+    t.string   "surname"
   end
 
   add_index "masq_personas", ["account_id", "title"], :name => "index_masq_personas_on_account_id_and_title", :unique => true

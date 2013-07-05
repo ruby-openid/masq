@@ -29,6 +29,12 @@ default: &default
     fullname:
       - fullname
       - http://axschema.org/namePerson
+    firstname:
+      - firstname
+      - http://axschema.org/namePerson/first
+    surname:
+      - surname
+      - http://axschema.org/namePerson/last
     postcode:
       - postcode
       - http://axschema.org/contact/postalCode/home

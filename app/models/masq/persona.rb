@@ -32,6 +32,13 @@ module Masq
       "#{dob_year? ? dob_year : '0000'}-#{dob_month? ? dob_month.to_s.rjust(2, '0') : '00'}-#{dob_day? ? dob_day.to_s.rjust(2, '0') : '00'}"
     end
 
+    def fullname=(name)
+      res = name.to_s.split(" ")
+      self.firstname  = res.shift
+      self.surname    = res.pop
+      self[:fullname] = name
+    end
+
     def date_of_birth=(dob)
       res = dob.split("-")
       self.dob_year = res[0]
