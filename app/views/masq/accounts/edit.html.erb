@@ -12,7 +12,7 @@
 
   <div class="row">
     <%= f.label :public_persona_id, t(:public_persona) %>
-    <%= f.select :public_persona_id, current_account.personas.map{ |p| [ p.title, p.id ]}, :include_blank => Masq::Engine.config.masq['force_default_persona'] %>
+    <%= f.select :public_persona_id, current_account.personas.map{ |p| [ p.title, p.id ]}, :include_blank => !Masq::Engine.config.masq['force_default_persona'] %>
   </div>
 
   <div>
