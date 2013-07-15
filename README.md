@@ -24,6 +24,8 @@ _If you want to upgrade from masquerade, please skip this part and see the Upgra
     * `bundle exec rake masq:install:config`
     * `$EDITOR config/masq.yml`
 
+Any persona attributes removed from the masq.yml config will be hidden when editing a persona.
+
 3. Copy the migrations and migrate:
     * `bundle exec rake masq:install:migrations`
     * `bundle exec rake db:migrate`
