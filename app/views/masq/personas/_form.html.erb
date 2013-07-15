@@ -143,7 +143,7 @@
   <%- {:phone => phone, 
        :instant_messaging => instant_messaging, 
        :other_information => other_information}.each do |title,attrs| %>
-    <%- if (attributes - attrs).size != attributes %>
+    <%- if (attributes - attrs).size != attributes.size %>
 
       <h3><%=t title %></h3>
       <%- attrs.each do |attr| %>
