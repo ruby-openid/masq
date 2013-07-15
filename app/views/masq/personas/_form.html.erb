@@ -1,4 +1,8 @@
-  <%- attributes = Masq::Engine.config.masq['attribute_mappings'].keys %>
+  <%- attributes = Masq::Engine.config.masq['attribute_mappings'].symbolize_keys.keys %>
+  <%- phone             = [:phone_home, :phone_mobile, :phone_fax, :phone_work] %>
+  <%- instant_messaging = [:im_aim, :im_icq, :im_msn, :im_yahoo, :im_jabber, :im_skype] %>
+  <%- other_information = [:biography, :image_default, :web_default, :web_blog] %>
+
   <div class="row inline space">
     <%= form.label :title, t(:title) %>
     <%= form.text_field :title %>
@@ -136,39 +140,20 @@
   </div>
   <% end %>
 
-  <%- unless attributes.index {|attr| attr.start_with? 'phone' }.nil? %>
-    <h3><%=t :phone %></h3>
-    <%- [:phone_home, :phone_mobile, :phone_fax, :phone_work].each do |attr| %>
-      <%- if attributes.include? attr %>
-        <div class="row inline">
-          <%= form.label attr, property_label_text(attr) %>
-          <%= form.text_field attr %>
-        </div>
-      <% end %>
-    <% end %>
-  <% end %>
+  <%- {:phone => phone, 
+       :instant_messaging => instant_messaging, 
+       :other_information => other_information}.each do |title,attrs| %>
+    <%- if (attributes - attrs).size != attributes %>
 
-  <%- unless attributes.index {|attr| attr.start_with? 'im_' }.nil? %>
-    <h3><%=t :instant_messaging %></h3>
-    <%- [:im_aim, :im_icq, :im_msn, :im_yahoo, :im_jabber, :im_skype].each do |attr| %>
-      <%- if attributes.include? attr %>
-        <div class="row inline">
-          <%= form.label attr, property_label_text(attr) %>
-          <%= form.text_field attr %>
-        </div>
+      <h3><%=t title %></h3>
+      <%- attrs.each do |attr| %>
+        <%- if attributes.include? attr %>
+          <div class="row inline">
+            <%= form.label attr, property_label_text(attr) %>
+            <%= form.text_field attr %>
+          </div>
+        <% end %>
       <% end %>
-    <% end %>
-  <% end %>
 
-  <%- other_information = [:biography, :image_default, :web_default, :web_blog] %>
-  <%- if (attributes - other_information).size != attributes %>
-    <h3><%=t :other_information %></h3>
-    <%- other_information.each do |attr| %>
-      <%- if attributes.include? attr %>
-        <div class="row inline">
-          <%= form.label attr, property_label_text(attr) %>
-          <%= form.text_field attr %>
-        </div>
-      <% end %>
     <% end %>
   <% end %>
