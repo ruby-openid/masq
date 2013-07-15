@@ -136,7 +136,7 @@
   </div>
   <% end %>
 
-  <%- unless (attributes.index {|attr| attr.start_with? 'phone' }.nil? %>
+  <%- unless attributes.index {|attr| attr.start_with? 'phone' }.nil? %>
     <h3><%=t :phone %></h3>
     <%- [:phone_home, :phone_mobile, :phone_fax, :phone_work].each do |attr| %>
       <%- if attributes.include? attr %>
@@ -148,7 +148,7 @@
     <% end %>
   <% end %>
 
-  <%- unless (attributes.index {|attr| attr.start_with? 'im_' }.nil? %>
+  <%- unless attributes.index {|attr| attr.start_with? 'im_' }.nil? %>
     <h3><%=t :instant_messaging %></h3>
     <%- [:im_aim, :im_icq, :im_msn, :im_yahoo, :im_jabber, :im_skype].each do |attr| %>
       <%- if attributes.include? attr %>
