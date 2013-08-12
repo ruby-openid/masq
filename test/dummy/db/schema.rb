@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130704205532) do
+ActiveRecord::Schema.define(:version => 20130807060329) do
 
   create_table "masq_accounts", :force => true do |t|
     t.boolean  "enabled",                                     :default => true
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(:version => 20130704205532) do
   add_index "masq_accounts", ["login"], :name => "index_masq_accounts_on_login", :unique => true
 
   create_table "masq_open_id_associations", :force => true do |t|
-    t.binary  "server_url"
+    t.string  "server_url", :limit => 2000
     t.binary  "secret"
     t.string  "handle"
     t.string  "assoc_type"
