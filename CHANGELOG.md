@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.2.9
+
+* Fork of the original gem. Fixes to make the gem Oracle compatible, fixed email OpenID.
+
 ## v0.2.7
 
 * Updated dependencies, Gemfile.lock was not correct (crypt19 v1.2.1 does not exist anymore)

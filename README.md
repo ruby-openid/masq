@@ -6,6 +6,12 @@ It is the successor of the stand-alone Rails application [masquerade](http://git
 The project is released under the MIT-License and its source code is available at [GitHub](http://github.com/dennisreimann/masquerade/).
 Feel free to fork and submit patches :)
 
+## Why forked?
+
+Basically because I am impatient and the original gem does not currently have an active maintainer. 
+I wanted an instance of this great app that worked with [Oracle](http://www.oracle.com) without having to monkey patch it.
+I have tried to ensure the upgrade process remains just as smooth and that the gem remains generic.
+
 ## Installation
 
 _If you want to upgrade from masquerade, please skip this part and see the Upgrading section below_
