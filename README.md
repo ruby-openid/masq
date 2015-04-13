@@ -1,20 +1,14 @@
 # Masq OpenID Server
 
+[![Build Status](https://secure.travis-ci.org/dennisreimann/masq.png)](http://travis-ci.org/dennisreimann/masq)
+
 Masq is a mountable Rails engine that provides OpenID server/identity provider functionality.
 It is the successor of the stand-alone Rails application [masquerade](http://github.com/dennisreimann/masquerade/).
 
 The project is released under the MIT-License and its source code is available at [GitHub](http://github.com/dennisreimann/masquerade/).
 Feel free to fork and submit patches :)
 
-## Why forked?
-
-Basically because I am impatient and the original gem does not currently have an active maintainer. 
-I wanted an instance of this great app that worked with [Oracle](http://www.oracle.com) without having to monkey patch it.
-I have tried to ensure the upgrade process remains just as smooth and that the gem remains generic.
-
 ## Installation
-
-_If you want to upgrade from masquerade, please skip this part and see the Upgrading section below_
 
 0. In case you want to run masq as a standalone application (not integrated into an existing app), you will have to generate a barebone Rails app first:
     * `rails new my_openid_provider`
@@ -27,8 +21,6 @@ _If you want to upgrade from masquerade, please skip this part and see the Upgra
     * `bundle exec rake masq:install:config`
     * `$EDITOR config/masq.yml`
 
-Any persona attributes removed from the masq.yml config will be hidden when editing a persona.
-
 3. Copy the migrations and migrate:
     * `bundle exec rake masq:install:migrations`
     * `bundle exec rake db:migrate`
@@ -39,28 +31,6 @@ Any persona attributes removed from the masq.yml config will be hidden when edit
         * `mount Masq::Engine => "/openid"`
     * Standalone installation, mount it at the root:
         * `mount Masq::Engine => "/"`
-
-## Upgrading from masquerade
-
-1. Generate a barebone Rails app:
-    * `rails new my_openid_provider`
-
-2. Add masq to your Gemfile and install it:
-    * `gem 'masq'`
-    * `bundle install`
-
-3. Copy your existing masquerade config file from `config/app_config.yml` to the new apps `config/masq.yml`
-
-4. Copy the migrations and migrate:
-    * PLEASE BACKUP YOUR DATABASE FIRST!
-    * `bundle exec rake masq:install:migrations`
-    * `bundle exec rake db:migrate`
-
-5. Configure the routes by mounting the masq engine:
-
-        Rails.application.routes.draw do
-          mount Masq::Engine => "/"
-        end
 
 ## Testing the installation
 
@@ -86,6 +56,8 @@ client-server communication (like requesting simple registration data).
 
 ### Introduction
 
+This fork adds ORACLE database support to the existing dennisreimann/masq gem.
+
 The main functionality is in the server controller, which is the endpoint for incoming
 OpenID requests. The server controller is supposed to only interact with relying parties
 a.k.a. consumer websites. It includes the OpenidServerSystem module, which provides some
@@ -102,7 +74,3 @@ The Rake task configures the database.yml for the chosen adapter.
 
 In case you prefer running the tests continuously, use Guard:
     * `bundle exec guard`
-
-## Contact
-
-Dennis Reimann: [mail@dennisreimann.de](mailto:mail@dennisreimann.de)

@@ -33,9 +33,7 @@ module Masq
     end
 
     def fullname=(name)
-      res = name.to_s.split(" ")
-      self.firstname  = res.shift
-      self.surname    = res.pop
+      self.firstname, self.surname = name.to_s.split(' ')
       self[:fullname] = name
     end
 

@@ -1,8 +1,20 @@
 # CHANGELOG
 
-## v0.2.9
+## v0.3.2
 
-* Fork of the original gem. Fixes to make the gem Oracle compatible, fixed email OpenID.
+* Merge latest changes into this repository.
+
+* Updated dependencies
+* Patch on routing for email identifiers
+* Internal improvements for testing
+
+## V0.2.9
+
+* Fork on gem to make ORACLE compatible fixes.
+
+## v0.2.8
+
+* Updated dependencies
 
 ## v0.2.7
 
