@@ -4,7 +4,7 @@ PATH
     masq (0.3.2)
       i18n_data
       rails (~> 3.2.16)
-      ruby-openid (~> 2.5.0)
+      ruby-openid (>= 2.5.0)
       ruby-yadis
       yubikey
 
