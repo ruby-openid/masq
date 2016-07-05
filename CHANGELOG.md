@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.3.3
+
+* [Security] Updated Rails to version 3.2.22.2
+
 ## v0.3.2
 
 * Merge latest changes into this repository.
