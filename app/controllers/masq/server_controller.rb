@@ -108,7 +108,12 @@ module Masq
 
     # Cancels the current OpenID request
     def cancel
-      redirect_to checkid_request.cancel_url
+      if checkid_request
+        redirect_to checkid_request.cancel_url
+      else
+        reset_session
+        redirect_to(login_path)
+      end
     end
 
     protected

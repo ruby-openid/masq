@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.3.4
+
+* Always populate first and lastname when fullname is passed in
+* Fix cancel_url request when checkid_request returns false
+
 ## v0.3.3
 
 * [Security] Updated Rails to version 3.2.22.2
