@@ -2,14 +2,15 @@ source "http://rubygems.org"
 
 group :development, :test do
   platforms :ruby, :mswin, :mingw do
-    gem 'mysql2'
-    gem 'pg'
-    #gem 'sqlite3'
+    gem 'sqlite3'
+    #gem 'mysql2'
+    #gem 'pg'
     #gem 'activerecord-oracle_enhanced-adapter'
     #gem 'ruby-plsql'
     #gem 'ruby-oci8'
   end
   gem 'minitest'
+  gem 'test-unit', '~> 3.0'
   gem 'turn'
   gem 'mocha'
   gem 'ruby_gntp'
