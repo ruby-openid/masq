@@ -11,7 +11,13 @@
 
 ## v0.3.2
 
-* Merge latest changes into this repository.
+* Updated dependencies
+
+## v0.3.1
+
+* Updated dependencies
+
+## v0.3.0
 
 * Updated dependencies
 * Patch on routing for email identifiers
