@@ -9,7 +9,7 @@ module Masq
     validates_presence_of :login
     validates_length_of :login, :within => 3..254
     validates_uniqueness_of :login, :case_sensitive => false
-    validates_format_of :login, :with => /^[A-Za-z0-9_@.-]+$/
+    validates_format_of :login, :with => /\A[A-Za-z0-9_@.-]+\z/
     validates_presence_of :email
     validates_uniqueness_of :email, :case_sensitive => false
     validates_format_of :email, :with => /(^([^@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})$)|(^$)/i

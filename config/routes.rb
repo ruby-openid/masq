@@ -22,17 +22,18 @@ Masq::Engine.routes.draw do
   get "/logout" => "sessions#destroy", :as => :logout
   post '/resend_activation_email/*account' => 'accounts#resend_activation_email', :as => :resend_activation_email
 
-  match "/server" => "server#index", :as => :server
-  match "/server/decide" => "server#decide", :as => :decide
-  match "/server/proceed" => "server#proceed", :as => :proceed
-  match "/server/complete" => "server#complete", :as => :complete
-  match "/server/cancel" => "server#cancel", :as => :cancel
+  get "/server" => "server#index", :as => :server
+  post "/server" => "server#index"
+  get "/server/decide" => "server#decide", :as => :decide
+  get "/server/proceed" => "server#proceed", :as => :proceed
+  post "/server/complete" => "server#complete", :as => :complete
+  get "/server/cancel" => "server#cancel", :as => :cancel
   get "/server/seatbelt/config.:format" => "server#seatbelt_config", :as => :seatbelt_config
   get "/server/seatbelt/state.:format" => "server#seatbelt_login_state", :as => :seatbelt_state
 
   get "/consumer" => "consumer#index", :as => :consumer
   post "/consumer/start" => "consumer#start", :as => :consumer_start
-  match "/consumer/complete" => "consumer#complete", :as => :consumer_complete
+  get "/consumer/complete" => "consumer#complete", :as => :consumer_complete
 
   get "/*account" => "accounts#show", :as => :identity,  :constraints => {:format => /\.xrds/}
 
