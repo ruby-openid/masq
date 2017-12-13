@@ -2,8 +2,8 @@ source "http://rubygems.org"
 
 group :development, :test do
   platforms :ruby, :mswin, :mingw do
-    gem 'mysql2'
     gem 'pg'
+    #gem 'mysql2'
     #gem 'sqlite3'
     #gem 'activerecord-oracle_enhanced-adapter'
     #gem 'ruby-plsql'
