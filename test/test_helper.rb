@@ -5,12 +5,6 @@ require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 require "rails/test_help"
 require 'mocha/setup'
 
-begin
-  require 'turn/autorun'
-  Turn.config.format = :dot
-rescue LoadError
-end
-
 Rails.backtrace_cleaner.remove_silencers!
 
 if ActionDispatch::IntegrationTest.method_defined?(:fixture_path=)
