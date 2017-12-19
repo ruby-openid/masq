@@ -63,7 +63,7 @@ module Masq
       return render_404 unless Masq::Engine.config.masq['send_activation_mail']
 
       begin
-        account = Account.find_and_activate!(params[:activation_code])
+        Account.find_and_activate!(params[:activation_code])
         redirect_to login_path, :notice => t(:account_activated_login_now)
       rescue ArgumentError, Account::ActivationCodeNotFound
         redirect_to new_account_path, :alert => t(:couldnt_find_account_with_code_create_new_one)

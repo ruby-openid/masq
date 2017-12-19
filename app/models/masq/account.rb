@@ -66,7 +66,7 @@ module Masq
 
     # True if the user has just been activated
     def pending?
-      @activated
+      @activated ||= false
     end
 
     # Does the user have the possibility to authenticate with a one time password?
@@ -133,7 +133,7 @@ module Masq
     end
 
     def authenticated_with_yubikey?
-      @authenticated_with_yubikey || false
+      @authenticated_with_yubikey ||= false
     end
 
     def associate_with_yubikey(otp)
@@ -184,11 +184,11 @@ module Masq
     end
 
     def recently_forgot_password?
-      @forgotten_password
+      @forgotten_password ||= false
     end
 
     def recently_reset_password?
-      @reset_password
+      @reset_password ||= false
     end
 
     def disable!
