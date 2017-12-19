@@ -33,7 +33,7 @@ module Masq
 
     def find_account_by_reset_code
       @reset_code = params[:id]
-      @account = Account.find_by_password_reset_code(@reset_code) unless @reset_code.blank?
+      @account = @reset_code.blank? ? nil : Account.find_by_password_reset_code(@reset_code)
       redirect_to(forgot_password_path, :alert => t(:reset_code_invalid_try_again)) unless @account
     end
 

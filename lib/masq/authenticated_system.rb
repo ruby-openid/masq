@@ -103,7 +103,7 @@ module Masq
     end
 
     def auth_type_used
-      @auth_type_used
+      @auth_type_used if defined?(@auth_type_used)
     end
 
     def auth_type_used= t

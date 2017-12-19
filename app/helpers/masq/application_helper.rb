@@ -2,7 +2,7 @@ module Masq
 
   module ApplicationHelper
     def page_title
-      @page_title ? "#{@page_title} | #{Masq::Engine.config.masq['name']}" : Masq::Engine.config.masq['name']
+      (@page_title||=nil) ? "#{@page_title} | #{Masq::Engine.config.masq['name']}" : Masq::Engine.config.masq['name']
     end
 
     def label_tag(field, text = nil, options = {})

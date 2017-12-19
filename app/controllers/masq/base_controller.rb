@@ -33,7 +33,7 @@ module Masq
     end
 
     def checkid_request
-      unless @checkid_request
+      unless (@checkid_request||=nil)
         req = openid_server.decode_request(current_openid_request.parameters) if current_openid_request
         @checkid_request = req.is_a?(OpenID::Server::CheckIDRequest) ? req : false
       end
