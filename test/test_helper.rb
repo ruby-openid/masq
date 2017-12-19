@@ -1,14 +1,14 @@
 # encoding: utf-8
 ENV["RAILS_ENV"] = "test"
 
-require File.expand_path("../dummy/config/environment.rb",  __FILE__)
+require File.expand_path("dummy/config/environment.rb",  File.dirname(__FILE__))
 require "rails/test_help"
 require 'mocha/setup'
 
 Rails.backtrace_cleaner.remove_silencers!
 
 if ActionDispatch::IntegrationTest.method_defined?(:fixture_path=)
-  ActionDispatch::IntegrationTest.fixture_path = File.expand_path("../fixtures", __FILE__)
+  ActionDispatch::IntegrationTest.fixture_path = File.expand_path("fixtures", File.dirname(__FILE__))
 end
 
 module Masq
