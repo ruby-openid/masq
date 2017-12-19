@@ -44,7 +44,7 @@ module Masq
       end
       assert_response :redirect
       assert_match checkid_request_params['openid.return_to'], response.redirect_url
-      assert_match /mode=id_res/,  response.redirect_url
+      assert_match(/mode=id_res/,  response.redirect_url)
     end
 
     def test_should_redirect_to_openid_cancel_url_if_user_chose_to_cancel
