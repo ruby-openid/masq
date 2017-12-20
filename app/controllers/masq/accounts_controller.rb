@@ -97,7 +97,7 @@ module Masq
       account = Account.find_by_login(params[:account])
 
       if account && !account.active?
-        AccountMailer.signup_notification(account).deliver
+        AccountMailer.signup_notification(account).deliver_now
         flash[:notice] = t(:activation_link_resent)
       else
         flash[:alert] = t(:account_already_activated_or_missing)

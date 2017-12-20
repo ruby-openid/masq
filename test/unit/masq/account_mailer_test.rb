@@ -16,7 +16,7 @@ module Masq
       Masq::Engine.config.masq['send_activation_mail'] = false
       account = Account.new valid_account_attributes
       assert_raise RuntimeError, "send_activation_mail deactivated" do
-        AccountMailer.signup_notification(account)
+        AccountMailer.signup_notification(account).deliver_now
       end
     end
 
