@@ -238,7 +238,7 @@ module Masq
     end
 
     def deliver_forgot_password
-      AccountMailer.forgot_password(self).deliver if recently_forgot_password?
+      AccountMailer.forgot_password(self).deliver_now if recently_forgot_password?
     end
 
   end
