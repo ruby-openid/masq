@@ -30,7 +30,7 @@ module Masq
       account.save!
       make_default_persona
       if send_activation_email?
-        AccountMailer.signup_notification(account).deliver
+        AccountMailer.signup_notification(account).deliver_now
       else
         account.activate!
       end

@@ -25,7 +25,7 @@ module Masq
     def test_should_send_activation_mail_on_create_if_send_activation_mail_is_enabled
       Masq::Engine.config.masq['send_activation_mail'] = true
       mail = mock()
-      mail.expects(:deliver)
+      mail.expects(:deliver_now)
       AccountMailer.expects(:signup_notification).returns(mail)
       Signup.create_account! valid_account_attributes
     end
