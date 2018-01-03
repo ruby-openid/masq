@@ -236,7 +236,7 @@ module Masq
 
     def site_params
       authorized_params = params.require(:site).permit( :persona_id ,  :url )
-      additional_data  = params[:site].slice(:ax_fetch, :sreg, :properties)
+      additional_data  = params[:site].slice(:ax_fetch, :sreg, :properties).permit!
       authorized_params.merge(additional_data)
     end
   end
