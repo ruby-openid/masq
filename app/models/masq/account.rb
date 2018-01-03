@@ -4,7 +4,7 @@ module Masq
   class Account < ActiveRecord::Base
     has_many :personas, ->(){order(:id)}, :dependent => :delete_all
     has_many :sites, :dependent => :destroy
-    belongs_to :public_persona, :class_name => "Persona"
+    belongs_to :public_persona, :class_name => "Persona", optional: true
 
     validates_presence_of :login
     validates_length_of :login, :within => 3..254

@@ -1,7 +1,7 @@
 module Masq
   class SessionsController < BaseController
-    before_filter :login_required, :only => :destroy
-    after_filter :set_login_cookie, :only => :create
+    before_action :login_required, :only => :destroy
+    after_action :set_login_cookie, :only => :create
 
     def new
       redirect_after_login if logged_in?

@@ -3,8 +3,10 @@ ENV["RAILS_ENV"] = "test"
 
 require File.expand_path("dummy/config/environment.rb",  File.dirname(__FILE__))
 require "rails/test_help"
+require 'rails-controller-testing'
 require 'mocha/setup'
 
+Rails::Controller::Testing.install
 Rails.backtrace_cleaner.remove_silencers!
 
 if ActionDispatch::IntegrationTest.method_defined?(:fixture_path=)

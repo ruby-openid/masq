@@ -1,6 +1,6 @@
 module Masq
   class YubikeyAssociationsController < BaseController
-    before_filter :login_required
+    before_action :login_required
 
     def create
       if current_account.associate_with_yubikey(params[:yubico_otp])

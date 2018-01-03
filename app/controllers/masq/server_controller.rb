@@ -2,13 +2,13 @@ module Masq
   class ServerController < BaseController
     # CSRF-protection must be skipped, because incoming
     # OpenID requests lack an authenticity token
-    skip_before_filter :verify_authenticity_token
+    skip_before_action :verify_authenticity_token
     # Error handling
     rescue_from OpenID::Server::ProtocolError, :with => :render_openid_error
     # Actions other than index require a logged in user
-    before_filter :login_required, :except => [:index, :cancel, :seatbelt_config, :seatbelt_login_state]
-    before_filter :ensure_valid_checkid_request, :except => [:index, :cancel, :seatbelt_config, :seatbelt_login_state]
-    after_filter :clear_checkid_request, :only => [:cancel, :complete]
+    before_action :login_required, :except => [:index, :cancel, :seatbelt_config, :seatbelt_login_state]
+    before_action :ensure_valid_checkid_request, :except => [:index, :cancel, :seatbelt_config, :seatbelt_login_state]
+    after_action :clear_checkid_request, :only => [:cancel, :complete]
     # These methods are used to display information about the request to the user
     helper_method :sreg_request, :ax_fetch_request, :ax_store_request
 
@@ -155,7 +155,7 @@ module Masq
       end
     end
 
-    # Use this as before_filter for every CheckID request based action.
+    # Use this as before_action for every CheckID request based action.
     # Loads the current openid request and cancels if none can be found.
     # The user has to log in, if he has not verified his ownership of
     # the identifier, yet.

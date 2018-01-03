@@ -1,7 +1,7 @@
 module Masq
   class SitesController < BaseController
-    before_filter :login_required
-    before_filter :find_personas, :only => [:create, :edit, :update]
+    before_action :login_required
+    before_action :find_personas, :only => [:create, :edit, :update]
 
     helper_method :site, :persona
 
