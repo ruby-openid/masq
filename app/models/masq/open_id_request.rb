@@ -8,6 +8,7 @@ module Masq
     serialize :parameters, Hash
 
     def parameters=(params)
+      params = params.to_h if params.is_a?(ActionController::Parameters)
       self[:parameters] = params.is_a?(Hash) ? params.delete_if { |k,v| k.index('openid.') != 0 } : nil
     end
 
