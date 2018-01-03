@@ -1,6 +1,6 @@
 # Masq2 OpenID Server
 
-[![Build Status](https://travis-ci.org/bardbess/masq.svg?branch=4-2-rails)](http://travis-ci.org/bardbess/masq)
+[![Build Status](https://travis-ci.org/bardbess/masq.svg?branch=5-0-rails)](http://travis-ci.org/bardbess/masq)
 
 Masq2 is a mountable Rails engine that provides OpenID server/identity provider functionality.
 It is the successor to the [masq gem](https://github.com/dennisreimann/masq), which in turn
