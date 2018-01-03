@@ -11,7 +11,7 @@ module Masq
       login_as(:standard)
       yubico_otp = 'x' * 44
       Account.expects(:verify_yubico_otp).with(yubico_otp).returns(true)
-      post :create, :yubico_otp => yubico_otp
+      post :create, params: {:yubico_otp => yubico_otp}
       @account.reload
       assert_equal 'x' * 12, @account.yubico_identity
       assert_redirected_to edit_account_path

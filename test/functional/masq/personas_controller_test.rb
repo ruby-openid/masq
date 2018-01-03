@@ -29,51 +29,51 @@ module Masq
     end
 
     def test_should_require_login_for_create
-      post :create, :persona => valid_persona_attributes
+      post :create, params: {:persona => valid_persona_attributes}
       assert_login_required
     end
 
     def test_should_create_persona
       login_as(:standard)
       assert_difference('Persona.count', 1) do
-        post :create, :persona => valid_persona_attributes
+        post :create, params: {:persona => valid_persona_attributes}
       end
       assert_redirected_to account_personas_path
     end
 
     def test_should_require_login_for_edit
-      get :edit, :id => personas(:public).id
+      get :edit, params: {:id => personas(:public).id}
       assert_login_required
     end
 
     def test_should_get_edit
       login_as(:standard)
-      get :edit, :id => personas(:public).id
+      get :edit, params: {:id => personas(:public).id}
       assert_response :success
     end
 
     def test_should_require_login_for_update
-      put :update, :id => personas(:public).id, :persona => valid_persona_attributes
+      put :update, params: {:id => personas(:public).id, :persona => valid_persona_attributes}
       assert_login_required
     end
 
     def test_should_update_persona
       login_as(:standard)
-      put :update, :id => personas(:public).id, :persona => valid_persona_attributes
+      put :update, params: {:id => personas(:public).id, :persona => valid_persona_attributes}
       assert_redirected_to account_personas_path
       expected_attributes = Persona.new(valid_persona_attributes).attributes.reject{|_, v| v.nil?}
       assert_equal  expected_attributes, Persona.find(personas(:public).id).attributes.slice(*expected_attributes.keys)
     end
 
     def test_should_require_login_for_destroy
-      delete :destroy, :id => personas(:public).id
+      delete :destroy, params: {:id => personas(:public).id}
       assert_login_required
     end
 
     def test_should_destroy_persona
       login_as(:standard)
       assert_difference('Persona.count', -1) do
-        delete :destroy, :id => personas(:public).id
+        delete :destroy, params: {:id => personas(:public).id}
       end
       assert_redirected_to account_personas_path
     end
