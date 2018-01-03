@@ -7,7 +7,7 @@ module Masq
 
     def test_should_redirect_to_safe_login_page_if_untrusted_domain
       login_as(:standard)
-      post :index, checkid_request_params
+      post :index, params: checkid_request_params
       assert_redirected_to safe_login_path
       assert_not_nil request.session[:return_to]
       assert_not_nil request.session[:request_token]
@@ -16,7 +16,7 @@ module Masq
     def test_should_redirect_to_login_page_if_trusted_domain
       login_as(:standard)
       domain = Masq::Engine.config.masq['trusted_domains'].first
-      post :index, checkid_request_params.merge('openid.trust_root' => "http://#{domain}/", 'openid.realm' => "http://#{domain}/", 'openid.return_to' => "http://#{domain}/return")
+      post :index, params: checkid_request_params.merge('openid.trust_root' => "http://#{domain}/", 'openid.realm' => "http://#{domain}/", 'openid.return_to' => "http://#{domain}/return")
       assert_redirected_to login_path
       assert_not_nil request.session[:return_to]
       assert_not_nil request.session[:request_token]
@@ -25,11 +25,11 @@ module Masq
     def test_should_save_site_if_user_chose_to_trust_always
       fake_checkid_request(:standard)
       assert_difference('Site.count', 1) do
-        post :complete, :always => 1,
+        post :complete, params: {:always => 1,
           :site => {
             :persona_id => personas(:public).id,
             :url => checkid_request_params['openid.trust_root'],
-            :properties => valid_properties }
+            :properties => valid_properties }}
       end
       assert_response :redirect
       assert_match(checkid_request_params['openid.return_to'], response.redirect_url)
@@ -39,8 +39,8 @@ module Masq
     def test_should_not_save_site_if_user_chose_to_trust_temporary
       fake_checkid_request(:standard)
       assert_no_difference('Site.count') do
-        post :complete, :temporary => 1,
-          :site => valid_site_attributes.merge(:properties => valid_properties)
+        post :complete, params: {:temporary => 1,
+          :site => valid_site_attributes.merge(:properties => valid_properties)}
       end
       assert_response :redirect
       assert_match checkid_request_params['openid.return_to'], response.redirect_url
@@ -49,7 +49,7 @@ module Masq
 
     def test_should_redirect_to_openid_cancel_url_if_user_chose_to_cancel
       fake_checkid_request(:standard)
-      post :complete, :cancel => 1
+      post :complete, params: {:cancel => 1}
       assert_response :redirect
       assert_match(checkid_request_params['openid.return_to'], response.redirect_url)
       assert_match(/mode=cancel/, response.redirect_url)
@@ -58,7 +58,7 @@ module Masq
     def test_should_ask_user_to_login_if_claimed_id_does_not_belong_to_current_account
       login_as(:standard)
       id_url = "http://notmine.com"
-      post :index, checkid_request_params.merge('openid.identity' => id_url, 'openid.claimed_id' => id_url)
+      post :index, params: checkid_request_params.merge('openid.identity' => id_url, 'openid.claimed_id' => id_url)
       assert_redirected_to safe_login_path
       assert_not_nil request.session[:return_to]
       assert_not_nil request.session[:request_token]
@@ -74,7 +74,7 @@ module Masq
     end
 
     def test_should_directly_answer_incoming_associate_requests
-      post :index, associate_request_params
+      post :index, params: associate_request_params
       assert_response :success
       assert_match 'assoc_handle', response.body
       assert_match 'assoc_type', response.body

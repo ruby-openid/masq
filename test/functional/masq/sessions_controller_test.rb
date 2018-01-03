@@ -7,13 +7,13 @@ module Masq
     fixtures :accounts
 
     def test_should_save_account_id_in_session_after_successful_login
-      post :create, :login => accounts(:standard).login, :password => 'test'
+      post :create, params: {:login => accounts(:standard).login, :password => 'test'}
       assert session[:account_id]
     end
 
     def test_should_redirect_to_users_identity_page_after_successful_login
       account = accounts(:standard)
-      post :create, :login => account.login, :password => 'test'
+      post :create, params: {:login => account.login, :password => 'test'}
       assert_redirected_to identity_url(account, :host => Masq::Engine.config.masq['host'])
     end
 
@@ -25,17 +25,17 @@ module Masq
     end
 
     def test_should_set_cookie_with_auth_token_if_user_chose_to_be_remembered
-      post :create, :login => accounts(:standard).login, :password => 'test', :remember_me => "1"
+      post :create, params: {:login => accounts(:standard).login, :password => 'test', :remember_me => "1"}
       assert_not_nil @response.cookies["auth_token"]
     end
 
     def test_should_not_set_cookie_with_auth_token_if_user_did_not_chose_to_be_remembered
-      post :create, :login => accounts(:standard).login, :password => 'test', :remember_me => "0"
+      post :create, params: {:login => accounts(:standard).login, :password => 'test', :remember_me => "0"}
       assert_nil @response.cookies["auth_token"]
     end
 
     def test_should_not_save_account_id_in_session_after_failed_login
-      post :create, :login => accounts(:standard).login, :password => 'bad password'
+      post :create, params: {:login => accounts(:standard).login, :password => 'bad password'}
       assert_nil session[:account_id]
     end
 
@@ -67,7 +67,7 @@ module Masq
     end
 
     def test_should_redirect_to_login_after_failed_login
-      post :create, :login => accounts(:standard).login, :password => 'bad password'
+      post :create, params: {:login => accounts(:standard).login, :password => 'bad password'}
       assert_redirected_to login_path
       assert flash.any?
     end
@@ -114,7 +114,7 @@ module Masq
 
     def test_should_set_authentication_attributes_after_successful_login
       @account = accounts(:standard)
-      post :create, :login => @account.login, :password => 'test'
+      post :create, params: {:login => @account.login, :password => 'test'}
       @account.reload
       assert_not_nil @account.last_authenticated_at
       assert !@account.last_authenticated_by_yubikey
@@ -124,7 +124,7 @@ module Masq
       @account = accounts(:with_yubico_identity)
       yubico_otp = @account.yubico_identity + 'x' * 32
       Account.expects(:verify_yubico_otp).with(yubico_otp).returns(true)
-      post :create, :login => @account.login, :password => 'test' + yubico_otp
+      post :create, params: {:login => @account.login, :password => 'test' + yubico_otp}
       @account.reload
       assert_not_nil @account.last_authenticated_at
       assert @account.last_authenticated_by_yubikey
@@ -132,7 +132,7 @@ module Masq
 
     def test_should_disallow_password_only_login_when_yubikey_is_mandatory
       account = accounts(:with_yubico_identity)
-      post :create, :login => account.login, :password => 'test'
+      post :create, params: {:login => account.login, :password => 'test'}
       assert_redirected_to login_path
       assert flash.any?
     end
