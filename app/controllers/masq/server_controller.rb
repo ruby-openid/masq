@@ -26,7 +26,7 @@ module Masq
           elsif openid_request
             handle_non_checkid_request
           else
-            render :text => t(:this_is_openid_not_a_human_ressource)
+            render :plain => t(:this_is_openid_not_a_human_ressource)
           end
         end
         format.xrds
@@ -150,7 +150,7 @@ module Masq
     # Deletes the old request when a new one comes in.
     def clear_checkid_request
       unless session[:request_token].blank?
-        OpenIdRequest.destroy_all :token => session[:request_token]
+        OpenIdRequest.where(:token => session[:request_token]).destroy_all
         session[:request_token] = nil
       end
     end
@@ -209,7 +209,7 @@ module Masq
       when OpenID::Server::MalformedTrustRoot then "Malformed trust root '#{exception.to_s}'"
       else exception.to_s
       end
-      render :text => "Invalid OpenID request: #{error}", :status => 500
+      render :plain => "Invalid OpenID request: #{error}", :status => 500
     end
 
     private

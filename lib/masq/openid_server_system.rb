@@ -93,9 +93,9 @@ module Masq
       signed_response = openid_server.signatory.sign(resp) if resp.needs_signing
       web_response = openid_server.encode_response(resp)
       case web_response.code
-      when OpenID::Server::HTTP_OK then render(:text => web_response.body, :status => 200)
+      when OpenID::Server::HTTP_OK then render(:html => web_response.body, :status => 200)
       when OpenID::Server::HTTP_REDIRECT then redirect_to(web_response.headers['location'])
-      else render(:text => web_response.body, :status => 400)
+      else render(:html => web_response.body, :status => 400)
       end
     end
 
