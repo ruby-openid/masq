@@ -10,6 +10,7 @@ group :development, :test do
     #gem 'ruby-oci8'
   end
   gem 'minitest'
+  gem 'rails-controller-testing'
   gem 'mocha'
   gem 'ruby_gntp'
   gem 'guard-minitest'

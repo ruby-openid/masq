@@ -1,8 +1,8 @@
 module Masq
   class AccountsController < BaseController
-    before_filter :check_disabled_registration, :only => [:new, :create]
-    before_filter :login_required, :except => [:show, :new, :create, :activate, :resend_activation_email]
-    before_filter :detect_xrds, :only => :show
+    before_action :check_disabled_registration, :only => [:new, :create]
+    before_action :login_required, :except => [:show, :new, :create, :activate, :resend_activation_email]
+    before_action :detect_xrds, :only => :show
 
     def show
       @account = Account.where(:login => params[:account], :enabled => true).first
