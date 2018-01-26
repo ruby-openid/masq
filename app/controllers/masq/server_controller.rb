@@ -44,7 +44,7 @@ module Masq
     # to the decision page.
     def proceed
       identity = identifier(current_account)
-      if @site = current_account.sites.find_by_url(checkid_request.trust_root)
+      if @site = current_account.sites.where(url: checkid_request.trust_root).first
         resp = checkid_request.answer(true, nil, identity)
         resp = add_sreg(resp, @site.sreg_properties) if sreg_request
         resp = add_ax(resp, @site.ax_properties) if ax_fetch_request
@@ -62,7 +62,7 @@ module Masq
     # Displays the decision page on that the user can confirm the request and
     # choose which data should be transfered to the relying party.
     def decide
-      @site = current_account.sites.find_or_initialize_by(url: checkid_request.trust_root)
+      @site = current_account.sites.where(url: checkid_request.trust_root).first_or_initialize
       @site.persona = current_account.personas.where(params[:persona_id] ).first || current_account.personas.first  if sreg_request || ax_store_request || ax_fetch_request
     end
 

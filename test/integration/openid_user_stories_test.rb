@@ -114,7 +114,7 @@ class OpenidUserStoriesTest < ActionDispatch::IntegrationTest
     assert_match "mode=id_res", @response.redirect_url, "Response mode was expected to be id_res"
     assert_match "openid.sreg.nickname=#{@persona.nickname}", @response.redirect_url, "Response was expected to have SReg nickname"
     # Has the site been saved?
-    assert_not_nil @account.sites.find_by_url(checkid_request_params['openid.trust_root'])
+    assert_not_nil @account.sites.where(url: checkid_request_params['openid.trust_root']).first
     # Now comes the second request
     post server_path, params: request_params
     assert_redirected_to proceed_path

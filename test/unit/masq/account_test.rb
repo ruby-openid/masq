@@ -75,7 +75,7 @@ module Masq
       Masq::Engine.config.masq['create_auth_ondemand']['enabled'] = true
       Masq::Engine.config.masq['create_auth_ondemand']['default_mail_domain'] = "example.net"
       Account.authenticate('notexistingtestuser', 'somepassword')
-      account = Account.find_by_login('notexistingtestuser')
+      account = Account.where(login: 'notexistingtestuser').first
       assert account.kind_of? Account
       assert_equal 'notexistingtestuser', account.login
       assert_equal 'notexistingtestuser@example.net', account.email
@@ -138,7 +138,7 @@ module Masq
       Masq::Engine.config.masq['create_auth_ondemand']['default_mail_domain'] = "example.net"
       Masq::Engine.config.masq['create_auth_ondemand']['random_password'] = true
       Account.authenticate('notexistingtestuser', 'somepassword')
-      account = Account.find_by_login('notexistingtestuser')
+      account = Account.where(login: 'notexistingtestuser').first
       assert_not_equal account.encrypt('somepassword'), account.crypted_password
     end
 
@@ -147,7 +147,7 @@ module Masq
       Masq::Engine.config.masq['create_auth_ondemand']['default_mail_domain'] = "example.net"
       Masq::Engine.config.masq['create_auth_ondemand']['random_password'] = false
       Account.authenticate('notexistingtestuser', 'somepassword')
-      account = Account.find_by_login('notexistingtestuser')
+      account = Account.where(login: 'notexistingtestuser').first
       assert_equal account.encrypt('somepassword'), account.crypted_password
     end
 
@@ -195,7 +195,7 @@ module Masq
       @persona = @account.personas.create(valid_persona_attributes)
       assert_equal 1, @account.personas.size
       @account.destroy
-      assert_nil Persona.find_by_id(@persona.id)
+      assert_nil Persona.where(id: @persona.id).first
     end
 
     def test_should_delete_associated_sites_on_destroy
@@ -203,7 +203,7 @@ module Masq
       @site = @account.sites.create(valid_site_attributes)
       assert_equal 1, @account.sites.size
       @account.destroy
-      assert_nil Site.find_by_id(@site.id)
+      assert_nil Site.where(id: @site.id).first
     end
 
     def test_should_get_associated_with_a_yubikey_if_the_given_otp_is_correct

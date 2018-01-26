@@ -32,7 +32,7 @@ module Masq
     def test_should_delete_associated_release_policies_on_destroy
       @release_policy = release_policies(:venteria_nickname)
       @release_policy.site.destroy
-      assert_nil ReleasePolicy.find_by_id(@release_policy.id)
+      assert_nil ReleasePolicy.where(id: @release_policy.id).first
     end
 
     def test_should_set_release_policies_from_given_properties
