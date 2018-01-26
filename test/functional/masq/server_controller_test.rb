@@ -70,7 +70,7 @@ module Masq
       assert token_for_first_request
       post :index
       assert_not_equal request.session[:request_token], token_for_first_request
-      assert_nil OpenIdRequest.find_by_token(token_for_first_request)
+      assert_nil OpenIdRequest.where(token: token_for_first_request).first
     end
 
     def test_should_directly_answer_incoming_associate_requests

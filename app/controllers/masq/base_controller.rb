@@ -41,7 +41,7 @@ module Masq
     end
 
     def current_openid_request
-      @current_openid_request ||= OpenIdRequest.find_by_token(session[:request_token]) if session[:request_token]
+      @current_openid_request ||= OpenIdRequest.where(token: session[:request_token]).first if session[:request_token]
     end
 
     def render_404

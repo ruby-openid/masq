@@ -41,7 +41,7 @@ module Masq
     # [Account::AlreadyActivated] if the user with the corresponding activation code has already activated their account
     def self.find_and_activate!(activation_code)
       raise ArgumentError if activation_code.nil?
-      user = find_by_activation_code(activation_code)
+      user = where(activation_code: activation_code).first
       raise ActivationCodeNotFound unless user
       raise AlreadyActivated.new(user) if user.active?
       user.send(:activate!)
@@ -77,7 +77,7 @@ module Masq
     # Authenticates a user by their login name and password.
     # Returns the user or nil.
     def self.authenticate(login, password, basic_auth_used=false)
-      a = Account.find_by_login(login)
+      a = Account.where(login: login).first
       if a.nil? and Masq::Engine.config.masq['create_auth_ondemand']['enabled']
         # Need to set some password - but is never used
         if Masq::Engine.config.masq['create_auth_ondemand']['random_password']

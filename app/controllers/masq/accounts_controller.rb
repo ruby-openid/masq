@@ -94,7 +94,7 @@ module Masq
     end
 
     def resend_activation_email
-      account = Account.find_by_login(params[:account])
+      account = Account.where(login: params[:account]).first
 
       if account && !account.active?
         AccountMailer.signup_notification(account).deliver_now

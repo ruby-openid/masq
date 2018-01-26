@@ -122,7 +122,7 @@ module Masq
 
     # Called from #current_account.  Finaly, attempt to login by an expiring token in the cookie.
     def login_from_cookie
-      account = cookies[:auth_token] && Account.find_by_remember_token(cookies[:auth_token])
+      account = cookies[:auth_token] && Account.where(remember_token: cookies[:auth_token]).first
       if account && account.remember_token?
         account.remember_me
         cookies[:auth_token] = { :value => account.remember_token, :expires => account.remember_token_expires_at }
