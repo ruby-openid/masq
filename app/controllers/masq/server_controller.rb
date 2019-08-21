@@ -4,11 +4,11 @@ module Masq
     # OpenID requests lack an authenticity token
     skip_before_action :verify_authenticity_token
     # Error handling
-    rescue_from OpenID::Server::ProtocolError, :with => :render_openid_error
+    rescue_from OpenID::Server::ProtocolError, with: :render_openid_error
     # Actions other than index require a logged in user
-    before_action :login_required, :except => [:index, :cancel, :seatbelt_config, :seatbelt_login_state]
-    before_action :ensure_valid_checkid_request, :except => [:index, :cancel, :seatbelt_config, :seatbelt_login_state]
-    after_action :clear_checkid_request, :only => [:cancel, :complete]
+    before_action :login_required, except: %i[index cancel seatbelt_config seatbelt_login_state]
+    before_action :ensure_valid_checkid_request, except: %i[index cancel seatbelt_config seatbelt_login_state]
+    after_action :clear_checkid_request, only: %i[cancel complete]
     # These methods are used to display information about the request to the user
     helper_method :sreg_request, :ax_fetch_request, :ax_store_request
 
@@ -44,7 +44,7 @@ module Masq
     # to the decision page.
     def proceed
       identity = identifier(current_account)
-      if @site = current_account.sites.where(url: checkid_request.trust_root).first
+      if @site = current_account.sites.find_by(url: checkid_request.trust_root)
         resp = checkid_request.answer(true, nil, identity)
         resp = add_sreg(resp, @site.sreg_properties) if sreg_request
         resp = add_ax(resp, @site.ax_properties) if ax_fetch_request
@@ -63,7 +63,7 @@ module Masq
     # choose which data should be transfered to the relying party.
     def decide
       @site = current_account.sites.where(url: checkid_request.trust_root).first_or_initialize
-      @site.persona = current_account.personas.where(params[:persona_id] ).first || current_account.personas.first  if sreg_request || ax_store_request || ax_fetch_request
+      @site.persona = current_account.personas.find_by(params[:persona_id]) || current_account.personas.first if sreg_request || ax_store_request || ax_fetch_request
     end
 
     # This action is called by submitting the decision form, the information entered by
@@ -82,7 +82,9 @@ module Masq
           @site.attributes = site_params
         elsif ax_store_request
           @site = current_account.sites.where(persona_id: params[:site][:persona_id], url: params[:site][:url]).first_or_create
-          not_supported, not_accepted, accepted = [], [], []
+          not_supported = []
+          not_accepted = []
+          accepted = []
           ax_store_request.data.each do |type_uri, values|
             if property = Persona.attribute_name_for_type_uri(type_uri)
               store_attribute = params[:site][:ax_store][property.to_sym]
@@ -133,7 +135,7 @@ module Masq
         reset_session
         request = save_checkid_request
         session[:return_to] = proceed_path
-        redirect_to( request.from_trusted_domain? ? login_path : safe_login_path )
+        redirect_to(request.from_trusted_domain? ? login_path : safe_login_path)
       end
     end
 
@@ -141,7 +143,7 @@ module Masq
     # Returns the OpenIdRequest
     def save_checkid_request
       clear_checkid_request
-      request = OpenIdRequest.create!(:parameters => openid_params)
+      request = OpenIdRequest.create!(parameters: openid_params)
       session[:request_token] = request.token
 
       request
@@ -162,7 +164,7 @@ module Masq
     def ensure_valid_checkid_request
       self.openid_request = checkid_request
       if !openid_request.is_a?(OpenID::Server::CheckIDRequest)
-        redirect_to root_path, :alert => t(:identity_verification_request_invalid)
+        redirect_to root_path, alert: t(:identity_verification_request_invalid)
       elsif !allow_verification?
         flash[:notice] = logged_in? && !pape_requirements_met?(auth_time) ?
           t(:service_provider_requires_reauthentication_last_login_too_long_ago) :
@@ -206,10 +208,10 @@ module Masq
     # Renders the exception message as text output
     def render_openid_error(exception)
       error = case exception
-      when OpenID::Server::MalformedTrustRoot then "Malformed trust root '#{exception.to_s}'"
-      else exception.to_s
+              when OpenID::Server::MalformedTrustRoot then "Malformed trust root '#{exception}'"
+              else exception.to_s
       end
-      render :plain => "Invalid OpenID request: #{error}", :status => 500
+      render plain: "Invalid OpenID request: #{error}", status: 500
     end
 
     private
@@ -235,8 +237,8 @@ module Masq
     end
 
     def site_params
-      authorized_params = params.require(:site).permit( :persona_id ,  :url )
-      additional_data  = params[:site].slice(:ax_fetch, :sreg, :properties).permit!
+      authorized_params = params.require(:site).permit(:persona_id, :url)
+      additional_data = params[:site].slice(:ax_fetch, :sreg, :properties).permit!
       authorized_params.merge(additional_data)
     end
   end
