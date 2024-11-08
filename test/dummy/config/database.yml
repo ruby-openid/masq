@@ -2,10 +2,10 @@
 test:
   adapter: sqlite3
   database: db/test.sqlite3
-  username: 
-  password: 
-  port: 
-  socket: 
+  username:
+  password:
+  port:
+  socket:
   host: localhost
   encoding: utf8
   pool: 5
