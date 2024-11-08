@@ -3,8 +3,9 @@ ENV["RAILS_ENV"] = "test"
 
 require File.expand_path("dummy/config/environment.rb",  File.dirname(__FILE__))
 require "rails/test_help"
+require 'minitest/autorun'
+require 'mocha/minitest'
 require 'rails-controller-testing'
-require 'mocha/setup'
 
 Rails::Controller::Testing.install
 Rails.backtrace_cleaner.remove_silencers!
