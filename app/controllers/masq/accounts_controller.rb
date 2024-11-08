@@ -5,12 +5,18 @@ module Masq
     before_action :detect_xrds, :only => :show
 
     def show
-      @account = Account.find_by(login: params[:account], enabled: true)
+      @account =
+        if params[:account].to_i.to_s == params[:account].to_s
+          Account.find_by(id: params[:account], enabled: true)
+        else
+          Account.find_by(login: params[:account], enabled: true)
+        end
+
       raise ActiveRecord::RecordNotFound if @account.nil?
 
       respond_to do |format|
         format.html do
-          response.headers['X-XRDS-Location'] = identity_url(:account => @account, :format => :xrds, :protocol => scheme)
+          response.headers['X-XRDS-Location'] = identity_url(:account => @account.id, :format => :xrds, :protocol => scheme)
         end
         format.xrds
       end
