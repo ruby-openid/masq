@@ -5,7 +5,7 @@ module Masq
 
     # Forgot password
     def create
-      if account = Account.where(:email => params[:email], :activation_code => nil).first
+      if account = Account.find_by(email: params[:email], activation_code: nil)
         account.forgot_password!
         redirect_to login_path, :notice => t(:password_reset_link_has_been_sent)
       else
@@ -33,7 +33,7 @@ module Masq
 
     def find_account_by_reset_code
       @reset_code = params[:id]
-      @account = @reset_code.blank? ? nil : Account.where(password_reset_code: @reset_code).first
+      @account = @reset_code.blank? ? nil : Account.find_by(password_reset_code: @reset_code)
       redirect_to(forgot_password_path, :alert => t(:reset_code_invalid_try_again)) unless @account
     end
 

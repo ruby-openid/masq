@@ -5,7 +5,7 @@ module Masq
     before_action :detect_xrds, :only => :show
 
     def show
-      @account = Account.where(:login => params[:account], :enabled => true).first
+      @account = Account.find_by(login: params[:account], enabled: true)
       raise ActiveRecord::RecordNotFound if @account.nil?
 
       respond_to do |format|
@@ -94,7 +94,7 @@ module Masq
     end
 
     def resend_activation_email
-      account = Account.where(login: params[:account]).first
+      account = Account.find_by(login: params[:account])
 
       if account && !account.active?
         AccountMailer.signup_notification(account).deliver_now

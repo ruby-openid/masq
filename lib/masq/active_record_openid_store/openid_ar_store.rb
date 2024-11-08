@@ -37,7 +37,7 @@ module Masq
     end
 
     def use_nonce(server_url, timestamp, salt)
-      return false if Nonce.(server_url: server_url, timestamp: timestamp, salt: salt).first
+      return false if Nonce.find_by(server_url: server_url, timestamp: timestamp, salt: salt)
       return false if (timestamp - Time.now.to_i).abs > OpenID::Nonce.skew
       Nonce.create(:server_url => server_url, :timestamp => timestamp, :salt => salt)
       return true

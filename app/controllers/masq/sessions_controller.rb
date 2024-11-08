@@ -13,7 +13,7 @@ module Masq
         flash[:notice] = t(:you_are_logged_in)
         redirect_after_login
       else
-        a = Account.where(login: params[:login]).first
+        a = Account.find_by(login: params[:login])
         if a.nil?
           redirect_to login_path, :alert => t(:login_incorrect)
         elsif a.active? && a.enabled?
