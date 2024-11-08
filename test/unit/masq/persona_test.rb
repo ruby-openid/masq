@@ -23,11 +23,9 @@ module Masq
       assert_invalid @persona, :title
     end
 
-    def test_should_raise_not_deletable_on_destroy_if_not_flagged_deletable
+    def test_should_not_delete_on_destroy_if_not_flagged_deletable
       @persona.update_attribute(:deletable, false)
-      assert_raises Persona::NotDeletable do
-        @persona.destroy
-      end
+      assert_equal(false, @persona.destroy)
     end
 
   end
