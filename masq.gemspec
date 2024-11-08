@@ -7,9 +7,9 @@ require "masq/version"
 Gem::Specification.new do |s|
   s.name        = "masq"
   s.version     = Masq::VERSION
-  s.authors     = ["Dennis Reimann", "Bardoe Besselaar","Nikita Vasiliev"]
-  s.email       = ["mail@dennisreimann.de"]
-  s.homepage    = "https://github.com/bardbess/masq"
+  s.authors     = ["Peter Boling", "Bardoe Besselaar","Nikita Vasiliev", "Dennis Reimann"]
+  s.email       = ["peter.boling@gmail.com"]
+  s.homepage    = "https://github.com/VitalConnectInc/masq"
   s.summary     = "Mountable Rails engine that provides OpenID server/identity provider functionality"
   s.description = "Masq supports the current OpenID specifications (OpenID 2.0) and supports SReg, AX (fetch and store requests) and PAPE as well as some custom additions like multifactor authentication using a yubikey"
 
