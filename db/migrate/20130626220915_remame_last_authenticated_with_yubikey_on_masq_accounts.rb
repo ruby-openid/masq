@@ -1,4 +1,4 @@
-class RemameLastAuthenticatedWithYubikeyOnMasqAccounts < ActiveRecord::Migration
+class RemameLastAuthenticatedWithYubikeyOnMasqAccounts < ActiveRecord::Migration[4.2]
   def up
     # Rename the last last_authenticated_with_yubikey to be within the 30 char column name limit set by Oracle.
     if table_exists?(:masq_accounts) && column_exists?(:masq_accounts, :last_authenticated_with_yubikey)
