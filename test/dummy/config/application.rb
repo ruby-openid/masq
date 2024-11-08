@@ -1,6 +1,25 @@
 require File.expand_path('../boot', __FILE__)
 
-require 'rails/all'
+# We need to avoid loading sprockets, see: https://github.com/rails/sprockets-rails/issues/444
+# require 'rails/all'
+require "rails"
+
+# sprockets/railtie
+%w(
+  active_record/railtie
+  active_storage/engine
+  action_controller/railtie
+  action_view/railtie
+  action_mailer/railtie
+  active_job/railtie
+  action_cable/engine
+  rails/test_unit/railtie
+).each do |railtie|
+  begin
+    require railtie
+  rescue LoadError
+  end
+end
 
 Bundler.require
 require "masq"
@@ -42,16 +61,6 @@ module Dummy
 
     # parameters by using an attr_accessor or attr_protected declaration.
     #config.active_record.whitelist_attributes = true
-
-    # Enable the asset pipeline
-    config.assets.enabled = false
-
-    config.assets.configure do |env|
-      env.cache = ActiveSupport::Cache.lookup_store(:null_store)
-    end
-
-    # Version of your assets, change this if you want to expire all your assets
-    #config.assets.version = '1.0'
   end
 end
 
