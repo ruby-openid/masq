@@ -20,6 +20,7 @@ Masq::Engine.routes.draw do
 
   get "/login" => "sessions#new", :as => :login
   get "/logout" => "sessions#destroy", :as => :logout
+  delete "/logout" => "sessions#destroy"
   post '/resend_activation_email/*account' => 'accounts#resend_activation_email', :as => :resend_activation_email
 
   match "/server" => "server#index", :as => :server, :via => [:get, :post]
