@@ -40,12 +40,18 @@ module Dummy
     # like if you have constraints or database-specific column types
     # config.active_record.schema_format = :sql
 
+    # parameters by using an attr_accessor or attr_protected declaration.
+    #config.active_record.whitelist_attributes = true
 
     # Enable the asset pipeline
-    config.assets.enabled = true
+    config.assets.enabled = false
+
+    config.assets.configure do |env|
+      env.cache = ActiveSupport::Cache.lookup_store(:null_store)
+    end
 
     # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
+    #config.assets.version = '1.0'
   end
 end
 
