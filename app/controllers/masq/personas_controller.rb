@@ -42,9 +42,7 @@ module Masq
 
     def destroy
       respond_to do |format|
-        begin
-          persona.destroy
-        rescue Persona::NotDeletable
+        unless persona.destroy
           flash[:alert] = t(:persona_cannot_be_deleted)
         end
         format.html { redirect_to account_personas_path }
