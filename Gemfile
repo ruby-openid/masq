@@ -3,8 +3,9 @@ source "https://rubygems.org"
 group :development, :test do
   platforms :ruby, :mswin, :mingw do
     gem 'sqlite3'
-    #gem 'mysql2'
-    #gem 'pg'
+    gem 'mysql2'
+    gem 'pg'
+    gem 'byebug'
     #gem 'activerecord-oracle_enhanced-adapter'
     #gem 'ruby-plsql'
     #gem 'ruby-oci8'
