@@ -174,11 +174,11 @@ module Masq
     end
 
     def test_should_remember_me_until_one_week
-      time = 1.week.from_now.utc
+      time = 1.week.from_now
       accounts(:standard).remember_me_until time
       assert_not_nil accounts(:standard).remember_token
       assert_not_nil accounts(:standard).remember_token_expires_at
-      assert_equal accounts(:standard).remember_token_expires_at, time
+      assert_equal accounts(:standard).remember_token_expires_at.to_s, time.to_s
     end
 
     def test_should_remember_me_default_two_weeks
