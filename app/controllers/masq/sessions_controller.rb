@@ -19,7 +19,7 @@ module Masq
         elsif a.active? && a.enabled?
           redirect_to login_path, :alert => t(:password_incorrect)
         elsif not a.enabled?
-          redirect_to login_path, :alert => t(:account_disabled)
+          redirect_to login_path, :alert => t(:account_deactivated)
         else
           redirect_to login_path(:resend_activation_for => params[:login]), :alert => t(:account_not_yet_activated)
         end
