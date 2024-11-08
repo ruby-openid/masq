@@ -6,6 +6,10 @@ require "rails/test_help"
 require 'minitest/autorun'
 require 'mocha/minitest'
 require 'rails-controller-testing'
+require 'byebug'
+
+# Set time zone to UTC for all tests.
+Time.zone = "UTC"
 
 Rails::Controller::Testing.install
 Rails.backtrace_cleaner.remove_silencers!
