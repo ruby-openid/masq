@@ -91,10 +91,10 @@ nl:
     en zou geen links moeten bebvatten.<br />Indien er wel links zijn, geeft u dan alstublieft aan ons door wie u hierheen zond."
 
   # nav
-  my_identity: identiteit
-  my_profile: profiel
-  my_personas: personas
-  my_trusted_sites: vertrouwde sites
+  nav_identity: identiteit
+  nav_profile: profiel
+  nav_personas: personas
+  nav_trusted_sites: vertrouwde sites
   logout: uitloggen
   current_verification_request: huidige aanvraag voor verificatie
   login_link: inloggen
@@ -184,7 +184,9 @@ nl:
   you_are_logged_in: U bent nu ingelogd.
   login_incorrect_or_account_not_yet_activated: De inloggegevens zijn incorrect of uw account is nog niet geactiveerd.
   login_incorrect: De inloggegevens zijn incorrect.
+  password_incorrect: De wachtwoord zijn incorrect.
   you_are_now_logged_out: U bent nu uitgelogd.
+  account_deactivated: Uw account has werd uitgezet.
 
   # sessions views
   login_title: Inloggen
@@ -239,7 +241,6 @@ nl:
   or: of
   your_release_policy_for_site: Uw uitgiftebeleid voor %{site}
   persona_label: Persona
-  choose_persona_submit: persona kiezen
   property: eigenschap
   value: waarde
   update_release_policy_submit: uitgiftebeleid bijwerken

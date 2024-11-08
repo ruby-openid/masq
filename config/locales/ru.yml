@@ -105,10 +105,10 @@ ru:
     and should contain no links.<br />If there are any links, please report to us, who sent you here."
 
   # nav
-  my_identity: идентификатор
-  my_profile: профиль
-  my_personas: персоны
-  my_trusted_sites: доверенные сайты
+  nav_identity: идентификатор
+  nav_profile: профиль
+  nav_personas: персоны
+  nav_trusted_sites: доверенные сайты
   logout: выход
   current_verification_request: current verification request
   login_link: вход
@@ -200,7 +200,7 @@ ru:
   login_incorrect: The login is incorrect.
   password_incorrect: The password is incorrect.
   you_are_now_logged_out: You are now logged out.
-  account_disabled: Your account is deactivated.
+  account_deactivated: Your account is deactivated.
 
   # sessions views
   login_title: Вход
@@ -255,7 +255,6 @@ ru:
   or: или
   your_release_policy_for_site: Your release policy for %{site}
   persona_label: Персона
-  choose_persona_submit: выбрать персону
   property: свойство
   value: значение
   update_release_policy_submit: update release policy
