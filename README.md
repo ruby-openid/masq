@@ -1,20 +1,24 @@
-# Masq OpenID Server
+# Masq2 OpenID Server
 
 [![Build Status](https://travis-ci.org/bardbess/masq.svg?branch=master)](http://travis-ci.org/bardbess/masq)
 
-Masq is a mountable Rails engine that provides OpenID server/identity provider functionality.
-It is the successor of the stand-alone Rails application [masquerade](http://github.com/dennisreimann/masquerade/).
+Masq2 is a mountable Rails engine that provides OpenID server/identity provider functionality.
+It is the successor to the [masq gem](https://github.com/dennisreimann/masq), which in turn
+was the successor of the stand-alone Rails application of the same purpose, [masquerade](http://github.com/dennisreimann/masquerade/).
 
-The project is released under the MIT-License and its source code is available at [GitHub](http://github.com/dennisreimann/masquerade/).
+Because of this history, and the desire to be drop-in compatible with `masq`,
+the namespace remains `Masq`, not `Masq2`.
+
+The project is released under the MIT-License and its source code is available at [GitHub](http://github.com/oauth-xx/masq2/).
 Feel free to fork and submit patches :)
 
 ## Installation
 
-0. In case you want to run masq as a standalone application (not integrated into an existing app), you will have to generate a barebone Rails app first:
+0. In case you want to run Masq2 as a standalone application (not integrated into an existing app), you will have to generate a bare-bone Rails app first:
     * `rails new my_openid_provider`
 
-1. Add masq to your Gemfile and install it:
-    * `gem 'masq'`
+1. Add `masq2` to your Gemfile and install it:
+    * `gem 'masq2'`
     * `bundle install`
 
 2. Copy the configuration and edit it:
@@ -56,7 +60,9 @@ client-server communication (like requesting simple registration data).
 
 ### Introduction
 
-This fork adds ORACLE database support to the existing dennisreimann/masq gem.
+`masq2` adds ORACLE database support, as well as support for 
+Rails 5.1, 5.2, 6.0, 6.1, 7.0, 7.1, 7.2, 8.0,
+which `masq` never had. 
 
 The main functionality is in the server controller, which is the endpoint for incoming
 OpenID requests. The server controller is supposed to only interact with relying parties
