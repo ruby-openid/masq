@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class OpenidUserStoriesTest < ActionDispatch::IntegrationTest
-  include Masq::Engine.routes_url_helpers
+  include Masq::Engine.routes.url_helpers
 
   fixtures :all
 
@@ -11,17 +11,17 @@ class OpenidUserStoriesTest < ActionDispatch::IntegrationTest
       'openid.identity' => claimed_id,
       'openid.claimed_id' => claimed_id)
     # OpenID requests comes in
-    post server_path, request_params
+    post server_path, params: request_params
     # User has to log in
     assert_redirected_to safe_login_path
-    post session_path, :login => 'quentin', :password => 'test'
+    post session_path, params: {:login => 'quentin', :password => 'test'}
     # User has to verify the request
     assert_redirected_to proceed_path
     follow_redirect!
     assert_redirected_to decide_path
     follow_redirect!
     assert_template 'server/decide'
-    post complete_path, :temporary => 1
+    post complete_path, params: {:temporary => 1}
     assert_match checkid_request_params['openid.return_to'], @response.redirect_url
     assert_match "mode=id_res", @response.redirect_url
   end
@@ -35,17 +35,17 @@ class OpenidUserStoriesTest < ActionDispatch::IntegrationTest
       'openid.claimed_id' => claimed_id).merge(
       sreg_request_params)
     # OpenID requests comes in
-    post server_path, request_params
+    post server_path, params: request_params
     # User has to log in
     assert_redirected_to safe_login_path
-    post session_path, :login => @account.login, :password => 'test'
+    post session_path, params: {:login => @account.login, :password => 'test'}
     # User has to verify the request
     assert_redirected_to proceed_path
     follow_redirect!
     assert_redirected_to decide_path
     follow_redirect!
     assert_template 'server/decide'
-    post complete_path, :temporary => 1, :site => { :persona_id => @persona.id, :sreg => { 'nickname' => @persona.nickname } }
+    post complete_path, params: {:temporary => 1, :site => { :persona_id => @persona.id, :sreg => { 'nickname' => @persona.nickname } }}
     assert_match checkid_request_params['openid.return_to'], @response.redirect_url
     assert_match "mode=id_res", @response.redirect_url
     assert_match "openid.sreg.nickname=#{@persona.nickname}", @response.redirect_url, "Response was expected to have SReg nickname"
@@ -60,10 +60,10 @@ class OpenidUserStoriesTest < ActionDispatch::IntegrationTest
       'openid.claimed_id' => claimed_id).merge(
       sreg_request_params)
     # OpenID requests comes in
-    post server_path, request_params
+    post server_path, params: request_params
     # User has to log in
     assert_redirected_to safe_login_path
-    post session_path, :login => @account.login, :password => 'test'
+    post session_path, params: {:login => @account.login, :password => 'test'}
     # User has to verify the request
     assert_redirected_to proceed_path
     follow_redirect!
@@ -80,8 +80,8 @@ class OpenidUserStoriesTest < ActionDispatch::IntegrationTest
       'openid.identity' => claimed_id,
       'openid.claimed_id' => claimed_id)
     # User will be logged in when the request comes in
-    post session_path, :login => 'quentin', :password => 'test'
-    post server_path, request_params
+    post session_path, params: {:login => 'quentin', :password => 'test'}
+    post server_path, params: request_params
     # Request has to be answered directly
     assert_redirected_to proceed_path
     follow_redirect!
@@ -98,25 +98,25 @@ class OpenidUserStoriesTest < ActionDispatch::IntegrationTest
       'openid.claimed_id' => claimed_id).merge(
       sreg_request_params)
     # User will be logged in when the request comes in
-    post session_path, :login => @account.login, :password => 'test'
-    post server_path, request_params
+    post session_path, params: {:login => @account.login, :password => 'test'}
+    post server_path, params: request_params
     # User verifies the request and stores the details for this site
     assert_redirected_to proceed_path
     follow_redirect!
     assert_redirected_to decide_path
     follow_redirect!
     assert_template 'server/decide'
-    post complete_path, :always => 1, :site => {
+    post complete_path, params: {:always => 1, :site => {
       :persona_id => @persona.id,
       :url => checkid_request_params['openid.trust_root'],
-      :sreg => { 'nickname' => @persona.nickname } }
+      :sreg => { 'nickname' => @persona.nickname } }}
     assert_match checkid_request_params['openid.return_to'], @response.redirect_url
     assert_match "mode=id_res", @response.redirect_url, "Response mode was expected to be id_res"
     assert_match "openid.sreg.nickname=#{@persona.nickname}", @response.redirect_url, "Response was expected to have SReg nickname"
     # Has the site been saved?
-    assert_not_nil @account.sites.find_by_url(checkid_request_params['openid.trust_root'])
+    assert_not_nil @account.sites.find_by(url: checkid_request_params['openid.trust_root'])
     # Now comes the second request
-    post server_path, request_params
+    post server_path, params: request_params
     assert_redirected_to proceed_path
     follow_redirect!
     assert_match "mode=id_res", @response.redirect_url, "Response mode was expected to be id_res on subsequent request"
@@ -132,21 +132,21 @@ class OpenidUserStoriesTest < ActionDispatch::IntegrationTest
       'openid.claimed_id' => claimed_id).merge(
       ax_fetch_request_params)
     # OpenID requests comes in
-    post server_path, request_params
+    post server_path, params: request_params
     # User has to log in
     assert_redirected_to safe_login_path
-    post session_path, :login => 'quentin', :password => 'test'
+    post session_path, params: {:login => 'quentin', :password => 'test'}
     # User has to verify the request
     assert_redirected_to proceed_path
     follow_redirect!
     assert_redirected_to decide_path
     follow_redirect!
     assert_template 'server/decide'
-    post complete_path, :temporary => 1, :site => {
+    post complete_path, params: {:temporary => 1, :site => {
       :persona_id => @persona.id,
       :ax_fetch => {
         'nickname' => { 'type' => 'http://axschema.org/namePerson/friendly', 'value' => @persona.nickname },
-        'gender' => { 'type' => 'http://axschema.org/person/gender', 'value' => @persona.gender } } }
+        'gender' => { 'type' => 'http://axschema.org/person/gender', 'value' => @persona.gender } } }}
     assert_match checkid_request_params['openid.return_to'], @response.redirect_url
     assert_match "openid.mode=id_res", @response.redirect_url, "Response mode was expected to be id_res"
     assert_match "openid.ax.mode=fetch_response", @response.redirect_url, "AX mode was expected to be fetch_response"
@@ -163,10 +163,10 @@ class OpenidUserStoriesTest < ActionDispatch::IntegrationTest
       'openid.claimed_id' => claimed_id).merge(
       ax_store_request_params)
     # OpenID requests comes in
-    post server_path, request_params
+    post server_path, params: request_params
     # User has to log in
     assert_redirected_to safe_login_path
-    post session_path, :login => 'quentin', :password => 'test'
+    post session_path, params: {:login => 'quentin', :password => 'test'}
     # User has to verify the request
     assert_redirected_to proceed_path
     follow_redirect!
@@ -176,11 +176,11 @@ class OpenidUserStoriesTest < ActionDispatch::IntegrationTest
     sent_fullname = ax_store_request_params['openid.ax.value.fullname.1']
     sent_email = ax_store_request_params['openid.ax.value.email.1']
     # Simulate accepting the fullname but not the email
-    post complete_path, :temporary => 1, :site => {
+    post complete_path, params: {:temporary => 1, :site => {
       :persona_id => @persona.id,
       :ax_store => {
         'fullname' => { 'type' => ax_store_request_params['openid.ax.type.fullname'], 'value' => sent_fullname },
-        'email' => { 'type' => ax_store_request_params['openid.ax.type.email'] } } }
+        'email' => { 'type' => ax_store_request_params['openid.ax.type.email'] } } }}
     assert_match checkid_request_params['openid.return_to'], @response.redirect_url
     assert_match "openid.mode=id_res", @response.redirect_url, "Response mode was expected to be id_res"
     assert_match "openid.ax.mode=store_response", @response.redirect_url, "AX mode was expected to be store_response"
@@ -197,17 +197,17 @@ class OpenidUserStoriesTest < ActionDispatch::IntegrationTest
       'openid.claimed_id' => claimed_id).merge(
       pape_request_params)
     # OpenID requests comes in
-    post server_path, request_params
+    post server_path, params: request_params
     # User has to log in
     assert_redirected_to safe_login_path
-    post session_path, :login => 'quentin', :password => 'test'
+    post session_path, params: {:login => 'quentin', :password => 'test'}
     # User has to verify the request
     assert_redirected_to proceed_path
     follow_redirect!
     assert_redirected_to decide_path
     follow_redirect!
     assert_template 'server/decide'
-    post complete_path, :temporary => 1
+    post complete_path, params: {:temporary => 1}
     assert_match checkid_request_params['openid.return_to'], @response.redirect_url, "Redirected to: #{@response.redirect_url}"
     assert_match "openid.mode=id_res", @response.redirect_url, "Response mode was expected to be id_res"
     assert_match "openid.pape.auth_policies=", @response.redirect_url

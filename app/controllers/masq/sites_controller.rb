@@ -1,7 +1,7 @@
 module Masq
   class SitesController < BaseController
-    before_filter :login_required
-    before_filter :find_personas, :only => [:create, :edit, :update]
+    before_action :login_required
+    before_action :find_personas, :only => [:create, :edit, :update]
 
     helper_method :site, :persona
 
@@ -19,7 +19,7 @@ module Masq
 
     def update
       respond_to do |format|
-        if site.update_attributes(params[:site])
+        if site.update_attributes(site_params)
           flash[:notice] = t(:release_policy_for_site_updated)
           format.html { redirect_to edit_account_site_path(site) }
         else
@@ -48,6 +48,10 @@ module Masq
 
     def find_personas
       @personas = current_account.personas.order(:title)
+    end
+
+    def site_params
+      params.require(:site).permit!
     end
   end
 end

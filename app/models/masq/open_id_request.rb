@@ -4,11 +4,24 @@ module Masq
 
     before_validation :make_token, :on => :create
 
-    attr_accessible :parameters
+    #attr_accessible :parameters
     serialize :parameters, Hash
 
+    def parameters
+      self[:parameters]
+    end
     def parameters=(params)
-      self[:parameters] = params.is_a?(Hash) ? params.delete_if { |k,v| k.index('openid.') != 0 } : nil
+      self[:parameters] =
+        case params
+          # arbitrary params passed as Hash
+        when Hash
+          params.delete_if { |k,v| k.index('openid.') != 0 }
+          # params from ActionController (does not inherit directly from HashWithIndifferentAccess after Rails 4.2)
+        when ActionController::Parameters
+          params.to_unsafe_h.delete_if { |k,v| k.index('openid.') != 0 }
+        else
+          nil
+        end
     end
 
     def from_trusted_domain?

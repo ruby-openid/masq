@@ -2,9 +2,9 @@ require 'digest/sha1'
 
 module Masq
   class Account < ActiveRecord::Base
-    has_many :personas, :dependent => :delete_all, :order => 'id ASC'
+    has_many :personas, ->(){order(:id)}, :dependent => :delete_all
     has_many :sites, :dependent => :destroy
-    belongs_to :public_persona, :class_name => "Persona"
+    belongs_to :public_persona, :class_name => "Persona", optional: true
 
     validates_presence_of :login
     validates_length_of :login, :within => 3..254
@@ -12,7 +12,7 @@ module Masq
     validates_format_of :login, :with => /\A[A-Za-z0-9_@.-]+\z/
     validates_presence_of :email
     validates_uniqueness_of :email, :case_sensitive => false
-    validates_format_of :email, :with => /(^([^@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})$)|(^$)/i
+    validates_format_of :email, :with => /(\A([^@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})\z)/i, :allow_blank => true
     validates_presence_of :password, :if => :password_required?
     validates_presence_of :password_confirmation, :if => :password_required?
     validates_length_of :password, :within => 6..40, :if => :password_required?
@@ -23,7 +23,7 @@ module Masq
     before_save   :encrypt_password
     after_save    :deliver_forgot_password
 
-    attr_accessible :login, :email, :password, :password_confirmation, :public_persona_id, :yubikey_mandatory
+    #attr_accessible :login, :email, :password, :password_confirmation, :public_persona_id, :yubikey_mandatory
     attr_accessor :password
 
     class ActivationCodeNotFound < StandardError; end
@@ -41,7 +41,7 @@ module Masq
     # [Account::AlreadyActivated] if the user with the corresponding activation code has already activated their account
     def self.find_and_activate!(activation_code)
       raise ArgumentError if activation_code.nil?
-      user = find_by_activation_code(activation_code)
+      user = find_by(activation_code: activation_code)
       raise ActivationCodeNotFound unless user
       raise AlreadyActivated.new(user) if user.active?
       user.send(:activate!)
@@ -66,7 +66,7 @@ module Masq
 
     # True if the user has just been activated
     def pending?
-      @activated
+      @activated ||= false
     end
 
     # Does the user have the possibility to authenticate with a one time password?
@@ -77,7 +77,7 @@ module Masq
     # Authenticates a user by their login name and password.
     # Returns the user or nil.
     def self.authenticate(login, password, basic_auth_used=false)
-      a = Account.find_by_login(login)
+      a = Account.find_by(login: login)
       if a.nil? and Masq::Engine.config.masq['create_auth_ondemand']['enabled']
         # Need to set some password - but is never used
         if Masq::Engine.config.masq['create_auth_ondemand']['random_password']
@@ -133,7 +133,7 @@ module Masq
     end
 
     def authenticated_with_yubikey?
-      @authenticated_with_yubikey || false
+      @authenticated_with_yubikey ||= false
     end
 
     def associate_with_yubikey(otp)
@@ -184,11 +184,11 @@ module Masq
     end
 
     def recently_forgot_password?
-      @forgotten_password
+      @forgotten_password ||= false
     end
 
     def recently_reset_password?
-      @reset_password
+      @reset_password ||= false
     end
 
     def disable!
@@ -238,7 +238,7 @@ module Masq
     end
 
     def deliver_forgot_password
-      AccountMailer.forgot_password(self).deliver if recently_forgot_password?
+      AccountMailer.forgot_password(self).deliver_now if recently_forgot_password?
     end
 
   end

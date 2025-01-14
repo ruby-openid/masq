@@ -1,7 +1,5 @@
 # Masq2 OpenID Server
 
-[![Build Status](https://travis-ci.org/bardbess/masq.svg?branch=master)](http://travis-ci.org/bardbess/masq)
-
 Masq2 is a mountable Rails engine that provides OpenID server/identity provider functionality.
 It is the successor to the [masq gem](https://github.com/dennisreimann/masq), which in turn
 was the successor of the stand-alone Rails application of the same purpose, [masquerade](http://github.com/dennisreimann/masquerade/).
@@ -14,22 +12,22 @@ Feel free to fork and submit patches :)
 
 ## Installation
 
-0. In case you want to run Masq2 as a standalone application (not integrated into an existing app), you will have to generate a bare-bone Rails app first:
+1. In case you want to run Masq2 as a standalone application (not integrated into an existing app), you will have to generate a bare-bone Rails app first:
     * `rails new my_openid_provider`
 
-1. Add `masq2` to your Gemfile and install it:
+2. Add `masq2` to your Gemfile and install it:
     * `gem 'masq2'`
     * `bundle install`
 
-2. Copy the configuration and edit it:
+3. Copy the configuration and edit it:
     * `bundle exec rake masq:install:config`
     * `$EDITOR config/masq.yml`
 
-3. Copy the migrations and migrate:
+4. Copy the migrations and migrate:
     * `bundle exec rake masq:install:migrations`
     * `bundle exec rake db:migrate`
 
-4. Configure the routes by mounting the masq engine:
+5. Configure the routes by mounting the masq engine:
     * For integration into an existing app, mount it in a subdirectory, like:
         * `mount Masq::Engine => "/masq"` or
         * `mount Masq::Engine => "/openid"`
@@ -72,11 +70,13 @@ handy methods to access and answer OpenID requests.
 ### Testing
 
 You can run the tests with Rake:
-    * `DB_ADAPTER=sqlite3 bundle exec rake app:masq:test:ci`
-    * `DB_ADAPTER=mysql2 bundle exec rake app:masq:test:ci`
-    * `DB_ADAPTER=postgresql bundle exec rake app:masq:test:ci`
+
+* `DB_ADAPTER=sqlite3 bundle exec rake app:masq:test:ci`
+* `DB_ADAPTER=mysql2 bundle exec rake app:masq:test:ci`
+* `DB_ADAPTER=postgresql bundle exec rake app:masq:test:ci`
 
 The Rake task configures the database.yml for the chosen adapter.
 
 In case you prefer running the tests continuously, use Guard:
-    * `bundle exec guard`
+
+* `bundle exec guard`

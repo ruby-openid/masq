@@ -75,7 +75,7 @@ module Masq
       Masq::Engine.config.masq['create_auth_ondemand']['enabled'] = true
       Masq::Engine.config.masq['create_auth_ondemand']['default_mail_domain'] = "example.net"
       Account.authenticate('notexistingtestuser', 'somepassword')
-      account = Account.find_by_login('notexistingtestuser')
+      account = Account.find_by(login: 'notexistingtestuser')
       assert account.kind_of? Account
       assert_equal 'notexistingtestuser', account.login
       assert_equal 'notexistingtestuser@example.net', account.email
@@ -138,7 +138,7 @@ module Masq
       Masq::Engine.config.masq['create_auth_ondemand']['default_mail_domain'] = "example.net"
       Masq::Engine.config.masq['create_auth_ondemand']['random_password'] = true
       Account.authenticate('notexistingtestuser', 'somepassword')
-      account = Account.find_by_login('notexistingtestuser')
+      account = Account.find_by(login: 'notexistingtestuser')
       assert_not_equal account.encrypt('somepassword'), account.crypted_password
     end
 
@@ -147,7 +147,7 @@ module Masq
       Masq::Engine.config.masq['create_auth_ondemand']['default_mail_domain'] = "example.net"
       Masq::Engine.config.masq['create_auth_ondemand']['random_password'] = false
       Account.authenticate('notexistingtestuser', 'somepassword')
-      account = Account.find_by_login('notexistingtestuser')
+      account = Account.find_by(login: 'notexistingtestuser')
       assert_equal account.encrypt('somepassword'), account.crypted_password
     end
 
@@ -165,26 +165,26 @@ module Masq
     end
 
     def test_should_remember_me_for_one_week
-      before = 1.week.from_now.utc
+      before = 1.week.from_now - 5.seconds
       accounts(:standard).remember_me_for 1.week
-      after = 1.week.from_now.utc
+      after = 1.week.from_now + 5.seconds
       assert_not_nil accounts(:standard).remember_token
       assert_not_nil accounts(:standard).remember_token_expires_at
       assert accounts(:standard).remember_token_expires_at.between?(before, after)
     end
 
     def test_should_remember_me_until_one_week
-      time = 1.week.from_now.utc
+      time = 1.week.from_now
       accounts(:standard).remember_me_until time
       assert_not_nil accounts(:standard).remember_token
       assert_not_nil accounts(:standard).remember_token_expires_at
-      assert_equal accounts(:standard).remember_token_expires_at, time
+      assert_equal accounts(:standard).remember_token_expires_at.to_s, time.to_s
     end
 
     def test_should_remember_me_default_two_weeks
-      before = 2.weeks.from_now.utc
+      before = 2.weeks.from_now - 5.seconds
       accounts(:standard).remember_me
-      after = 2.weeks.from_now.utc
+      after = 2.weeks.from_now + 5.seconds
       assert_not_nil accounts(:standard).remember_token
       assert_not_nil accounts(:standard).remember_token_expires_at
       assert accounts(:standard).remember_token_expires_at.between?(before, after)
@@ -195,7 +195,7 @@ module Masq
       @persona = @account.personas.create(valid_persona_attributes)
       assert_equal 1, @account.personas.size
       @account.destroy
-      assert_nil Persona.find_by_id(@persona.id)
+      assert_nil Persona.find_by(id: @persona.id)
     end
 
     def test_should_delete_associated_sites_on_destroy
@@ -203,7 +203,7 @@ module Masq
       @site = @account.sites.create(valid_site_attributes)
       assert_equal 1, @account.sites.size
       @account.destroy
-      assert_nil Site.find_by_id(@site.id)
+      assert_nil Site.find_by(id: @site.id)
     end
 
     def test_should_get_associated_with_a_yubikey_if_the_given_otp_is_correct

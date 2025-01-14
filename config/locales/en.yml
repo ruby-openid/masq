@@ -104,10 +104,10 @@ en:
     and should contain no links.<br />If there are any links, please report to us, who sent you here."
 
   # nav
-  my_identity: identity
-  my_profile: profile
-  my_personas: personas
-  my_trusted_sites: trusted sites
+  nav_identity: identity
+  nav_profile: profile
+  nav_personas: personas
+  nav_trusted_sites: trusted sites
   logout: logout
   current_verification_request: current verification request
   login_link: login
@@ -199,7 +199,7 @@ en:
   login_incorrect: The login is incorrect.
   password_incorrect: The password is incorrect.
   you_are_now_logged_out: You are now logged out.
-  account_disabled: Your account is deactivated.
+  account_deactivated: Your account is deactivated.
 
   # sessions views
   login_title: Login
@@ -254,7 +254,6 @@ en:
   or: or
   your_release_policy_for_site: Your release policy for %{site}
   persona_label: Persona
-  choose_persona_submit: choose persona
   property: property
   value: value
   update_release_policy_submit: update release policy

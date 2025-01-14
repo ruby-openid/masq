@@ -20,20 +20,20 @@ Masq::Engine.routes.draw do
 
   get "/login" => "sessions#new", :as => :login
   get "/logout" => "sessions#destroy", :as => :logout
+  delete "/logout" => "sessions#destroy"
   post '/resend_activation_email/*account' => 'accounts#resend_activation_email', :as => :resend_activation_email
 
-  get "/server" => "server#index", :as => :server
-  post "/server" => "server#index"
-  get "/server/decide" => "server#decide", :as => :decide
-  get "/server/proceed" => "server#proceed", :as => :proceed
-  post "/server/complete" => "server#complete", :as => :complete
-  get "/server/cancel" => "server#cancel", :as => :cancel
+  match "/server" => "server#index", :as => :server, :via => [:get, :post]
+  match "/server/decide" => "server#decide", :as => :decide, :via => [:get, :post]
+  match "/server/proceed" => "server#proceed", :as => :proceed, :via => [:get, :post]
+  match "/server/complete" => "server#complete", :as => :complete, :via => [:get, :post]
+  match "/server/cancel" => "server#cancel", :as => :cancel, :via => [:get, :post]
   get "/server/seatbelt/config.:format" => "server#seatbelt_config", :as => :seatbelt_config
   get "/server/seatbelt/state.:format" => "server#seatbelt_login_state", :as => :seatbelt_state
 
   get "/consumer" => "consumer#index", :as => :consumer
   post "/consumer/start" => "consumer#start", :as => :consumer_start
-  get "/consumer/complete" => "consumer#complete", :as => :consumer_complete
+  match "/consumer/complete" => "consumer#complete", :as => :consumer_complete, :via => [:get, :post]
 
   get "/*account" => "accounts#show", :as => :identity,  :constraints => {:format => /\.xrds/}
 

@@ -1,11 +1,17 @@
 module Masq
   class AccountsController < BaseController
-    before_filter :check_disabled_registration, :only => [:new, :create]
-    before_filter :login_required, :except => [:show, :new, :create, :activate, :resend_activation_email]
-    before_filter :detect_xrds, :only => :show
+    before_action :check_disabled_registration, :only => [:new, :create]
+    before_action :login_required, :except => [:show, :new, :create, :activate, :resend_activation_email]
+    before_action :detect_xrds, :only => :show
 
     def show
-      @account = Account.where(:login => params[:account], :enabled => true).first
+      @account =
+        if params[:account].to_i.to_s == params[:account].to_s
+          Account.find_by(id: params[:account], enabled: true)
+        else
+          Account.find_by(login: params[:account], enabled: true)
+        end
+
       raise ActiveRecord::RecordNotFound if @account.nil?
 
       respond_to do |format|
@@ -22,9 +28,8 @@ module Masq
 
     def create
       cookies.delete :auth_token
-      attrs = params[:account]
-      attrs[:login] = attrs[:email] if email_as_login?
-      signup = Signup.create_account!(attrs)
+      account_params[:login] = account_params[:email] if email_as_login?
+      signup = Signup.create_account!(account_params)
       if signup.succeeded?
         redirect_to login_path, :notice => signup.send_activation_email? ?
           t(:thanks_for_signing_up_activation_link) :
@@ -36,11 +41,10 @@ module Masq
     end
 
     def update
-      attrs = params[:account]
-      attrs.delete(:email) if email_as_login?
-      attrs.delete(:login)
+      account_params.delete(:email) if email_as_login?
+      account_params.delete(:login)
 
-      if current_account.update_attributes(attrs)
+      if current_account.update_attributes(account_params)
         redirect_to edit_account_path(:account => current_account), :notice => t(:profile_updated)
       else
         render :action => 'edit'
@@ -65,7 +69,7 @@ module Masq
       return render_404 unless Masq::Engine.config.masq['send_activation_mail']
 
       begin
-        account = Account.find_and_activate!(params[:activation_code])
+        Account.find_and_activate!(params[:activation_code])
         redirect_to login_path, :notice => t(:account_activated_login_now)
       rescue ArgumentError, Account::ActivationCodeNotFound
         redirect_to new_account_path, :alert => t(:couldnt_find_account_with_code_create_new_one)
@@ -96,10 +100,10 @@ module Masq
     end
 
     def resend_activation_email
-      account = Account.find_by_login(params[:account])
+      account = Account.find_by(login: params[:account])
 
       if account && !account.active?
-        AccountMailer.signup_notification(account).deliver
+        AccountMailer.signup_notification(account).deliver_now
         flash[:notice] = t(:activation_link_resent)
       else
         flash[:alert] = t(:account_already_activated_or_missing)
@@ -120,5 +124,10 @@ module Masq
         params[:account] = $1
       end
     end
+
+    def account_params
+      @account_params ||= params.require(:account).permit(:login, :email, :password, :password_confirmation, :public_persona_id, :yubikey_mandatory)
+    end
+
   end
 end

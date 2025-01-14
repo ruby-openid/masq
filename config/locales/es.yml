@@ -91,10 +91,10 @@ es:
     y no debería contener enlaces.<br />Si tiene algún enlace, por favor informanos quien te envió aquí."
 
   # nav
-  my_identity: identidad
-  my_profile: perfil
-  my_personas: personas
-  my_trusted_sites: sitios autorizados
+  nav_identity: identidad
+  nav_profile: perfil
+  nav_personas: personas
+  nav_trusted_sites: sitios autorizados
   logout: salir
   current_verification_request: current verification request
   login_link: entrar
@@ -186,7 +186,9 @@ es:
   you_are_logged_in: Ahora estás ingresado.
   login_incorrect_or_account_not_yet_activated: El usuario es incorrecto o la cuenta no ha sido activada todavía.
   login_incorrect: El usuario es incorrecto.
+  password_incorrect: La clave es incorrecto.
   you_are_now_logged_out: Has salido.
+  account_deactivated: Tu cuenta es desabilitada.
 
   # sessions views
   login_title: Usuario
@@ -235,7 +237,6 @@ es:
   or: o
   your_release_policy_for_site: Tu política de liberación para %{site}
   persona_label: Persona
-  choose_persona_submit: elige una persona
   property: propiedad
   value: valor
   update_release_policy_submit: actualizar política de liberación

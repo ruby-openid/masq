@@ -1,7 +1,7 @@
 module Masq
   class SessionsController < BaseController
-    before_filter :login_required, :only => :destroy
-    after_filter :set_login_cookie, :only => :create
+    before_action :login_required, :only => :destroy
+    after_action :set_login_cookie, :only => :create
 
     def new
       redirect_after_login if logged_in?
@@ -13,13 +13,13 @@ module Masq
         flash[:notice] = t(:you_are_logged_in)
         redirect_after_login
       else
-        a = Account.find_by_login(params[:login])
+        a = Account.find_by(login: params[:login])
         if a.nil?
           redirect_to login_path, :alert => t(:login_incorrect)
         elsif a.active? && a.enabled?
           redirect_to login_path, :alert => t(:password_incorrect)
         elsif not a.enabled?
-          redirect_to login_path, :alert => t(:account_disabled)
+          redirect_to login_path, :alert => t(:account_deactivated)
         else
           redirect_to login_path(:resend_activation_for => params[:login]), :alert => t(:account_not_yet_activated)
         end

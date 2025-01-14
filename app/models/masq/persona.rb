@@ -9,9 +9,7 @@ module Masq
 
     before_destroy :check_deletable!
 
-    attr_protected :account_id, :deletable
-
-    class NotDeletable < StandardError; end
+    #attr_protected :account_id, :deletable
 
     def self.properties
       Persona.mappings.keys
@@ -49,7 +47,7 @@ module Masq
     protected
 
     def check_deletable!
-      raise NotDeletable unless deletable
+      raise ActiveRecord::RecordNotDestroyed unless deletable
     end
 
     private

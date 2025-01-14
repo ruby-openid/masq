@@ -1,7 +1,7 @@
 module Masq
   class ConsumerController < BaseController
 
-    skip_before_filter :verify_authenticity_token
+    skip_before_action :verify_authenticity_token
 
     def start
       begin
@@ -61,7 +61,7 @@ module Masq
     end
 
     def complete
-      parameters = params.reject{ |k,v| request.path_parameters[k.to_sym] }
+      parameters = params.to_unsafe_h.reject{ |k,v| request.path_parameters[k.to_sym] }
       oidresp = openid_consumer.complete(parameters, url_for({}))
       case oidresp.status
       when OpenID::Consumer::SETUP_NEEDED

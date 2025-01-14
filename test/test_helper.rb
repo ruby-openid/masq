@@ -1,23 +1,26 @@
 # encoding: utf-8
 ENV["RAILS_ENV"] = "test"
 
-require File.expand_path("../dummy/config/environment.rb",  __FILE__)
+require File.expand_path("dummy/config/environment.rb",  File.dirname(__FILE__))
 require "rails/test_help"
+require 'minitest/autorun'
+require 'mocha/minitest'
+require 'rails-controller-testing'
+require 'byebug'
 
-begin
-  require 'turn/autorun'
-  Turn.config.format = :dot
-rescue LoadError
-end
+# Set time zone to UTC for all tests.
+Time.zone = "UTC"
 
+Rails::Controller::Testing.install
 Rails.backtrace_cleaner.remove_silencers!
 
 if ActionDispatch::IntegrationTest.method_defined?(:fixture_path=)
-  ActionDispatch::IntegrationTest.fixture_path = File.expand_path("../fixtures", __FILE__)
+  ActionDispatch::IntegrationTest.fixture_path = File.expand_path("fixtures", File.dirname(__FILE__))
 end
 
 module Masq
   class ActionController::TestCase
+    include Masq::Engine.routes.url_helpers
     setup do
       @routes = Engine.routes
     end
@@ -154,3 +157,5 @@ end
 
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
+
+

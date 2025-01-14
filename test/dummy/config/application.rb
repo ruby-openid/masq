@@ -1,6 +1,25 @@
 require File.expand_path('../boot', __FILE__)
 
-require 'rails/all'
+# We need to avoid loading sprockets, see: https://github.com/rails/sprockets-rails/issues/444
+# require 'rails/all'
+require "rails"
+
+# sprockets/railtie
+%w(
+  active_record/railtie
+  active_storage/engine
+  action_controller/railtie
+  action_view/railtie
+  action_mailer/railtie
+  active_job/railtie
+  action_cable/engine
+  rails/test_unit/railtie
+).each do |railtie|
+  begin
+    require railtie
+  rescue LoadError
+  end
+end
 
 Bundler.require
 require "masq"
@@ -40,17 +59,8 @@ module Dummy
     # like if you have constraints or database-specific column types
     # config.active_record.schema_format = :sql
 
-    # Enforce whitelist mode for mass assignment.
-    # This will create an empty whitelist of attributes available for mass-assignment for all models
-    # in your app. As such, your models will need to explicitly whitelist or blacklist accessible
-    # parameters by using an attr_accessible or attr_protected declaration.
-    config.active_record.whitelist_attributes = true
-
-    # Enable the asset pipeline
-    config.assets.enabled = true
-
-    # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
+    # parameters by using an attr_accessor or attr_protected declaration.
+    #config.active_record.whitelist_attributes = true
   end
 end
 

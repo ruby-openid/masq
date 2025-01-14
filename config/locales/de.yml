@@ -104,10 +104,10 @@ de:
     geleitet hat."
 
   # nav
-  my_identity: Identität
-  my_profile: Account
-  my_personas: Rollen
-  my_trusted_sites: Websites
+  nav_identity: Identität
+  nav_profile: Account
+  nav_personas: Rollen
+  nav_trusted_sites: Websites
   logout: ausloggen
   current_verification_request: aktuelle Prüfanfrage
   login_link: Einloggen
@@ -199,7 +199,7 @@ de:
   login_incorrect: Benutzer nicht vorhanden
   password_incorrect: Falsches Passwort
   you_are_now_logged_out: Sie sind jetzt ausgeloggt.
-  account_disabled: Ihr Account ist deaktiviert.
+  account_deactivated: Ihr Account ist deaktiviert.
 
   # sessions views
   login_title: Einloggen
@@ -254,7 +254,6 @@ de:
   or: oder
   your_release_policy_for_site: Ihre Vertrauensrichtlinien für %{site}
   persona_label: Rolle
-  choose_persona_submit: Rolle auswählen
   property: Eigenschaft
   value: Wert
   update_release_policy_submit: Richtlinie aktualisieren

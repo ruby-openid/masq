@@ -1,11 +1,11 @@
 module Masq
   class PasswordsController < BaseController
-    before_filter :check_can_change_password, :only => [:create, :edit, :update]
-    before_filter :find_account_by_reset_code, :only => [:edit, :update]
+    before_action :check_can_change_password, :only => [:create, :edit, :update]
+    before_action :find_account_by_reset_code, :only => [:edit, :update]
 
     # Forgot password
     def create
-      if account = Account.where(:email => params[:email], :activation_code => nil).first
+      if account = Account.find_by(email: params[:email], activation_code: nil)
         account.forgot_password!
         redirect_to login_path, :notice => t(:password_reset_link_has_been_sent)
       else
@@ -33,7 +33,7 @@ module Masq
 
     def find_account_by_reset_code
       @reset_code = params[:id]
-      @account = Account.find_by_password_reset_code(@reset_code) unless @reset_code.blank?
+      @account = @reset_code.blank? ? nil : Account.find_by(password_reset_code: @reset_code)
       redirect_to(forgot_password_path, :alert => t(:reset_code_invalid_try_again)) unless @account
     end
 

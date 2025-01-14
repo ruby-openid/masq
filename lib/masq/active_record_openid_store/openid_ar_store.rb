@@ -15,9 +15,9 @@ module Masq
 
     def get_association(server_url, handle=nil)
       assocs = if handle.blank?
-          Association.find_all_by_server_url(server_url)
+          Association.where(server_url: server_url)
         else
-          Association.find_all_by_server_url_and_handle(server_url, handle)
+          Association.where(server_url: server_url, handle: handle)
         end
 
       assocs.reverse.each do |assoc|
@@ -33,11 +33,11 @@ module Masq
     end
 
     def remove_association(server_url, handle)
-      Association.delete_all(['server_url = ? AND handle = ?', server_url, handle]) > 0
+      Association.where('server_url = ? AND handle = ?', server_url, handle).delete_all > 0
     end
 
     def use_nonce(server_url, timestamp, salt)
-      return false if Nonce.find_by_server_url_and_timestamp_and_salt(server_url, timestamp, salt)
+      return false if Nonce.find_by(server_url: server_url, timestamp: timestamp, salt: salt)
       return false if (timestamp - Time.now.to_i).abs > OpenID::Nonce.skew
       Nonce.create(:server_url => server_url, :timestamp => timestamp, :salt => salt)
       return true
@@ -45,12 +45,12 @@ module Masq
 
     def cleanup_nonces
       now = Time.now.to_i
-      Nonce.delete_all(["timestamp > ? OR timestamp < ?", now + OpenID::Nonce.skew, now - OpenID::Nonce.skew])
+      Nonce.where("timestamp > ? OR timestamp < ?", now + OpenID::Nonce.skew, now - OpenID::Nonce.skew).delete_all
     end
 
     def cleanup_associations
       now = Time.now.to_i
-      Association.delete_all(['issued + lifetime > ?',now])
+      Association.where('issued + lifetime > ?',now).delete_all
     end
   end
 end

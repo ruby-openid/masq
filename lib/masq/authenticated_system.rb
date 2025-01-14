@@ -41,15 +41,15 @@ module Masq
     #
     # To require logins for all actions, use this in your controllers:
     #
-    #   before_filter :login_required
+    #   before_action :login_required
     #
     # To require logins for specific actions, use this in your controllers:
     #
-    #   before_filter :login_required, :only => [ :edit, :update ]
+    #   before_action :login_required, :only => [ :edit, :update ]
     #
     # To skip this in a subclassed controller:
     #
-    #   skip_before_filter :login_required
+    #   skip_before_action :login_required
     #
     def login_required
       authorized? || access_denied
@@ -103,7 +103,7 @@ module Masq
     end
 
     def auth_type_used
-      @auth_type_used
+      @auth_type_used if defined?(@auth_type_used)
     end
 
     def auth_type_used= t
@@ -122,7 +122,7 @@ module Masq
 
     # Called from #current_account.  Finaly, attempt to login by an expiring token in the cookie.
     def login_from_cookie
-      account = cookies[:auth_token] && Account.find_by_remember_token(cookies[:auth_token])
+      account = cookies[:auth_token] && Account.find_by(remember_token: cookies[:auth_token])
       if account && account.remember_token?
         account.remember_me
         cookies[:auth_token] = { :value => account.remember_token, :expires => account.remember_token_expires_at }
