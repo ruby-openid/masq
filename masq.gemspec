@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 5.2.0"
   s.add_dependency "erb"
   s.add_dependency "rails-controller-testing"
-  s.add_dependency "ruby-openid"
+  s.add_dependency "ruby-openid2", "~> 3.1"
   s.add_dependency "ruby-yadis"
   s.add_dependency "yubikey"
   s.add_dependency "i18n_data"
