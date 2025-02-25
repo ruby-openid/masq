@@ -18,3 +18,8 @@ test/dummy/tmp
 test/dummy/.sass-cache
 tmp
 vendor/ruby
+
+# Ignore uploaded files in development, if ever there are any from ActiveStorage
+/storage/*
+
+/public/assets

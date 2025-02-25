@@ -61,6 +61,7 @@ module Dummy
 
     # parameters by using an attr_accessor or attr_protected declaration.
     #config.active_record.whitelist_attributes = true
+
+    config.active_record.sqlite3.represent_boolean_as_integer = true
   end
 end
-

@@ -59,13 +59,61 @@ client-server communication (like requesting simple registration data).
 ### Introduction
 
 `masq2` adds ORACLE database support, as well as support for 
-Rails 5.1, 5.2, 6.0, 6.1, 7.0, 7.1, 7.2, 8.0,
+Rails 5.2, 6.0, 6.1, 7.0, 7.1, 7.2, 8.0,
 which `masq` never had. 
 
 The main functionality is in the server controller, which is the endpoint for incoming
 OpenID requests. The server controller is supposed to only interact with relying parties
 a.k.a. consumer websites. It includes the OpenidServerSystem module, which provides some
 handy methods to access and answer OpenID requests.
+
+#### v1 Release Breaking Change 
+
+\[📒Also Rails 5.2+ / Serialization / Psych Caveats\]
+
+v1 release has a breaking change from the ancient masq v0.3.4 release.
+Continue reading if you think it may impact you.
+
+Rails 5.2.8.1 is a security patch release to fix CVE-2022-32224.
+See: https://discuss.rubyonrails.org/t/cve-2022-32224-possible-rce-escalation-bug-with-serialized-columns-in-active-record/81017
+
+The patch (Rails v5.2.8.1) causes an error with `masq` v0.3.4
+(... actually it doesn't work at all on Rails v5, but some forks have been fixed):
+
+```
+Psych::DisallowedClass: Tried to load unspecified class: ActiveSupport::HashWithIndifferentAccess
+```
+
+when serializing a Hash the way we had done in previous versions `app/models/masq/open_id_request.rb`:
+```ruby
+serialize :parameters, Hash
+```
+
+so we instead switch to serializing as JSON:
+```ruby
+serialize :parameters, JSON
+```
+
+If an implementation needs to continue using the serialized Hash,
+you will need to override the definition by reopening the model, and adding:
+
+```ruby
+serialize :parameters, Hash
+```
+
+In addition, one of the following is also needed.
+
+1. Simple, but insecure fix, which reverts to previous unpatched behavior is:
+
+      ```ruby
+      Rails.application.config.active_record.use_yaml_unsafe_load = true
+      ```
+
+2. More complex, and a bit less insecure fix, is to explicitly list the allowed classes to serialize:
+
+      ```ruby
+      Rails.application.config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, HashWithIndifferentAccess]
+      ```
 
 ### Testing
 
