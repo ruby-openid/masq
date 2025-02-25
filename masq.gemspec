@@ -6,24 +6,24 @@ gem_version = Masq::Version::VERSION
 Masq::Version.send(:remove_const, :VERSION)
 
 # Describe your gem and declare its dependencies:
-Gem::Specification.new do |s|
-  s.name        = "masq2"
-  s.version     = gem_version
-  s.authors     = ["Peter Boling", "Dennis Reimann", "Bardoe Besselaar","Nikita Vasiliev"]
-  s.email       = ["peter.boling@gmail.com"]
-  s.homepage    = "https://github.com/oauth-xx/masq2"
-  s.summary     = "Mountable Rails engine that provides OpenID 2.0 server/identity provider functionality"
-  s.description = "Masq2 supports OpenID 2.0 and supports SReg, AX (fetch and store requests) and PAPE as well as some custom additions like multi-factor authentication using a yubikey"
+Gem::Specification.new do |spec|
+  spec.name        = "masq2"
+  spec.version     = gem_version
+  spec.authors     = ["Peter Boling", "Dennis Reimann", "Bardoe Besselaar","Nikita Vasiliev"]
+  spec.email       = ["peter.boling@gmail.com"]
+  spec.homepage    = "https://github.com/oauth-xx/masq2"
+  spec.summary     = "Mountable Rails engine that provides OpenID 2.0 server/identity provider functionality"
+  spec.description = "Masq2 supports OpenID 2.0 and supports SReg, AX (fetch and store requests) and PAPE as well as some custom additions like multi-factor authentication using a yubikey"
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
-  s.test_files = Dir["test/**/*"]
+  spec.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
+  spec.test_files = Dir["test/**/*"]
 
-  s.add_dependency "version_gem", "~> 1.1", ">= 1.1.6"
-  s.add_dependency "rails", ">= 5.2.8.1"
-  s.add_dependency "erb"
-  s.add_dependency "rails-controller-testing"
-  s.add_dependency "ruby-openid2", "~> 3.1"
-  s.add_dependency "ruby-yadis"
-  s.add_dependency "yubikey"
-  s.add_dependency "i18n_data"
+  spec.add_dependency "version_gem", "~> 1.1", ">= 1.1.6"
+  spec.add_dependency "rails", ">= 5.2.8.1"
+  spec.add_dependency "erb"
+  spec.add_dependency "rails-controller-testing"
+  spec.add_dependency "ruby-openid2", "~> 3.1"
+  spec.add_dependency "ruby-yadis"
+  spec.add_dependency "yubikey"
+  spec.add_dependency "i18n_data"
 end
