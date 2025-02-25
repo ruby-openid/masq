@@ -1,13 +1,14 @@
 PATH
   remote: .
   specs:
-    masq2 (0.3.4)
+    masq2 (1.0.0.pre.beta.1)
       erb
       i18n_data
-      rails (~> 5.2.0)
+      rails (>= 5.2.8.1)
       rails-controller-testing
       ruby-openid2 (~> 3.1)
       ruby-yadis
+      version_gem (~> 1.1, >= 1.1.6)
       yubikey
 
 GEM
@@ -163,7 +164,7 @@ GEM
     timeout (0.4.3)
     tzinfo (1.2.11)
       thread_safe (~> 0.1)
-    version_gem (1.1.4)
+    version_gem (1.1.6)
     websocket-driver (0.7.7)
       base64
       websocket-extensions (>= 0.1.0)

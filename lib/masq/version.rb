@@ -1,3 +1,5 @@
 module Masq
-  VERSION = "0.3.4"
+  module Version
+    VERSION = "1.0.0-beta.1"
+  end
 end
