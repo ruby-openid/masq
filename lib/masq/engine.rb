@@ -1,3 +1,5 @@
+require "rails/engine"
+
 module Masq
   class Engine < ::Rails::Engine
     isolate_namespace Masq

@@ -20,7 +20,7 @@ module Masq
     # OpenID parameter reader, use this to access only OpenID
     # request parameters from inside your server controller
     def openid_params
-      @openid_params ||= params.permit(params.keys.select {|k| k.start_with?('openid.') })
+      @openid_params ||= params.permit(params.keys.select { |k| k.start_with?("openid.") })
     end
 
     # OpenID request accessor
@@ -64,7 +64,7 @@ module Masq
     # http://rakuto.blogspot.com/2008/03/ruby-fetch-and-store-some-attributes.html
     def add_ax(resp, data)
       ax_resp = OpenID::AX::FetchResponse.new
-      ax_args = data.reverse_merge('mode' => 'fetch_response')
+      ax_args = data.reverse_merge("mode" => "fetch_response")
       ax_resp.parse_extension_args(ax_args)
       resp.add_extension(ax_resp)
       resp
@@ -72,7 +72,7 @@ module Masq
 
     # Adds PAPE information for your server to an OpenID response.
     def add_pape(resp, policies = [], nist_auth_level = 0, auth_time = nil)
-      if papereq = OpenID::PAPE::Request.from_openid_request(openid_request)
+      if OpenID::PAPE::Request.from_openid_request(openid_request)
         paperesp = OpenID::PAPE::Response.new
         policies.each { |p| paperesp.add_policy_uri(p) }
         paperesp.nist_auth_level = nist_auth_level
@@ -90,12 +90,12 @@ module Masq
 
     # Renders the final response output
     def render_openid_response(resp)
-      signed_response = openid_server.signatory.sign(resp) if resp.needs_signing
+      openid_server.signatory.sign(resp) if resp.needs_signing
       web_response = openid_server.encode_response(resp)
       case web_response.code
-      when OpenID::Server::HTTP_OK then render(plain: web_response.body, :status => 200)
-      when OpenID::Server::HTTP_REDIRECT then redirect_to(web_response.headers['location'])
-      else render(plain: web_response.body, :status => 400)
+      when OpenID::Server::HTTP_OK then render(plain: web_response.body, status: 200)
+      when OpenID::Server::HTTP_REDIRECT then redirect_to(web_response.headers["location"])
+      else render(plain: web_response.body, status: 400)
       end
     end
 

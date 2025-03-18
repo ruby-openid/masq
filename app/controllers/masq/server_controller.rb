@@ -26,7 +26,7 @@ module Masq
           elsif openid_request
             handle_non_checkid_request
           else
-            render :plain => t(:this_is_openid_not_a_human_ressource)
+            render(plain: t(:this_is_openid_not_a_human_ressource))
           end
         end
         format.xrds
@@ -55,7 +55,7 @@ module Masq
       elsif checkid_request.immediate
         render_response(checkid_request.answer(true, nil, identity))
       else
-        redirect_to decide_path
+        redirect_to(decide_path)
       end
     end
 
@@ -76,7 +76,7 @@ module Masq
         resp = checkid_request.answer(true, nil, identifier(current_account))
         if params[:always]
           @site = current_account.sites.where(persona_id: params[:site][:persona_id], url: params[:site][:url]).first_or_create
-          @site.update_attributes(site_params)
+          @site.update(site_params)
         elsif sreg_request || ax_fetch_request
           @site = current_account.sites.where(persona_id: params[:site][:persona_id], url: params[:site][:url]).first_or_create
           @site.attributes = site_params
@@ -111,7 +111,7 @@ module Masq
     # Cancels the current OpenID request
     def cancel
       if checkid_request
-        redirect_to checkid_request.cancel_url
+        redirect_to(checkid_request.cancel_url)
       else
         reset_session
         redirect_to(login_path)
@@ -128,7 +128,7 @@ module Masq
     def handle_checkid_request
       if allow_verification?
         save_checkid_request
-        redirect_to proceed_path
+        redirect_to(proceed_path)
       elsif openid_request.immediate
         render_response(openid_request.answer(false))
       else
@@ -152,7 +152,7 @@ module Masq
     # Deletes the old request when a new one comes in.
     def clear_checkid_request
       unless session[:request_token].blank?
-        OpenIdRequest.where(:token => session[:request_token]).destroy_all
+        OpenIdRequest.where(token: session[:request_token]).destroy_all
         session[:request_token] = nil
       end
     end
@@ -164,13 +164,13 @@ module Masq
     def ensure_valid_checkid_request
       self.openid_request = checkid_request
       if !openid_request.is_a?(OpenID::Server::CheckIDRequest)
-        redirect_to root_path, alert: t(:identity_verification_request_invalid)
+        redirect_to(root_path, alert: t(:identity_verification_request_invalid))
       elsif !allow_verification?
-        flash[:notice] = logged_in? && !pape_requirements_met?(auth_time) ?
+        flash[:notice] = (logged_in? && !pape_requirements_met?(auth_time)) ?
           t(:service_provider_requires_reauthentication_last_login_too_long_ago) :
           t(:login_to_verify_identity)
         session[:return_to] = proceed_path
-        redirect_to login_path
+        redirect_to(login_path)
       end
     end
 
@@ -184,7 +184,7 @@ module Masq
     # must be logged in, so that we know his identifier or the identifier
     # has to be selected by the server (id_select).
     def correct_identifier?
-      (openid_request.identity == identifier(current_account) || openid_request.id_select)
+      openid_request.identity == identifier(current_account) || openid_request.id_select
     end
 
     # Clears the stored request and answers
@@ -197,9 +197,9 @@ module Masq
     def transform_ax_data(parameters)
       data = {}
       parameters.each_pair do |key, details|
-        if details['value']
-          data["type.#{key}"] = details['type']
-          data["value.#{key}"] = details['value']
+        if details["value"]
+          data["type.#{key}"] = details["type"]
+          data["value.#{key}"] = details["value"]
         end
       end
       data
@@ -208,10 +208,10 @@ module Masq
     # Renders the exception message as text output
     def render_openid_error(exception)
       error = case exception
-              when OpenID::Server::MalformedTrustRoot then "Malformed trust root '#{exception}'"
-              else exception.to_s
+      when OpenID::Server::MalformedTrustRoot then "Malformed trust root '#{exception}'"
+      else exception.to_s
       end
-      render plain: "Invalid OpenID request: #{error}", status: 500
+      render(plain: "Invalid OpenID request: #{error}", status: 500)
     end
 
     private
@@ -219,7 +219,7 @@ module Masq
     # The NIST Assurance Level, see:
     # http://openid.net/specs/openid-provider-authentication-policy-extension-1_0-01.html#anchor12
     def auth_level
-      if Masq::Engine.config.masq['use_ssl']
+      if Masq::Engine.config.masq["use_ssl"]
         current_account.last_authenticated_by_yubikey? ? 3 : 2
       else
         0

@@ -1,0 +1,65 @@
+{
+  "app/controllers/masq/info_controller.rb:3069306562": [
+    [13, 65, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240]
+  ],
+  "app/controllers/masq/passwords_controller.rb:4013562638": [
+    [8, 18, 1, "Lint/AssignmentInCondition: Wrap assignment in parentheses if intentional", 177560]
+  ],
+  "app/controllers/masq/server_controller.rb:4249946322": [
+    [47, 16, 1, "Lint/AssignmentInCondition: Wrap assignment in parentheses if intentional", 177560],
+    [89, 25, 1, "Lint/AssignmentInCondition: Wrap assignment in parentheses if intentional", 177560]
+  ],
+  "app/controllers/masq/sessions_controller.rb:2546607075": [
+    [39, 21, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [49, 20, 1, "Lint/AssignmentInCondition: Wrap assignment in parentheses if intentional", 177560]
+  ],
+  "app/models/masq/account.rb:3431296046": [
+    [43, 5, 298, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2464945722],
+    [80, 5, 1035, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2286399262],
+    [82, 17, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [98, 18, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [98, 32, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [99, 39, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
+    [99, 88, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
+    [108, 5, 97, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 4218748683],
+    [220, 5, 3, "Lint/IneffectiveAccessModifier: `private` (on line 216) does not make singleton methods private. Use `private_class_method` or `private` inside a `class << self` block instead.", 193404514],
+    [220, 5, 85, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 115756650],
+    [226, 5, 3, "Lint/IneffectiveAccessModifier: `private` (on line 216) does not make singleton methods private. Use `private_class_method` or `private` inside a `class << self` block instead.", 193404514],
+    [226, 5, 181, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 3702657420],
+    [234, 5, 3, "Lint/IneffectiveAccessModifier: `private` (on line 216) does not make singleton methods private. Use `private_class_method` or `private` inside a `class << self` block instead.", 193404514],
+    [234, 5, 135, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 4139970307]
+  ],
+  "app/models/masq/open_id_request.rb:3145306176": [
+    [27, 7, 159, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 474907089]
+  ],
+  "app/models/masq/persona.rb:3585878101": [
+    [14, 5, 55, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1041090622],
+    [18, 5, 142, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 3038409932],
+    [55, 5, 3, "Lint/IneffectiveAccessModifier: `private` (on line 52) does not make singleton methods private. Use `private_class_method` or `private` inside a `class << self` block instead.", 193404514],
+    [55, 5, 78, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2563415249]
+  ],
+  "app/models/masq/signup.rb:1186383472": [
+    [7, 5, 126, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1071524745]
+  ],
+  "lib/masq/authenticated_system.rb:2956957840": [
+    [95, 5, 3, "Lint/IneffectiveAccessModifier: `protected` (on line 3) does not make singleton methods protected. Use `protected` inside a `class << self` block instead.", 193404514],
+    [95, 5, 111, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 4258707989],
+    [127, 10, 34, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 631550519]
+  ],
+  "lib/masq/openid_server_system.rb:2879462441": [
+    [106, 26, 41, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 3858462676]
+  ],
+  "lib/tasks/masq_tasks.rake:1483017689": [
+    [39, 21, 42, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 4054527944]
+  ],
+  "masq.gemspec:1107948888": [
+    [72, 3, 26, "Gemspec/DependencyVersion: Dependency version specification is required.", 1260806891],
+    [73, 3, 32, "Gemspec/DependencyVersion: Dependency version specification is required.", 855136127],
+    [76, 3, 33, "Gemspec/DependencyVersion: Dependency version specification is required.", 3159729161],
+    [78, 3, 30, "Gemspec/DependencyVersion: Dependency version specification is required.", 2010339150],
+    [89, 3, 72, "Gemspec/DependencyVersion: Dependency version specification is required.", 2491072344]
+  ],
+  "test/test_helper.rb:2707756256": [
+    [194, 45, 1, "Lint/AssignmentInCondition: Wrap assignment in parentheses if intentional", 177560]
+  ]
+}

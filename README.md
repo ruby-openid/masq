@@ -58,16 +58,16 @@ client-server communication (like requesting simple registration data).
 
 ### Introduction
 
-`masq2` adds ORACLE database support, as well as support for 
+`masq2` adds ORACLE database support, as well as support for
 Rails 5.2, 6.0, 6.1, 7.0, 7.1, 7.2, 8.0,
-which `masq` never had. 
+which `masq` never had.
 
 The main functionality is in the server controller, which is the endpoint for incoming
 OpenID requests. The server controller is supposed to only interact with relying parties
 a.k.a. consumer websites. It includes the OpenidServerSystem module, which provides some
 handy methods to access and answer OpenID requests.
 
-#### v1 Release Breaking Change 
+#### v1 Release Breaking Change
 
 \[📒Also Rails 5.2+ / Serialization / Psych Caveats\]
 
@@ -106,13 +106,13 @@ In addition, one of the following is also needed.
 1. Simple, but insecure fix, which reverts to previous unpatched behavior is:
 
       ```ruby
-      Rails.application.config.active_record.use_yaml_unsafe_load = true
+Rails.application.config.active_record.use_yaml_unsafe_load = true
       ```
 
 2. More complex, and a bit less insecure fix, is to explicitly list the allowed classes to serialize:
 
       ```ruby
-      Rails.application.config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, HashWithIndifferentAccess]
+Rails.application.config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, HashWithIndifferentAccess]
       ```
 
 ### Testing

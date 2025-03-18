@@ -36,4 +36,3 @@ Rails.application.config.active_record.belongs_to_required_by_default = false
 #   Rails.application.config.active_record.use_yaml_unsafe_load = true
 # The more complex, and a bit less insecure fix, is to explicitly list the allowed classes to serialize:
 # Rails.application.config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, HashWithIndifferentAccess]
-

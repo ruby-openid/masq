@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require File.expand_path("../boot", __FILE__)
 
 # We need to avoid loading sprockets, see: https://github.com/rails/sprockets-rails/issues/444
 # require 'rails/all'
@@ -15,10 +15,8 @@ require "rails"
   action_cable/engine
   rails/test_unit/railtie
 ).each do |railtie|
-  begin
-    require railtie
-  rescue LoadError
-  end
+  require railtie
+rescue LoadError
 end
 
 Bundler.require
@@ -60,7 +58,7 @@ module Dummy
     # config.active_record.schema_format = :sql
 
     # parameters by using an attr_accessor or attr_protected declaration.
-    #config.active_record.whitelist_attributes = true
+    # config.active_record.whitelist_attributes = true
 
     config.active_record.sqlite3.represent_boolean_as_integer = true
   end

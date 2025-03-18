@@ -7,7 +7,7 @@ Dummy::Application.configure do
   config.cache_classes = false
 
   # Show full error reports and disable caching
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local = true
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send
@@ -21,7 +21,7 @@ Dummy::Application.configure do
 
   config.public_file_server.enabled = false
   config.public_file_server.headers = {
-    'Cache-Control' => "public, max-age=3600"
+    "Cache-Control" => "public, max-age=3600",
   }
 
   config.eager_load = false

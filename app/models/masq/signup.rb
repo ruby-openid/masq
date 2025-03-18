@@ -1,11 +1,11 @@
-require 'digest/sha1'
+require "digest/sha1"
 
 module Masq
   class Signup
     attr_accessor :account
 
     def self.create_account!(attrs = {})
-      signup = Signup.new attrs
+      signup = Signup.new(attrs)
       signup.send(:create_account!)
       signup
     end
@@ -15,7 +15,7 @@ module Masq
     end
 
     def send_activation_email?
-      Masq::Engine.config.masq['send_activation_mail']
+      Masq::Engine.config.masq["send_activation_mail"]
     end
 
     protected
@@ -38,14 +38,13 @@ module Masq
     end
 
     def make_activation_code
-      account.activation_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
+      account.activation_code = Digest::SHA1.hexdigest(Time.now.to_s.split("").sort_by { rand }.join)
     end
 
     def make_default_persona
-      account.public_persona = account.personas.build(:title => "Standard", :email => account.email)
+      account.public_persona = account.personas.build(title: "Standard", email: account.email)
       account.public_persona.deletable = false
       account.public_persona.save!
     end
-
   end
 end

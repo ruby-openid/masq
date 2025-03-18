@@ -1,28 +1,27 @@
 module Masq
-
   module ApplicationHelper
     def page_title
-      (@page_title||=nil) ? "#{@page_title} | #{Masq::Engine.config.masq['name']}" : Masq::Engine.config.masq['name']
+      (@page_title ||= nil) ? "#{@page_title} | #{Masq::Engine.config.masq["name"]}" : Masq::Engine.config.masq["name"]
     end
 
     def label_tag(field, text = nil, options = {})
-      content_tag :label, text ? text : field.to_s.humanize, options.reverse_merge(:for => field.to_s)
+      content_tag(:label, text ? text : field.to_s.humanize, options.reverse_merge(for: field.to_s))
     end
 
     def error_messages_for(*objects)
-      render "masq/shared/error_messages", :objects => objects.flatten
+      render("masq/shared/error_messages", objects: objects.flatten)
     end
 
     # Is the current page an identity page? This is used to display
     # further information (like the endoint url) in the <head>
     def identity_page?
-      active_page? 'accounts' => ['show']
+      active_page?("accounts" => ["show"])
     end
 
     # Is the current page the home page? This is used to display
     # further information (like the endoint url) in the <head>
     def home_page?
-      active_page? 'info' => ['index']
+      active_page?("info" => ["index"])
     end
 
     # Custom label names for request properties (like SReg data)
@@ -43,7 +42,7 @@ module Masq
     # Renders a navigation element and marks it as active where
     # appropriate. See active_page? for details
     def nav(name, url, pages = nil, active = false)
-      content_tag :li, link_to(name, url), :class => (active || (pages && active_page?(pages)) ? 'act' : nil)
+      content_tag(:li, link_to(name, url), class: ((active || (pages && active_page?(pages))) ? "act" : nil))
     end
 
     # Takes a hash with pages and tells whether the current page is among them.
