@@ -37,7 +37,7 @@ appraise "rails-6-1" do
   # Load order is very important with combustion!
   gem "combustion", "~> 1.5"
 
-  gem "rails", "~> 6.1.7.7"
+  gem "rails", "~> 6.1.7.10"
 end
 
 # Compat: Ruby >= 2.7
@@ -49,7 +49,7 @@ appraise "rails-7-0" do
   # Load order is very important with combustion!
   gem "combustion", "~> 1.5"
 
-  gem "rails", "~> 7.0.8.1"
+  gem "rails", "~> 7.0.8.7"
 end
 
 # Compat: Ruby >= 2.7
@@ -62,5 +62,30 @@ appraise "rails-7-1" do
   # Load order is very important with combustion!
   gem "combustion", "~> 1.5"
 
-  gem "rails", "~> 7.1.3.2"
+  gem "rails", "~> 7.1.5.1"
+end
+
+# Compat: Ruby >= 3.1
+# Test Matrix:
+#   - Ruby 3.1
+#   - Ruby 3.2
+#   - Ruby 3.3
+#   - Ruby 3.4
+appraise "rails-7-2" do
+  # Load order is very important with combustion!
+  gem "combustion", "~> 1.5"
+
+  gem "rails", "~> 7.2.2.1"
+end
+
+# Compat: Ruby >= 3.2
+# Test Matrix:
+#   - Ruby 3.2
+#   - Ruby 3.3
+#   - Ruby 3.4
+appraise "rails-8-0" do
+  # Load order is very important with combustion!
+  gem "combustion", "~> 1.5"
+
+  gem "rails", "~> 8.0.2"
 end

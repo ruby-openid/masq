@@ -18,13 +18,15 @@ gemfiles/*.gemfile.lock
 Appraisal.*.gemfile.lock
 
 # Engine stuff
+/db/*.sqlite
 /db/*.sqlite3
 /log/*.log
 /public/cache/**/*
 /vendor/
 
 # Dummy Rails App
-/test/dummy/db/*.sqlite3
-/test/dummy/log/*.log
-/test/dummy/tmp
-/test/dummy/.sass-cache
+/test/internal/db/*.sqlite3
+/test/internal/db/*.sqlite
+/test/internal/log/*.log
+/test/internal/tmp
+/test/internal/.sass-cache
