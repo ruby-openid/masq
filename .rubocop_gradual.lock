@@ -59,7 +59,7 @@
     [78, 3, 30, "Gemspec/DependencyVersion: Dependency version specification is required.", 2010339150],
     [89, 3, 72, "Gemspec/DependencyVersion: Dependency version specification is required.", 2491072344]
   ],
-  "test/test_helper.rb:2680236708": [
-    [199, 45, 1, "Lint/AssignmentInCondition: Wrap assignment in parentheses if intentional", 177560]
+  "test/test_helper.rb:2983051125": [
+    [195, 45, 1, "Lint/AssignmentInCondition: Wrap assignment in parentheses if intentional", 177560]
   ]
 }

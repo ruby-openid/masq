@@ -10,8 +10,11 @@ git_source(:gitlab) { |repo_name| "https://gitlab.com/#{repo_name}" }
 # Load order it important for combustion, so make sure it loads first!
 gem "combustion", "~> 1.5"
 
-# Common Deps
-eval_gemfile "gemfiles/modular/common.gemfile"
+# Gems that have been removed from stdlib need to be added to the Gemfile explicitly
+gem "logger"
+gem "rexml"
+gem "mutex_m", "~> 0.2"
+gem "stringio", "~> 3.0"
 
 # Include dependencies from <gem name>.gemspec
 gemspec

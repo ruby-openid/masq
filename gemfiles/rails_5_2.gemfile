@@ -11,6 +11,6 @@ gem "sqlite3", "~> 1.4"
 gem "rails", "~> 5.2.8.1"
 gem "nokogiri"
 
-gemspec :path => "../"
+gemspec path: "../"
 
 eval_gemfile("modular/mini_testing.gemfile")
