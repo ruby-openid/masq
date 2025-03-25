@@ -1,5 +1,10 @@
 class ActiveSupport::TestCase
-  self.fixture_paths = [File.expand_path("../../../fixtures", __FILE__)]
+  # Support for older versions of Rails
+  if respond_to?(:fixture_path=)
+    self.fixture_path = [File.expand_path("../../../fixtures", __FILE__)]
+  else
+    self.fixture_paths = [File.expand_path("../../../fixtures", __FILE__)]
+  end
 
   set_fixture_class accounts: Masq::Account
   set_fixture_class personas: Masq::Persona
