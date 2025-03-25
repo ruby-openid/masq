@@ -1,0 +1,3 @@
+# Gems that have been removed from stdlib need to be added to the Gemfile explicitly
+gem "logger"
+gem "rexml"

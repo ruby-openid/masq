@@ -2,8 +2,13 @@
 
 source "https://rubygems.org"
 
-gem "appraisal", branch: "galtzo", git: "https://github.com/pboling/appraisal"
 gem "combustion", "~> 1.5"
 gem "rails", "~> 7.0.8.7"
 
-gemspec path: "../"
+gemspec :path => "../"
+
+eval_gemfile("modular/mini_testing.gemfile")
+
+eval_gemfile("modular/db_adapters.gemfile")
+
+eval_gemfile("modular/common.gemfile")
