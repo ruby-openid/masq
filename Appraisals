@@ -121,6 +121,7 @@ appraise "audit" do
   gem "mutex_m", "~> 0.2"
   gem "stringio", "~> 3.0"
   eval_gemfile "modular/audit.gemfile"
+  eval_gemfile "modular/db_adapters.gemfile"
   eval_gemfile "modular/common.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
@@ -149,6 +150,7 @@ appraise "style" do
   gem "mutex_m", "~> 0.2"
   gem "stringio", "~> 3.0"
   eval_gemfile "modular/style.gemfile"
+  eval_gemfile "modular/db_adapters.gemfile"
   eval_gemfile "modular/common.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end

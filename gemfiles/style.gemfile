@@ -11,4 +11,6 @@ gemspec path: "../"
 
 eval_gemfile("modular/style.gemfile")
 
+eval_gemfile "modular/db_adapters.gemfile"
+
 eval_gemfile("modular/common.gemfile")
