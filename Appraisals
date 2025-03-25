@@ -114,6 +114,10 @@ end
 
 # Only run security audit on latest Ruby version
 appraise "audit" do
+  # Load order is very important with combustion!
+  gem "combustion", "~> 1.5"
+
+  gem "rails", "~> 8.0.2"
   gem "mutex_m", "~> 0.2"
   gem "stringio", "~> 3.0"
   eval_gemfile "modular/audit.gemfile"
@@ -123,6 +127,10 @@ end
 
 # Only run coverage on latest Ruby version
 appraise "coverage" do
+  # Load order is very important with combustion!
+  gem "combustion", "~> 1.5"
+
+  gem "rails", "~> 8.0.2"
   gem "mutex_m", "~> 0.2"
   gem "stringio", "~> 3.0"
   eval_gemfile "modular/coverage.gemfile"
@@ -134,6 +142,10 @@ end
 
 # Only run linter on latest Ruby version (but, in support of oldest supported Ruby version)
 appraise "style" do
+  # Load order is very important with combustion!
+  gem "combustion", "~> 1.5"
+
+  gem "rails", "~> 8.0.2"
   gem "mutex_m", "~> 0.2"
   gem "stringio", "~> 3.0"
   eval_gemfile "modular/style.gemfile"

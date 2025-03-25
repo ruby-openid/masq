@@ -5,7 +5,7 @@ source "https://rubygems.org"
 gem "combustion", "~> 1.5"
 gem "rails", "~> 8.0.2"
 
-gemspec :path => "../"
+gemspec path: "../"
 
 eval_gemfile("modular/mini_testing.gemfile")
 
