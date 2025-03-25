@@ -29,7 +29,7 @@ module Masq
       end
     end
 
-    private
+    protected
 
     def make_token
       self.token = Digest::SHA1.hexdigest(Time.now.to_s.split("").sort_by { rand }.join)

@@ -13,23 +13,7 @@
     [39, 21, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [49, 20, 1, "Lint/AssignmentInCondition: Wrap assignment in parentheses if intentional", 177560]
   ],
-  "app/models/masq/account.rb:3431296046": [
-    [43, 5, 298, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2464945722],
-    [80, 5, 1035, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2286399262],
-    [82, 17, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [98, 18, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [98, 32, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [99, 39, 2, "Style/AndOr: Use `||` instead of `or`.", 5861240],
-    [99, 88, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [108, 5, 97, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 4218748683],
-    [220, 5, 3, "Lint/IneffectiveAccessModifier: `private` (on line 216) does not make singleton methods private. Use `private_class_method` or `private` inside a `class << self` block instead.", 193404514],
-    [220, 5, 85, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 115756650],
-    [226, 5, 3, "Lint/IneffectiveAccessModifier: `private` (on line 216) does not make singleton methods private. Use `private_class_method` or `private` inside a `class << self` block instead.", 193404514],
-    [226, 5, 181, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 3702657420],
-    [234, 5, 3, "Lint/IneffectiveAccessModifier: `private` (on line 216) does not make singleton methods private. Use `private_class_method` or `private` inside a `class << self` block instead.", 193404514],
-    [234, 5, 135, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 4139970307]
-  ],
-  "app/models/masq/open_id_request.rb:3145306176": [
+  "app/models/masq/open_id_request.rb:2515784583": [
     [27, 7, 159, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 474907089]
   ],
   "app/models/masq/persona.rb:3585878101": [
