@@ -51,7 +51,7 @@ module Masq
     end
 
     def site_params
-      params.require(:site).permit!
+      params.require(:site).permit(:persona_id)
     end
   end
 end
