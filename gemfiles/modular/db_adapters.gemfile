@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 # Database adapters
-platforms :ruby, :mswin, :mingw do
-  gem "sqlite3"
-  gem "mysql2"
-  gem "pg"
-  # gem 'activerecord-oracle_enhanced-adapter'
-  # gem 'ruby-plsql'
-  # gem 'ruby-oci8'
-end
+gem "sqlite3"
+gem "mysql2"
+gem "pg"
+
+# gem 'activerecord-oracle_enhanced-adapter'
+# gem 'ruby-plsql'
+# gem 'ruby-oci8'
