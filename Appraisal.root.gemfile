@@ -9,6 +9,15 @@ source "https://rubygems.org"
 # On CI, we use it for the Appraisal-based builds.
 # We do not load the standard Gemfile, as it is tailored for local development.
 
+# NOTE: Due to variations in relative pathing, we can't use the gemfiles/modular gemfiles here,
+#       since they would be added to the Appraisals gemfiles with the wrong relative path.
+
+# Gems that have been removed from stdlib need to be added to the Gemfile explicitly
+gem "logger"
+gem "rexml"
+gem "mutex_m", "~> 0.2"
+gem "stringio", "~> 3.0"
+
 gemspec
 
 gem "appraisal", github: "pboling/appraisal", branch: "galtzo"

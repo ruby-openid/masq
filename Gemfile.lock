@@ -413,18 +413,20 @@ DEPENDENCIES
   combustion (~> 1.5)
   debug (>= 1.0.0)
   kettle-soup-cover (~> 1.0, >= 1.0.4)
+  logger
   masq2!
   minitest
   mocha
   mysql2
   pg
   pry (~> 0.14)
-  rails (~> 8.0, >= 8.0.1)
+  rails (~> 8.0, >= 8.0.2)
   rails-controller-testing
   rake (~> 13.0)
   rdoc (~> 6.11)
   reek (~> 6.4)
   require_bench
+  rexml
   rubocop-lts (~> 18.2, >= 18.2.1)
   rubocop-packaging (~> 0.5, >= 0.5.2)
   sqlite3

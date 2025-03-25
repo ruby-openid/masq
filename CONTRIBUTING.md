@@ -37,6 +37,14 @@ BUNDLE_GEMFILE=Appraisal.root.gemfile bundle exec appraisal update
 
 When adding an appraisal to CI check the [runner tool cache][🏃‍♂️runner-tool-cache] to see which runner to use.
 
+When fixing an issue in CI with a specific appraisal:
+```shell
+adsf local ruby 3.0.7 # or whatever version you need
+BUNDLE_GEMFILE=Appraisal.root.gemfile bundle install
+BUNDLE_GEMFILE=gemfiles/rails_6_1.gemfile bundle # or whatever appraisal you need
+BUNDLE_GEMFILE=gemfiles/rails_6_1.gemfile bundle exec rake test # or whatever command failed
+```
+
 ## The Reek List
 
 Take a look at the `reek` list which is the file called `REEK` and find something to improve.

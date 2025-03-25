@@ -10,6 +10,9 @@ git_source(:gitlab) { |repo_name| "https://gitlab.com/#{repo_name}" }
 # Load order it important for combustion, so make sure it loads first!
 gem "combustion", "~> 1.5"
 
+# Common Deps
+eval_gemfile "gemfiles/modular/common.gemfile"
+
 # Include dependencies from <gem name>.gemspec
 gemspec
 
@@ -41,4 +44,4 @@ gem "appraisal", github: "pboling/appraisal", branch: "galtzo"
 
 # For local testing we'll use Rails v8.0
 # In CI we'll use `combustion` and `appraisal` to test other versions
-gem "rails", "~> 8.0", ">= 8.0.1"
+gem "rails", "~> 8.0", ">= 8.0.2"

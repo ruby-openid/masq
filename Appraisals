@@ -6,12 +6,11 @@
 appraise "rails-5-2" do
   # Load order is very important with combustion!
   gem "combustion", "~> 1.5"
+  gem "sqlite3", "~> 1.4"
 
   gem "rails", "~> 5.2.8.1"
   gem "nokogiri"
   eval_gemfile "modular/mini_testing.gemfile"
-  eval_gemfile "modular/db_adapters.gemfile"
-  eval_gemfile "modular/common.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
@@ -21,11 +20,10 @@ end
 appraise "rails-6-0" do
   # Load order is very important with combustion!
   gem "combustion", "~> 1.5"
+  gem "sqlite3", "~> 1.4"
 
   gem "rails", "~> 6.0.6.1"
   eval_gemfile "modular/mini_testing.gemfile"
-  eval_gemfile "modular/db_adapters.gemfile"
-  eval_gemfile "modular/common.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
@@ -36,11 +34,10 @@ end
 appraise "rails-6-1" do
   # Load order is very important with combustion!
   gem "combustion", "~> 1.5"
+  gem "sqlite3", "~> 1.4"
 
   gem "rails", "~> 6.1.7.10"
   eval_gemfile "modular/mini_testing.gemfile"
-  eval_gemfile "modular/db_adapters.gemfile"
-  eval_gemfile "modular/common.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
@@ -51,11 +48,10 @@ end
 appraise "rails-7-0" do
   # Load order is very important with combustion!
   gem "combustion", "~> 1.5"
+  gem "sqlite3", "~> 2.0"
 
   gem "rails", "~> 7.0.8.7"
   eval_gemfile "modular/mini_testing.gemfile"
-  eval_gemfile "modular/db_adapters.gemfile"
-  eval_gemfile "modular/common.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
@@ -68,11 +64,10 @@ end
 appraise "rails-7-1" do
   # Load order is very important with combustion!
   gem "combustion", "~> 1.5"
+  gem "sqlite3", "~> 2.0"
 
   gem "rails", "~> 7.1.5.1"
   eval_gemfile "modular/mini_testing.gemfile"
-  eval_gemfile "modular/db_adapters.gemfile"
-  eval_gemfile "modular/common.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
@@ -86,11 +81,10 @@ end
 appraise "rails-7-2" do
   # Load order is very important with combustion!
   gem "combustion", "~> 1.5"
+  gem "sqlite3", "~> 2.0"
 
   gem "rails", "~> 7.2.2.1"
   eval_gemfile "modular/mini_testing.gemfile"
-  eval_gemfile "modular/db_adapters.gemfile"
-  eval_gemfile "modular/common.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
@@ -104,11 +98,10 @@ end
 appraise "rails-8-0" do
   # Load order is very important with combustion!
   gem "combustion", "~> 1.5"
+  gem "sqlite3", "~> 2.0"
 
   gem "rails", "~> 8.0.2"
   eval_gemfile "modular/mini_testing.gemfile"
-  eval_gemfile "modular/db_adapters.gemfile"
-  eval_gemfile "modular/common.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
@@ -116,13 +109,10 @@ end
 appraise "audit" do
   # Load order is very important with combustion!
   gem "combustion", "~> 1.5"
+  gem "sqlite3", "~> 2.0"
 
   gem "rails", "~> 8.0.2"
-  gem "mutex_m", "~> 0.2"
-  gem "stringio", "~> 3.0"
   eval_gemfile "modular/audit.gemfile"
-  eval_gemfile "modular/db_adapters.gemfile"
-  eval_gemfile "modular/common.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
@@ -130,14 +120,11 @@ end
 appraise "coverage" do
   # Load order is very important with combustion!
   gem "combustion", "~> 1.5"
+  gem "sqlite3", "~> 2.0"
 
   gem "rails", "~> 8.0.2"
-  gem "mutex_m", "~> 0.2"
-  gem "stringio", "~> 3.0"
   eval_gemfile "modular/coverage.gemfile"
   eval_gemfile "modular/mini_testing.gemfile"
-  eval_gemfile "modular/db_adapters.gemfile"
-  eval_gemfile "modular/common.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
@@ -145,12 +132,9 @@ end
 appraise "style" do
   # Load order is very important with combustion!
   gem "combustion", "~> 1.5"
+  gem "sqlite3", "~> 2.0"
 
   gem "rails", "~> 8.0.2"
-  gem "mutex_m", "~> 0.2"
-  gem "stringio", "~> 3.0"
   eval_gemfile "modular/style.gemfile"
-  eval_gemfile "modular/db_adapters.gemfile"
-  eval_gemfile "modular/common.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end

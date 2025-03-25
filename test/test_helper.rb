@@ -46,10 +46,6 @@ Time.zone = "UTC"
 Rails::Controller::Testing.install
 Rails.backtrace_cleaner.remove_silencers!
 
-if ActionDispatch::IntegrationTest.method_defined?(:fixture_path=)
-  ActionDispatch::IntegrationTest.fixture_path = File.expand_path("fixtures", File.dirname(__FILE__))
-end
-
 module Masq
   class ActionController::TestCase
     include Masq::Engine.routes.url_helpers

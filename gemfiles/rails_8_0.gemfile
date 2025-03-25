@@ -2,13 +2,14 @@
 
 source "https://rubygems.org"
 
+gem "logger"
+gem "rexml"
+gem "mutex_m", "~> 0.2"
+gem "stringio", "~> 3.0"
 gem "combustion", "~> 1.5"
+gem "sqlite3", "~> 2.0"
 gem "rails", "~> 8.0.2"
 
-gemspec path: "../"
+gemspec :path => "../"
 
 eval_gemfile("modular/mini_testing.gemfile")
-
-eval_gemfile "modular/db_adapters.gemfile"
-
-eval_gemfile("modular/common.gemfile")
