@@ -19,6 +19,11 @@ rescue LoadError
   nil
 end
 
+# External Libs that Rails, or other deps, are dependent on,
+#   yet not all versions of Rails, or other deps, require properly
+require "logger"
+require "rexml"
+
 require "bundler"
 Bundler.require :default, :development
 Combustion.path = "test/internal"
