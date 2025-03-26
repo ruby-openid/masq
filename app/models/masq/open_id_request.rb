@@ -29,8 +29,6 @@ module Masq
       Masq::Engine.config.masq["trusted_domains"].find { |domain| host.to_s.ends_with?(domain) }
     end
 
-    protected
-
     def make_token
       self.token = Digest::SHA1.hexdigest(Time.now.to_s.split("").sort_by { rand }.join)
     end
