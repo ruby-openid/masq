@@ -120,12 +120,20 @@ module Masq
 
     def test_should_authenticate_with_password_and_yubico_otp
       @account = accounts(:with_yubico_identity)
+      assert_nil(@account.last_authenticated_at)
+      assert(!@account.last_authenticated_by_yubikey)
+      assert(@account.login == "yubikey")
+      return_to = "/super-duper"
+      original_return_to = session[:return_to]
+      session[:return_to] = return_to
       yubico_otp = @account.yubico_identity + "x" * 32
-      Account.expects(:verify_yubico_otp).with(yubico_otp).returns(true)
+      Masq::Account.expects(:verify_yubico_otp).with(yubico_otp).returns(true)
       post(:create, params: {login: @account.login, password: "test" + yubico_otp})
+      session[:return_to] = original_return_to # Don't bleed state, even if the login failed.
+      assert_redirected_to(return_to)
       # TODO: Why does the account save seems to be very slow sometimes?
       #       Or is it failing to save the account randomly?
-      sleep(1)
+      sleep(2)
       @account.reload
       assert_not_nil(@account.last_authenticated_at)
       assert(@account.last_authenticated_by_yubikey)
