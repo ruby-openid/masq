@@ -6,26 +6,27 @@ ENV["RAILS_ENV"] = "test"
 require "minitest/autorun"
 require "mocha/minitest"
 
-# Internal test config
-require "config/debug.rb"
-
-# Last thing before loading this gem is to set up code coverage
+# We have to set up code coverage early because the gem will be required by the Rails test dummy app.
 begin
   # This does not require "simplecov", but
   require "kettle-soup-cover"
   #   this next line has a side effect of running `.simplecov`
   require "simplecov" if defined?(Kettle::Soup::Cover) && Kettle::Soup::Cover::DO_COV
 rescue LoadError
-  nil
+  warn("Warning: Could not load simplecov. Code coverage will not be collected.")
 end
+
+# Internal test config
+require "config/debug.rb"
+
+require "bundler"
+Bundler.require :default, :development
 
 # External Libs that Rails, or other deps, are dependent on,
 #   yet not all versions of Rails, or other deps, require properly
 require "logger"
 require "rexml"
 
-require "bundler"
-Bundler.require :default, :development
 Combustion.path = "test/internal"
 Combustion.initialize!(:all)
 
@@ -35,8 +36,6 @@ require "rails-controller-testing"
 
 puts "Rails version is #{Rails.version}"
 puts "BUNDLE_GEMFILE: #{ENV["BUNDLE_GEMFILE"]}"
-puts "RAILS_VERSION: #{ENV["RAILS_VERSION"]}"
-puts "RAILS_MAJOR_MINOR: #{ENV["RAILS_MAJOR_MINOR"]}"
 
 require "masq2"
 

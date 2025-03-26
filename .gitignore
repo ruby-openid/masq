@@ -6,6 +6,9 @@
 /pkg/
 /tmp/
 
+# Debugging
+.byebug_history
+
 # rspec failure tracking
 .rspec_status
 
