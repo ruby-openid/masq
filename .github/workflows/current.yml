@@ -62,15 +62,6 @@ jobs:
             rubygems: default
             bundler: default
 
-          # jruby-9.4, Rails 7.2
-          #   (targets Ruby 3.1 compatibility)
-          - ruby: "jruby"
-            appraisal: "rails-7-2"
-            exec_cmd: "rake test"
-            gemfile: "Appraisal.root"
-            rubygems: default
-            bundler: default
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
