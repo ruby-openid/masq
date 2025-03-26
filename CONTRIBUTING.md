@@ -63,6 +63,18 @@ To run all tests
 bundle exec rake test
 ```
 
+To run a single test:
+
+```bash
+bundle exec ruby -I test file/path/to/test.rb --name test_name_that_is_real
+```
+
+Just swap out the example file path and test name, to be something like below:
+
+```bash
+bundle exec ruby -I test test/functional/masq/sessions_controller_test.rb --name test_should_authenticate_with_password_and_yubico_otp
+```
+
 ## Lint It
 
 Run all the default tasks, which includes running the gradually autocorrecting linter, `rubocop-gradual`.
