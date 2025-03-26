@@ -91,14 +91,21 @@ serialize :parameters, Hash
 
 so we instead switch to serializing as JSON:
 ```ruby
+# Rails 5.2/6.0
 serialize :parameters, JSON
+# Rails 6.1+
+serialize :parameters, type: Hash, coder: JSON
 ```
 
 If an implementation needs to continue using the serialized Hash,
-you will need to override the definition by reopening the model, and adding:
+you will need to override the definition by reopening the model,
+and set it back to the old way!
 
 ```ruby
+# Rails 5.2/6.0
 serialize :parameters, Hash
+# Rails 6.1+ (untested, might not work!)
+serialize :parameters, type: Hash, coder: Hash
 ```
 
 In addition, one of the following is also needed.

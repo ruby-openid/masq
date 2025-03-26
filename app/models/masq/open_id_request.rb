@@ -4,7 +4,11 @@ module Masq
 
     before_validation :make_token, on: :create
 
-    serialize :parameters, type: Hash, coder: JSON
+    if Rails.gem_version >= Gem::Version.create("6.1")
+      serialize :parameters, type: Hash, coder: JSON
+    else # Rails 5.2 & 6.0
+      serialize :parameters, JSON
+    end
 
     def parameters
       self[:parameters]
