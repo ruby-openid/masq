@@ -4,10 +4,12 @@ module Masq
   class Signup
     attr_accessor :account
 
-    def self.create_account!(attrs = {})
-      signup = Signup.new(attrs)
-      signup.send(:create_account!)
-      signup
+    class << self
+      def create_account!(attrs = {})
+        factory = new(attrs)
+        factory.send(:create_account!)
+        factory
+      end
     end
 
     def succeeded?
@@ -21,16 +23,17 @@ module Masq
     protected
 
     def initialize(attrs = {})
-      self.account = Account.new(attrs)
+      self.account = Masq::Account.new(attrs)
     end
 
     def create_account!
       return false unless account.valid?
+
       make_activation_code if send_activation_email?
       account.save!
       make_default_persona
       if send_activation_email?
-        AccountMailer.signup_notification(account).deliver_now
+        Masq::AccountMailer.signup_notification(account).deliver_now
       else
         account.activate!
       end

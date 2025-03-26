@@ -18,6 +18,7 @@ module Masq
       require_relative "masq/active_record_openid_store/association"
       require_relative "masq/active_record_openid_store/nonce"
       require_relative "masq/active_record_openid_store/openid_ar_store"
+      require_relative "masq/signup"
     rescue StandardError, LoadError => e
       if !defined?(::Rails::Engine)
         warn("masq2 is a Rails engine, but Rails::Engine isn't defined.")
@@ -36,13 +37,6 @@ module Masq
     warn("masq2 was loaded before Rails. Please check your configuration.")
   end
 end
-
-require_relative "masq/engine"
-require_relative "masq/authenticated_system"
-require_relative "masq/openid_server_system"
-require_relative "masq/active_record_openid_store/association"
-require_relative "masq/active_record_openid_store/nonce"
-require_relative "masq/active_record_openid_store/openid_ar_store"
 
 # Ensure version is configured before loading the rest of the library
 Masq::Version.class_eval do

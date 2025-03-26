@@ -61,7 +61,7 @@ module Masq
           else
             password
           end
-          signup = Signup.create_account!(
+          signup = Masq::Signup.create_account!(
             login: login,
             password: pw,
             password_confirmation: pw,
