@@ -45,14 +45,6 @@ jobs:
             rubygems: default
             bundler: default
 
-          # truffleruby-head
-          - ruby: "truffleruby-head"
-            appraisal: "rails-8-0"
-            exec_cmd: "rake test"
-            gemfile: "Appraisal.root"
-            rubygems: default
-            bundler: default
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
