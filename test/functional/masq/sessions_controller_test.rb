@@ -123,7 +123,6 @@ module Masq
       yubico_otp = @account.yubico_identity + "x" * 32
       Account.expects(:verify_yubico_otp).with(yubico_otp).returns(true)
       post(:create, params: {login: @account.login, password: "test" + yubico_otp})
-      sleep(1) # Somehow the reload frequently occurred before the record change had been saved
       @account.reload
       assert_not_nil(@account.last_authenticated_at)
       assert(@account.last_authenticated_by_yubikey)

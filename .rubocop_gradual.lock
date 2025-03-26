@@ -8,15 +8,6 @@
   "app/controllers/masq/sessions_controller.rb:3600302919": [
     [39, 21, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806]
   ],
-  "app/models/masq/persona.rb:3585878101": [
-    [14, 5, 55, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1041090622],
-    [18, 5, 142, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 3038409932],
-    [55, 5, 3, "Lint/IneffectiveAccessModifier: `private` (on line 52) does not make singleton methods private. Use `private_class_method` or `private` inside a `class << self` block instead.", 193404514],
-    [55, 5, 78, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 2563415249]
-  ],
-  "app/models/masq/signup.rb:1186383472": [
-    [7, 5, 126, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1071524745]
-  ],
   "lib/masq/authenticated_system.rb:2956957840": [
     [95, 5, 3, "Lint/IneffectiveAccessModifier: `protected` (on line 3) does not make singleton methods protected. Use `protected` inside a `class << self` block instead.", 193404514],
     [95, 5, 111, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 4258707989],

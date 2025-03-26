@@ -24,7 +24,7 @@ module Masq
     after_save :deliver_forgot_password
 
     # attr_accessible :login, :email, :password, :password_confirmation, :public_persona_id, :yubikey_mandatory
-    attr_accessor :password, :password_confirmation
+    attr_accessor :password
 
     class ActivationCodeNotFound < StandardError; end
 
@@ -53,7 +53,7 @@ module Masq
       # Authenticates a user by their login name and password.
       # Returns the user or nil.
       def authenticate(login, password, basic_auth_used = false)
-        a = Account.find_by(login: login)
+        a = find_by(login: login)
         if a.nil? && Masq::Engine.config.masq["create_auth_ondemand"]["enabled"]
           # Need to set some password - but is never used
           pw = if Masq::Engine.config.masq["create_auth_ondemand"]["random_password"]
@@ -72,7 +72,8 @@ module Masq
 
         if !a.nil? && a.active? && a.enabled
           if a.authenticated?(password) || (Masq::Engine.config.masq["trust_basic_auth"] && basic_auth_used)
-            a.last_authenticated_at, a.last_authenticated_by_yubikey = Time.now, a.authenticated_with_yubikey?
+            a.last_authenticated_at = Time.now.utc
+            a.last_authenticated_by_yubikey = a.authenticated_with_yubikey?
             a.save(validate: false)
             a
           end
@@ -144,15 +145,15 @@ module Masq
       elsif password.length < 50 && !(yubico_identity? && yubikey_mandatory?)
         encrypt(password) == crypted_password
       elsif Masq::Engine.config.masq["can_use_yubikey"]
-        password, yubico_otp = Account.split_password_and_yubico_otp(password)
+        password, yubico_otp = self.class.split_password_and_yubico_otp(password)
         @authenticated_with_yubikey = yubikey_authenticated?(yubico_otp) if encrypt(password) == crypted_password
       end
     end
 
     # Is the Yubico OTP valid and belongs to this account?
     def yubikey_authenticated?(otp)
-      if yubico_identity? && Account.verify_yubico_otp(otp)
-        (Account.extract_yubico_identity_from_otp(otp) == yubico_identity)
+      if yubico_identity? && self.class.verify_yubico_otp(otp)
+        (self.class.extract_yubico_identity_from_otp(otp) == yubico_identity)
       else
         false
       end
@@ -163,8 +164,8 @@ module Masq
     end
 
     def associate_with_yubikey(otp)
-      if Account.verify_yubico_otp(otp)
-        self.yubico_identity = Account.extract_yubico_identity_from_otp(otp)
+      if self.class.verify_yubico_otp(otp)
+        self.yubico_identity = self.class.extract_yubico_identity_from_otp(otp)
         save(validate: false)
       else
         false
@@ -238,7 +239,7 @@ module Masq
     end
 
     def deliver_forgot_password
-      AccountMailer.forgot_password(self).deliver_now if recently_forgot_password?
+      Masq::AccountMailer.forgot_password(self).deliver_now if recently_forgot_password?
     end
   end
 end

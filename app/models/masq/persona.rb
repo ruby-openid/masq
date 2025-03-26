@@ -11,14 +11,23 @@ module Masq
 
     # attr_protected :account_id, :deletable
 
-    def self.properties
-      Persona.mappings.keys
+    class << self
+      def properties
+        mappings.keys
+      end
+
+      def attribute_name_for_type_uri(type_uri)
+        prop = mappings.detect { |i| i[1].include?(type_uri) }
+        prop ? prop[0] : nil
+      end
+
+      # Mappings for SReg names and AX Type URIs to attributes
+      def mappings
+        Masq::Engine.config.masq["attribute_mappings"]
+      end
     end
 
-    def self.attribute_name_for_type_uri(type_uri)
-      prop = mappings.detect { |i| i[1].include?(type_uri) }
-      prop ? prop[0] : nil
-    end
+    public
 
     # Returns the personas attribute for the given SReg name or AX Type URI
     def property(type)
@@ -47,13 +56,6 @@ module Masq
 
     def check_deletable!
       raise ActiveRecord::RecordNotDestroyed unless deletable
-    end
-
-    private
-
-    # Mappings for SReg names and AX Type URIs to attributes
-    def self.mappings
-      Masq::Engine.config.masq["attribute_mappings"]
     end
   end
 end
