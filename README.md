@@ -1,5 +1,15 @@
 # Masq2 OpenID Server
 
+## SECURITY WARNING
+
+- The roots of this gem are ancient, and there are more modern options.
+- This gem is based on OpenID 2.0, which is a **deprecated standard**.
+- The modern alternative is called OpenID Connect (OIDC).
+- This gem **does not** support OIDC.
+- Many, if not all, of the [current security vulnerabilities](https://github.com/oauth-xx/masq2/security/code-scanning) **will not be fixed**.
+
+## Read above before continuing
+
 Masq2 is a mountable Rails engine that provides OpenID server/identity provider functionality.
 It is the successor to the [masq gem](https://github.com/dennisreimann/masq), which in turn
 was the successor of the stand-alone Rails application of the same purpose, [masquerade](http://github.com/dennisreimann/masquerade/).
