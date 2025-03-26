@@ -197,7 +197,7 @@ nl:
   i_forgot_my_password: Ik ben mijn wachtwoord vergeten
 
   # server controller
-  this_is_openid_not_a_human_ressource: Dit is een OpenID server eindpunt, geen voor mensen leesbare bron.
+  this_is_openid_not_a_human_resource: Dit is een OpenID server eindpunt, geen voor mensen leesbare bron.
   identity_verification_request_invalid: De vereficatie van de identiteit is ongeldig.
   service_provider_requires_reauthentication_last_login_too_long_ago: De dienst vereist een nieuwe autenticatie, omdat uw laatste inlog te lang geleden was.
   login_to_verify_identity: Log alstublieft in om uw identiteit te verefiëren.

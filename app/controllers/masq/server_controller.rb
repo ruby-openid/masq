@@ -5,7 +5,7 @@ module Masq
     skip_before_action :verify_authenticity_token
     # Error handling
     rescue_from OpenID::Server::ProtocolError, with: :render_openid_error
-    # Actions other than index require a logged in user
+    # Actions other than index require a logged-in user
     before_action :login_required, except: %i[index cancel seatbelt_config seatbelt_login_state]
     before_action :ensure_valid_checkid_request, except: %i[index cancel seatbelt_config seatbelt_login_state]
     after_action :clear_checkid_request, only: %i[cancel complete]
@@ -26,7 +26,7 @@ module Masq
           elsif openid_request
             handle_non_checkid_request
           else
-            render(plain: t(:this_is_openid_not_a_human_ressource))
+            render(plain: t(:this_is_openid_not_a_human_resource))
           end
         end
         format.xrds
@@ -40,11 +40,12 @@ module Masq
     # be answered based on the users release policy. If the request is immediate
     # (relying party wants no user interaction, used e.g. for ajax requests)
     # the request can only be answered if no further information (like simple
-    # registration data) is requested. Otherwise the user will be redirected
+    # registration data) is requested. Otherwise, the user will be redirected
     # to the decision page.
     def proceed
       identity = identifier(current_account)
-      if @site = current_account.sites.find_by(url: checkid_request.trust_root)
+      @site = current_account.sites.find_by(url: checkid_request.trust_root)
+      if @site
         resp = checkid_request.answer(true, nil, identity)
         resp = add_sreg(resp, @site.sreg_properties) if sreg_request
         resp = add_ax(resp, @site.ax_properties) if ax_fetch_request
@@ -60,7 +61,7 @@ module Masq
     end
 
     # Displays the decision page on that the user can confirm the request and
-    # choose which data should be transfered to the relying party.
+    # choose which data should be transferred to the relying party.
     def decide
       @site = current_account.sites.where(url: checkid_request.trust_root).first_or_initialize
       @site.persona = current_account.personas.find_by(params[:persona_id]) || current_account.personas.first if sreg_request || ax_store_request || ax_fetch_request
@@ -68,7 +69,7 @@ module Masq
 
     # This action is called by submitting the decision form, the information entered by
     # the user is used to answer the request. If the user decides to always trust the
-    # relying party, a new site according to the release policies the will be created.
+    # relying party, a new site according to the release policies will be created.
     def complete
       if params[:cancel]
         cancel
@@ -86,7 +87,8 @@ module Masq
           not_accepted = []
           accepted = []
           ax_store_request.data.each do |type_uri, values|
-            if property = Persona.attribute_name_for_type_uri(type_uri)
+            property = Persona.attribute_name_for_type_uri(type_uri)
+            if property
               store_attribute = params[:site][:ax_store][property.to_sym]
               if store_attribute && !store_attribute[:value].blank?
                 @site.persona.update_attribute(property, values.first)

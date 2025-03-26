@@ -3,9 +3,9 @@ class MasqSchema < ActiveRecord::Migration[4.2]
     # Check for existing masquerade tables. In case the tables already exist,
     # upgrade the database by renaming the tables - otherwise create them.
 
-    # Accounts: Also check for columns, as account is a pretty generic model name
-    # and we don't want to conflict with an existing account tables that's not
-    # from an existing masquerade installation
+    # Accounts: Also check for columns, as account is a pretty generic model name,
+    #   and we don't want to conflict with an existing account tables that's not
+    #   from an existing masquerade installation
     if table_exists?(:accounts) && column_exists?(:accounts, :public_persona_id) &&
         column_exists?(:accounts, :yubico_identity)
       rename_table(:accounts, :masq_accounts)

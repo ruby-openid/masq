@@ -5,13 +5,8 @@
   "app/controllers/masq/passwords_controller.rb:4013562638": [
     [8, 18, 1, "Lint/AssignmentInCondition: Wrap assignment in parentheses if intentional", 177560]
   ],
-  "app/controllers/masq/server_controller.rb:4249946322": [
-    [47, 16, 1, "Lint/AssignmentInCondition: Wrap assignment in parentheses if intentional", 177560],
-    [89, 25, 1, "Lint/AssignmentInCondition: Wrap assignment in parentheses if intentional", 177560]
-  ],
-  "app/controllers/masq/sessions_controller.rb:2546607075": [
-    [39, 21, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
-    [49, 20, 1, "Lint/AssignmentInCondition: Wrap assignment in parentheses if intentional", 177560]
+  "app/controllers/masq/sessions_controller.rb:3600302919": [
+    [39, 21, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806]
   ],
   "app/models/masq/persona.rb:3585878101": [
     [14, 5, 55, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1041090622],

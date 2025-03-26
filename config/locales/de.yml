@@ -210,7 +210,7 @@ de:
   i_forgot_my_password: Ich habe mein Passwort vergessen
 
   # server controller
-  this_is_openid_not_a_human_ressource: Dies ist ein OpenID-Server-Endpunkt und keine von Menschen lesbare Ressource.
+  this_is_openid_not_a_human_resource: Dies ist ein OpenID-Server-Endpunkt und keine von Menschen lesbare Ressource.
   identity_verification_request_invalid: Die Anfrage zur Identitätsprüfung ist ungültig.
   service_provider_requires_reauthentication_last_login_too_long_ago: Der Dienstanbieter erfordert eine erneute Authentifizierung, da Ihr letzter Login zu lange her war.
   login_to_verify_identity: Bitte loggen Sie sich ein, um Ihre Identität zu bestätigen.

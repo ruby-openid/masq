@@ -46,7 +46,8 @@ module Masq
     end
 
     def redirect_after_login
-      if return_to = session[:return_to]
+      return_to = session[:return_to]
+      if return_to
         session[:return_to] = nil
         redirect_to(return_to)
       else

@@ -199,7 +199,7 @@ es:
   i_forgot_my_password: Olvidé mi clave
 
   # server controller
-  this_is_openid_not_a_human_ressource: "Este es un punto de conexión del servidor OpenID, no un recurso utilizable por personas"
+  this_is_openid_not_a_human_resource: "Este es un punto de conexión del servidor OpenID, no un recurso utilizable por personas"
   identity_verification_request_invalid: La petición de verificación de identidad es inválida.
   service_provider_requires_reauthentication_last_login_too_long_ago: "El proveedor del servicio requiere autenticación, porque tu último ingreso fue hace demasiado tiempo."
   login_to_verify_identity: Por favor ingresa para verificar tu identidad.
