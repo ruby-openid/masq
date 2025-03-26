@@ -28,9 +28,6 @@ rescue LoadError
   warn("Warning: Could not load simplecov. Code coverage will not be collected.")
 end
 
-# Internal test config
-require "config/debug.rb"
-
 require "bundler"
 Bundler.require :default, :development
 
@@ -41,6 +38,9 @@ require "rexml"
 
 Combustion.path = "test/internal"
 Combustion.initialize!(:all)
+
+# Internal test config
+require "config/debug.rb"
 
 # Rails-dependent external libs
 require "rails/test_help"

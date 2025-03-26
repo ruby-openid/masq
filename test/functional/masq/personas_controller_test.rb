@@ -34,7 +34,7 @@ module Masq
 
     def test_should_create_persona
       login_as(:standard)
-      assert_difference("Persona.count", 1) do
+      assert_difference("Masq::Persona.count", 1) do
         post(:create, params: {persona: valid_persona_attributes})
       end
       assert_redirected_to(account_personas_path)
@@ -60,8 +60,8 @@ module Masq
       login_as(:standard)
       put(:update, params: {id: personas(:public).id, persona: valid_persona_attributes})
       assert_redirected_to(account_personas_path)
-      expected_attributes = Persona.new(valid_persona_attributes).attributes.reject { |_, v| v.nil? }
-      assert_equal(expected_attributes, Persona.find(personas(:public).id).attributes.slice(*expected_attributes.keys))
+      expected_attributes = Masq::Persona.new(valid_persona_attributes).attributes.reject { |_, v| v.nil? }
+      assert_equal(expected_attributes, Masq::Persona.find(personas(:public).id).attributes.slice(*expected_attributes.keys))
     end
 
     def test_should_require_login_for_destroy
@@ -71,7 +71,7 @@ module Masq
 
     def test_should_destroy_persona
       login_as(:standard)
-      assert_difference("Persona.count", -1) do
+      assert_difference("Masq::Persona.count", -1) do
         delete(:destroy, params: {id: personas(:public).id})
       end
       assert_redirected_to(account_personas_path)

@@ -5,7 +5,8 @@ standard:
   login: quentin
   email: quentin@example.com
   salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
-  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  # test is the password
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1
   created_at: <%= 5.days.ago.send(formatted, :db) %>
   activated_at: <%= 5.days.ago.send(formatted, :db) %>
 
@@ -15,7 +16,8 @@ inactive:
   login: aaron
   email: aaron@example.com
   salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
-  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  # test is the password
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1
   created_at: <%= 1.days.ago.send(formatted, :db) %>
   activation_code: 8f24789ae988411ccf33ab0c30fe9106fab32e9a
 
@@ -25,9 +27,22 @@ with_yubico_identity:
   login: yubikey
   email: yubikey@example.com
   salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
-  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  # test is the password
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1
   yubico_identity: efveghxdfedg
   yubikey_mandatory: true
   created_at: <%= 5.days.ago.send(formatted, :db) %>
   activated_at: <%= 5.days.ago.send(formatted, :db) %>
 
+with_destroyable_yubico_identity:
+  id: 4
+  enabled: true
+  login: destroyubi
+  email: destroyubi@example.com
+  salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  # test is the password
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1
+  yubico_identity: birkendurgel
+  yubikey_mandatory: true
+  created_at: <%= 5.days.ago.send(formatted, :db) %>
+  activated_at: <%= 5.days.ago.send(formatted, :db) %>

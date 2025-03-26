@@ -6,7 +6,7 @@ module Masq
 
     def test_should_allow_signup_if_enabled
       Masq::Engine.config.masq["disable_registration"] = false
-      assert_difference("Account.count") do
+      assert_difference("Masq::Account.count") do
         post(:create, params: {account: valid_account_attributes})
       end
       assert_redirected_to(login_path)

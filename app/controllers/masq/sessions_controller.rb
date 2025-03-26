@@ -8,12 +8,12 @@ module Masq
     end
 
     def create
-      self.current_account = Account.authenticate(params[:login], params[:password])
+      self.current_account = Masq::Account.authenticate(params[:login], params[:password])
       if logged_in?
         flash[:notice] = t(:you_are_logged_in)
         redirect_after_login
       else
-        a = Account.find_by(login: params[:login])
+        a = Masq::Account.find_by(login: params[:login])
         if a.nil?
           redirect_to(login_path(error: "incorrect-login"), alert: t(:login_incorrect))
         elsif a.active? && a.enabled?

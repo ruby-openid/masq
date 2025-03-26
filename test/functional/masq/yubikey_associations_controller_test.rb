@@ -8,7 +8,7 @@ module Masq
       @account = accounts(:standard)
       login_as(:standard)
       yubico_otp = "x" * 44
-      Account.expects(:verify_yubico_otp).with(yubico_otp).returns(true)
+      Masq::Account.expects(:verify_yubico_otp).with(yubico_otp).returns(true)
       post(:create, params: {yubico_otp: yubico_otp})
       @account.reload
       assert_equal("x" * 12, @account.yubico_identity)
@@ -16,8 +16,8 @@ module Masq
     end
 
     def test_should_remove_an_association
-      @account = accounts(:with_yubico_identity)
-      login_as(:with_yubico_identity)
+      @account = accounts(:with_destroyable_yubico_identity)
+      login_as(:with_destroyable_yubico_identity)
       delete(:destroy)
       @account.reload
       assert_nil(@account.yubico_identity)

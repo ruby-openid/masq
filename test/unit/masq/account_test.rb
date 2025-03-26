@@ -7,7 +7,7 @@ module Masq
     fixtures :accounts
 
     def setup
-      @account = Account.new(valid_account_attributes)
+      @account = Masq::Account.new(valid_account_attributes)
     end
 
     def test_should_require_login
@@ -74,9 +74,9 @@ module Masq
     def test_should_create_account_on_demand_if_create_auth_ondemand_is_enabled
       Masq::Engine.config.masq["create_auth_ondemand"]["enabled"] = true
       Masq::Engine.config.masq["create_auth_ondemand"]["default_mail_domain"] = "example.net"
-      Account.authenticate("notexistingtestuser", "somepassword")
-      account = Account.find_by(login: "notexistingtestuser")
-      assert(account.is_a?(Account))
+      Masq::Account.authenticate("notexistingtestuser", "somepassword")
+      account = Masq::Account.find_by(login: "notexistingtestuser")
+      assert(account.is_a?(Masq::Account))
       assert_equal("notexistingtestuser", account.login)
       assert_equal("notexistingtestuser@example.net", account.email)
     end
@@ -84,7 +84,7 @@ module Masq
     def test_should_find_and_activate_by_activation_token
       @account.update_attribute(:activation_code, "openid123")
       assert_equal(false, @account.active?)
-      Account.find_and_activate!("openid123")
+      Masq::Account.find_and_activate!("openid123")
       @account.reload
       assert(@account.active?)
       assert_not_nil(@account.activated_at)
@@ -93,35 +93,35 @@ module Masq
     def test_should_reset_password
       Masq::Engine.config.masq["trust_basic_auth"] = false # doesn't make sense without
       accounts(:standard).update(password: "new password", password_confirmation: "new password")
-      assert_equal(accounts(:standard), Account.authenticate("quentin", "new password"))
+      assert_equal(accounts(:standard), Masq::Account.authenticate("quentin", "new password"))
     end
 
     def test_should_not_rehash_password
       Masq::Engine.config.masq["trust_basic_auth"] = false # doesn't make sense without
       accounts(:standard).update(login: "quentin2")
-      assert_equal(accounts(:standard), Account.authenticate("quentin2", "test"))
+      assert_equal(accounts(:standard), Masq::Account.authenticate("quentin2", "test"))
     end
 
     def test_should_authenticate_user
       Masq::Engine.config.masq["trust_basic_auth"] = false # doesn't make sense without
-      assert_equal(accounts(:standard), Account.authenticate("quentin", "test"))
+      assert_equal(accounts(:standard), Masq::Account.authenticate("quentin", "test"))
     end
 
     def test_should_not_check_password_if_trust_basic_auth_is_enabled_and_basic_is_used
       Masq::Engine.config.masq["trust_basic_auth"] = true
-      assert_equal(accounts(:standard), Account.authenticate("quentin", "nottest", true))
+      assert_equal(accounts(:standard), Masq::Account.authenticate("quentin", "nottest", true))
     end
 
     def test_should_check_password_if_trust_basic_auth_is_enabled_and_basic_is_not_used
       Masq::Engine.config.masq["trust_basic_auth"] = true
-      assert_not_equal(accounts(:standard), Account.authenticate("quentin", "nottest", false))
+      assert_not_equal(accounts(:standard), Masq::Account.authenticate("quentin", "nottest", false))
     end
 
     def test_should_check_password_if_trust_basic_auth_is_disabled
       Masq::Engine.config.masq["trust_basic_auth"] = false
-      assert_not_equal(accounts(:standard), Account.authenticate("quentin", "nottest", true))
-      assert_not_equal(accounts(:standard), Account.authenticate("quentin", "nottest", false))
-      assert_equal(accounts(:standard), Account.authenticate("quentin", "test", true))
+      assert_not_equal(accounts(:standard), Masq::Account.authenticate("quentin", "nottest", true))
+      assert_not_equal(accounts(:standard), Masq::Account.authenticate("quentin", "nottest", false))
+      assert_equal(accounts(:standard), Masq::Account.authenticate("quentin", "test", true))
     end
 
     def test_should_not_login_if_trust_basic_auth_is_enabled_but_account_is_disabled
@@ -130,15 +130,15 @@ module Masq
       account.activation_code = 666
       account.activated_at = nil
       account.save!
-      assert_not_equal(account, Account.authenticate("quentin", "test"))
+      assert_not_equal(account, Masq::Account.authenticate("quentin", "test"))
     end
 
     def test_should_create_random_password_on_create_account_on_demand_if_create_auth_ondemand_is_enabled_and_random_password_is_enabled
       Masq::Engine.config.masq["create_auth_ondemand"]["enabled"] = true
       Masq::Engine.config.masq["create_auth_ondemand"]["default_mail_domain"] = "example.net"
       Masq::Engine.config.masq["create_auth_ondemand"]["random_password"] = true
-      Account.authenticate("notexistingtestuser", "somepassword")
-      account = Account.find_by(login: "notexistingtestuser")
+      Masq::Account.authenticate("notexistingtestuser", "somepassword")
+      account = Masq::Account.find_by(login: "notexistingtestuser")
       assert_not_equal(account.encrypt("somepassword"), account.crypted_password)
     end
 
@@ -146,8 +146,8 @@ module Masq
       Masq::Engine.config.masq["create_auth_ondemand"]["enabled"] = true
       Masq::Engine.config.masq["create_auth_ondemand"]["default_mail_domain"] = "example.net"
       Masq::Engine.config.masq["create_auth_ondemand"]["random_password"] = false
-      Account.authenticate("notexistingtestuser", "somepassword")
-      account = Account.find_by(login: "notexistingtestuser")
+      Masq::Account.authenticate("notexistingtestuser", "somepassword")
+      account = Masq::Account.find_by(login: "notexistingtestuser")
       assert_equal(account.encrypt("somepassword"), account.crypted_password)
     end
 
@@ -195,7 +195,7 @@ module Masq
       @persona = @account.personas.create(valid_persona_attributes)
       assert_equal(1, @account.personas.size)
       @account.destroy
-      assert_nil(Persona.find_by(id: @persona.id))
+      assert_nil(Masq::Persona.find_by(id: @persona.id))
     end
 
     def test_should_delete_associated_sites_on_destroy
@@ -203,14 +203,14 @@ module Masq
       @site = @account.sites.create(valid_site_attributes)
       assert_equal(1, @account.sites.size)
       @account.destroy
-      assert_nil(Site.find_by(id: @site.id))
+      assert_nil(Masq::Site.find_by(id: @site.id))
     end
 
     def test_should_get_associated_with_a_yubikey_if_the_given_otp_is_correct
       @account = accounts(:standard)
       yubico_otp = "x" * 44
       assert(@account.yubico_identity.nil?)
-      Account.expects(:verify_yubico_otp).with(yubico_otp).returns(true)
+      Masq::Account.expects(:verify_yubico_otp).with(yubico_otp).returns(true)
       @account.associate_with_yubikey(yubico_otp)
       @account.reload
       assert_equal(yubico_otp[0..11], @account.yubico_identity)
@@ -221,7 +221,7 @@ module Masq
       yubico_otp = "x" * 44
       @account.yubico_identity = yubico_otp[0..11]
       assert(@account.save)
-      Account.expects(:verify_yubico_otp).with(yubico_otp).returns(true)
+      Masq::Account.expects(:verify_yubico_otp).with(yubico_otp).returns(true)
       assert(@account.yubikey_authenticated?(yubico_otp))
     end
 
@@ -241,14 +241,14 @@ module Masq
       yubico_otp = "x" * 44
       @account.yubico_identity = "y" * 12
       assert(@account.save)
-      Account.expects(:verify_yubico_otp).with(yubico_otp).returns(true)
+      Masq::Account.expects(:verify_yubico_otp).with(yubico_otp).returns(true)
       assert(!@account.yubikey_authenticated?(yubico_otp))
     end
 
     def test_should_split_password_and_yubico_otp
       password, yubico_otp = "123456", ("x" * 22 + "y" * 22)
       token = password + yubico_otp
-      assert_equal([password, yubico_otp], Account.split_password_and_yubico_otp(token))
+      assert_equal([password, yubico_otp], Masq::Account.split_password_and_yubico_otp(token))
     end
   end
 end

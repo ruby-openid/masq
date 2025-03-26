@@ -56,7 +56,7 @@ module Masq
 
     def test_should_destroy_site
       login_as(:standard)
-      assert_difference("Site.count", -1) do
+      assert_difference("Masq::Site.count", -1) do
         delete(:destroy, params: {id: sites(:venteria).id})
       end
       assert_redirected_to(account_sites_path)

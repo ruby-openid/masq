@@ -23,7 +23,7 @@ module Masq
 
     def test_should_save_site_if_user_chose_to_trust_always
       fake_checkid_request(:standard)
-      assert_difference("Site.count", 1) do
+      assert_difference("Masq::Site.count", 1) do
         post(:complete, params: {
           always: 1,
           site: {
@@ -40,7 +40,7 @@ module Masq
 
     def test_should_not_save_site_if_user_chose_to_trust_temporary
       fake_checkid_request(:standard)
-      assert_no_difference("Site.count") do
+      assert_no_difference("Masq::Site.count") do
         post(:complete, params: {
           temporary: 1,
           site: valid_site_attributes.merge(properties: valid_properties),
