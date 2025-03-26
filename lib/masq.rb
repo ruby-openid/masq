@@ -19,7 +19,7 @@ module Masq
       require_relative "masq/active_record_openid_store/nonce"
       require_relative "masq/active_record_openid_store/openid_ar_store"
       require_relative "masq/signup"
-    rescue StandardError, LoadError => e
+    rescue StandardError, LoadError => error
       if !defined?(::Rails::Engine)
         warn("masq2 is a Rails engine, but Rails::Engine isn't defined.")
       else
@@ -30,6 +30,12 @@ module Masq
             require "masq/engine"
     
           If unable to resolve, please report a bug to the issue tracker at https://github.com/oauth-xx/masq2
+
+          Original Error:
+          #{error.class}: #{error.message}
+
+          BACKTRACE:
+          #{Array(error.backtrace).join("\n")}
         WARNING
       end
     end
