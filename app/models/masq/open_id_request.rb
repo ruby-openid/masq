@@ -2,6 +2,9 @@ module Masq
   class OpenIdRequest < ActiveRecord::Base
     validates_presence_of :token, :parameters
 
+    def make_token
+      self.token = Digest::SHA1.hexdigest(Time.now.to_s.split("").sort_by { rand }.join)
+    end
     before_validation :make_token, on: :create
 
     serialize :parameters, type: Hash, coder: JSON
@@ -27,10 +30,6 @@ module Masq
       return false if Masq::Engine.config.masq["trusted_domains"].nil?
 
       Masq::Engine.config.masq["trusted_domains"].find { |domain| host.to_s.ends_with?(domain) }
-    end
-
-    def make_token
-      self.token = Digest::SHA1.hexdigest(Time.now.to_s.split("").sort_by { rand }.join)
     end
   end
 end
