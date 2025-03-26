@@ -2,6 +2,5 @@
 
 # Minitest Testing
 gem "minitest"
-gem "rails-controller-testing"
 gem "test-unit", "~> 3.0"
 gem "mocha"
