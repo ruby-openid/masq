@@ -5,6 +5,20 @@ ENV["RAILS_ENV"] = "test"
 # External libraries
 require "minitest/autorun"
 require "mocha/minitest"
+require "minitest/retry"
+
+Minitest::Retry.use!(
+  retry_count:  3,         # The number of times to retry. The default is 3.
+  verbose: true,           # Whether or not to display the message at the time of retry. The default is true.
+  io: $stdout,             # Display destination of retry when the message. The default is stdout.
+  exceptions_to_retry: [], # List of exceptions that will trigger a retry (when empty, all exceptions will).
+  methods_to_retry:    [
+    :test_should_authenticate_with_password_and_yubico_otp,
+  ], # List of methods that will trigger a retry (when empty, all methods will).
+  classes_to_retry:    [], # List of classes that will trigger a retry (when empty, all classes will).
+  methods_to_skip:     [], # List of methods that will skip a retry (when empty, all methods will retry).
+  exceptions_to_skip:  [],  # List of exceptions that will skip a retry (when empty, all exceptions will retry).
+)
 
 # We have to set up code coverage early because the gem will be required by the Rails test dummy app.
 begin
