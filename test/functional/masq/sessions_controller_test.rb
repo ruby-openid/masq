@@ -15,7 +15,7 @@ module Masq
       assert_redirected_to(identity_url(account, host: Masq::Engine.config.masq["host"]))
     end
 
-    def test_should_redirect_to_users_on_login_if_allready_logged_in
+    def test_should_redirect_to_users_on_login_if_already_logged_in
       login_as(:standard)
       account = accounts(:standard)
       get(:new)
@@ -123,6 +123,9 @@ module Masq
       yubico_otp = @account.yubico_identity + "x" * 32
       Account.expects(:verify_yubico_otp).with(yubico_otp).returns(true)
       post(:create, params: {login: @account.login, password: "test" + yubico_otp})
+      # TODO: Why does the account save seems to be very slow sometimes?
+      #       Or is it failing to save the account randomly?
+      sleep(1)
       @account.reload
       assert_not_nil(@account.last_authenticated_at)
       assert(@account.last_authenticated_by_yubikey)
