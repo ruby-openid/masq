@@ -15,18 +15,18 @@ module Masq
         case params
           # arbitrary params passed as Hash
         when Hash
-          params.delete_if { |k, v| k.index("openid.") != 0 }
+          params.delete_if { |k, _v| k.index("openid.") != 0 }
           # params from ActionController (does not inherit directly from HashWithIndifferentAccess after Rails 4.2)
         when ActionController::Parameters
-          params.to_unsafe_h.delete_if { |k, v| k.index("openid.") != 0 }
+          params.to_unsafe_h.delete_if { |k, _v| k.index("openid.") != 0 }
         end
     end
 
     def from_trusted_domain?
       host = URI.parse(parameters["openid.realm"] || parameters["openid.trust_root"]).host
-      unless Masq::Engine.config.masq["trusted_domains"].nil?
-        Masq::Engine.config.masq["trusted_domains"].find { |domain| host.ends_with?(domain) }
-      end
+      return false if Masq::Engine.config.masq["trusted_domains"].nil?
+
+      Masq::Engine.config.masq["trusted_domains"].find { |domain| host.to_s.ends_with?(domain) }
     end
 
     protected

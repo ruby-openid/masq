@@ -7,7 +7,7 @@ gem "rexml"
 gem "mutex_m", "~> 0.2"
 gem "stringio", "~> 3.0"
 gem "combustion", "~> 1.5"
-gem "sqlite3", "~> 2.0"
+gem "sqlite3", "~> 1.4"
 gem "rails", "~> 7.0.8.7"
 
 gemspec path: "../"

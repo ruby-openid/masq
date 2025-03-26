@@ -48,7 +48,7 @@ end
 appraise "rails-7-0" do
   # Load order is very important with combustion!
   gem "combustion", "~> 1.5"
-  gem "sqlite3", "~> 2.0"
+  gem "sqlite3", "~> 1.4"
 
   gem "rails", "~> 7.0.8.7"
   eval_gemfile "modular/mini_testing.gemfile"
