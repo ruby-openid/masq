@@ -13,9 +13,6 @@
     [39, 21, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806],
     [49, 20, 1, "Lint/AssignmentInCondition: Wrap assignment in parentheses if intentional", 177560]
   ],
-  "app/models/masq/open_id_request.rb:2515784583": [
-    [27, 7, 159, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 474907089]
-  ],
   "app/models/masq/persona.rb:3585878101": [
     [14, 5, 55, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1041090622],
     [18, 5, 142, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 3038409932],
