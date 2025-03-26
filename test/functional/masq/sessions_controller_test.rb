@@ -66,7 +66,7 @@ module Masq
 
     def test_should_redirect_to_login_after_failed_login
       post(:create, params: {login: accounts(:standard).login, password: "bad password"})
-      assert_redirected_to(login_path)
+      assert_redirected_to(login_path(error: "incorrect-password"))
       assert(flash.any?)
     end
 
@@ -142,7 +142,7 @@ module Masq
     def test_should_disallow_password_only_login_when_yubikey_is_mandatory
       account = accounts(:with_yubico_identity)
       post(:create, params: {login: account.login, password: "test"})
-      assert_redirected_to(login_path)
+      assert_redirected_to(login_path(error: "incorrect-password"))
       assert(flash.any?)
     end
 

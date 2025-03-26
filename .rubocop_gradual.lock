@@ -5,7 +5,7 @@
   "app/controllers/masq/passwords_controller.rb:4013562638": [
     [8, 18, 1, "Lint/AssignmentInCondition: Wrap assignment in parentheses if intentional", 177560]
   ],
-  "app/controllers/masq/sessions_controller.rb:3600302919": [
+  "app/controllers/masq/sessions_controller.rb:595937348": [
     [39, 21, 3, "Style/AndOr: Use `&&` instead of `and`.", 193409806]
   ],
   "lib/masq/authenticated_system.rb:2956957840": [
