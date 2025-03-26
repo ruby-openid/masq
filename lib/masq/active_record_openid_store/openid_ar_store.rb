@@ -1,26 +1,28 @@
-require 'openid/store/interface'
+require "openid/store/interface"
 
 module Masq
   # not in OpenID module to avoid namespace conflict
   class ActiveRecordStore < OpenID::Store::Interface
     def store_association(server_url, assoc)
       remove_association(server_url, assoc.handle)
-      Association.create(:server_url => server_url,
-                         :handle     => assoc.handle,
-                         :secret     => assoc.secret,
-                         :issued     => assoc.issued,
-                         :lifetime   => assoc.lifetime,
-                         :assoc_type => assoc.assoc_type)
+      Association.create(
+        server_url: server_url,
+        handle: assoc.handle,
+        secret: assoc.secret,
+        issued: assoc.issued,
+        lifetime: assoc.lifetime,
+        assoc_type: assoc.assoc_type,
+      )
     end
 
-    def get_association(server_url, handle=nil)
+    def get_association(server_url, handle = nil)
       assocs = if handle.blank?
-          Association.where(server_url: server_url)
-        else
-          Association.where(server_url: server_url, handle: handle)
-        end
+        Association.where(server_url: server_url)
+      else
+        Association.where(server_url: server_url, handle: handle)
+      end
 
-      assocs.reverse.each do |assoc|
+      assocs.reverse_each do |assoc|
         a = assoc.from_record
         if a.expires_in == 0
           assoc.destroy
@@ -29,18 +31,18 @@ module Masq
         end
       end if assocs.any?
 
-      return nil
+      nil
     end
 
     def remove_association(server_url, handle)
-      Association.where('server_url = ? AND handle = ?', server_url, handle).delete_all > 0
+      Association.where("server_url = ? AND handle = ?", server_url, handle).delete_all > 0
     end
 
     def use_nonce(server_url, timestamp, salt)
       return false if Nonce.find_by(server_url: server_url, timestamp: timestamp, salt: salt)
       return false if (timestamp - Time.now.to_i).abs > OpenID::Nonce.skew
-      Nonce.create(:server_url => server_url, :timestamp => timestamp, :salt => salt)
-      return true
+      Nonce.create(server_url: server_url, timestamp: timestamp, salt: salt)
+      true
     end
 
     def cleanup_nonces
@@ -50,7 +52,7 @@ module Masq
 
     def cleanup_associations
       now = Time.now.to_i
-      Association.where('issued + lifetime > ?',now).delete_all
+      Association.where("issued + lifetime > ?", now).delete_all
     end
   end
 end

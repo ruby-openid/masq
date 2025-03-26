@@ -5,7 +5,7 @@ module Masq
     skip_before_action :verify_authenticity_token
     # Error handling
     rescue_from OpenID::Server::ProtocolError, with: :render_openid_error
-    # Actions other than index require a logged in user
+    # Actions other than index require a logged-in user
     before_action :login_required, except: %i[index cancel seatbelt_config seatbelt_login_state]
     before_action :ensure_valid_checkid_request, except: %i[index cancel seatbelt_config seatbelt_login_state]
     after_action :clear_checkid_request, only: %i[cancel complete]
@@ -26,7 +26,7 @@ module Masq
           elsif openid_request
             handle_non_checkid_request
           else
-            render :plain => t(:this_is_openid_not_a_human_ressource)
+            render(plain: t(:this_is_openid_not_a_human_resource))
           end
         end
         format.xrds
@@ -40,11 +40,12 @@ module Masq
     # be answered based on the users release policy. If the request is immediate
     # (relying party wants no user interaction, used e.g. for ajax requests)
     # the request can only be answered if no further information (like simple
-    # registration data) is requested. Otherwise the user will be redirected
+    # registration data) is requested. Otherwise, the user will be redirected
     # to the decision page.
     def proceed
       identity = identifier(current_account)
-      if @site = current_account.sites.find_by(url: checkid_request.trust_root)
+      @site = current_account.sites.find_by(url: checkid_request.trust_root)
+      if @site
         resp = checkid_request.answer(true, nil, identity)
         resp = add_sreg(resp, @site.sreg_properties) if sreg_request
         resp = add_ax(resp, @site.ax_properties) if ax_fetch_request
@@ -55,12 +56,12 @@ module Masq
       elsif checkid_request.immediate
         render_response(checkid_request.answer(true, nil, identity))
       else
-        redirect_to decide_path
+        redirect_to(decide_path)
       end
     end
 
     # Displays the decision page on that the user can confirm the request and
-    # choose which data should be transfered to the relying party.
+    # choose which data should be transferred to the relying party.
     def decide
       @site = current_account.sites.where(url: checkid_request.trust_root).first_or_initialize
       @site.persona = current_account.personas.find_by(params[:persona_id]) || current_account.personas.first if sreg_request || ax_store_request || ax_fetch_request
@@ -68,7 +69,7 @@ module Masq
 
     # This action is called by submitting the decision form, the information entered by
     # the user is used to answer the request. If the user decides to always trust the
-    # relying party, a new site according to the release policies the will be created.
+    # relying party, a new site according to the release policies will be created.
     def complete
       if params[:cancel]
         cancel
@@ -76,7 +77,7 @@ module Masq
         resp = checkid_request.answer(true, nil, identifier(current_account))
         if params[:always]
           @site = current_account.sites.where(persona_id: params[:site][:persona_id], url: params[:site][:url]).first_or_create
-          @site.update_attributes(site_params)
+          @site.update(site_params)
         elsif sreg_request || ax_fetch_request
           @site = current_account.sites.where(persona_id: params[:site][:persona_id], url: params[:site][:url]).first_or_create
           @site.attributes = site_params
@@ -86,7 +87,8 @@ module Masq
           not_accepted = []
           accepted = []
           ax_store_request.data.each do |type_uri, values|
-            if property = Persona.attribute_name_for_type_uri(type_uri)
+            property = Persona.attribute_name_for_type_uri(type_uri)
+            if property
               store_attribute = params[:site][:ax_store][property.to_sym]
               if store_attribute && !store_attribute[:value].blank?
                 @site.persona.update_attribute(property, values.first)
@@ -111,7 +113,7 @@ module Masq
     # Cancels the current OpenID request
     def cancel
       if checkid_request
-        redirect_to checkid_request.cancel_url
+        redirect_to(checkid_request.cancel_url)
       else
         reset_session
         redirect_to(login_path)
@@ -128,7 +130,7 @@ module Masq
     def handle_checkid_request
       if allow_verification?
         save_checkid_request
-        redirect_to proceed_path
+        redirect_to(proceed_path)
       elsif openid_request.immediate
         render_response(openid_request.answer(false))
       else
@@ -152,7 +154,7 @@ module Masq
     # Deletes the old request when a new one comes in.
     def clear_checkid_request
       unless session[:request_token].blank?
-        OpenIdRequest.where(:token => session[:request_token]).destroy_all
+        OpenIdRequest.where(token: session[:request_token]).destroy_all
         session[:request_token] = nil
       end
     end
@@ -164,13 +166,13 @@ module Masq
     def ensure_valid_checkid_request
       self.openid_request = checkid_request
       if !openid_request.is_a?(OpenID::Server::CheckIDRequest)
-        redirect_to root_path, alert: t(:identity_verification_request_invalid)
+        redirect_to(root_path, alert: t(:identity_verification_request_invalid))
       elsif !allow_verification?
-        flash[:notice] = logged_in? && !pape_requirements_met?(auth_time) ?
+        flash[:notice] = (logged_in? && !pape_requirements_met?(auth_time)) ?
           t(:service_provider_requires_reauthentication_last_login_too_long_ago) :
           t(:login_to_verify_identity)
         session[:return_to] = proceed_path
-        redirect_to login_path
+        redirect_to(login_path)
       end
     end
 
@@ -184,7 +186,7 @@ module Masq
     # must be logged in, so that we know his identifier or the identifier
     # has to be selected by the server (id_select).
     def correct_identifier?
-      (openid_request.identity == identifier(current_account) || openid_request.id_select)
+      openid_request.identity == identifier(current_account) || openid_request.id_select
     end
 
     # Clears the stored request and answers
@@ -197,9 +199,9 @@ module Masq
     def transform_ax_data(parameters)
       data = {}
       parameters.each_pair do |key, details|
-        if details['value']
-          data["type.#{key}"] = details['type']
-          data["value.#{key}"] = details['value']
+        if details["value"]
+          data["type.#{key}"] = details["type"]
+          data["value.#{key}"] = details["value"]
         end
       end
       data
@@ -208,10 +210,10 @@ module Masq
     # Renders the exception message as text output
     def render_openid_error(exception)
       error = case exception
-              when OpenID::Server::MalformedTrustRoot then "Malformed trust root '#{exception}'"
-              else exception.to_s
+      when OpenID::Server::MalformedTrustRoot then "Malformed trust root '#{exception}'"
+      else exception.to_s
       end
-      render plain: "Invalid OpenID request: #{error}", status: 500
+      render(plain: "Invalid OpenID request: #{error}", status: 500)
     end
 
     private
@@ -219,7 +221,7 @@ module Masq
     # The NIST Assurance Level, see:
     # http://openid.net/specs/openid-provider-authentication-policy-extension-1_0-01.html#anchor12
     def auth_level
-      if Masq::Engine.config.masq['use_ssl']
+      if Masq::Engine.config.masq["use_ssl"]
         current_account.last_authenticated_by_yubikey? ? 3 : 2
       else
         0

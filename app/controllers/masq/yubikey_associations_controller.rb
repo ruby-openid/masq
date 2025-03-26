@@ -9,7 +9,7 @@ module Masq
         flash[:alert] = t(:sorry_yubico_one_time_password_incorrect)
       end
       respond_to do |format|
-        format.html { redirect_to edit_account_path }
+        format.html { redirect_to(edit_account_path) }
       end
     end
 
@@ -18,7 +18,7 @@ module Masq
       current_account.save
 
       respond_to do |format|
-        format.html { redirect_to edit_account_path, :notice => t(:account_disassociated_from_yubico_identity) }
+        format.html { redirect_to(edit_account_path, notice: t(:account_disassociated_from_yubico_identity)) }
       end
     end
   end

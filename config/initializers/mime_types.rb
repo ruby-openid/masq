@@ -1,1 +1,1 @@
-Mime::Type.register "application/xrds+xml", :xrds
+Mime::Type.register("application/xrds+xml", :xrds)

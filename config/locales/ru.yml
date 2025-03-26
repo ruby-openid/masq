@@ -211,7 +211,7 @@ ru:
   i_forgot_my_password: Я забыл свой пароль
 
   # server controller
-  this_is_openid_not_a_human_ressource: This is an OpenID server endpoint, not a human readable resource.
+  this_is_openid_not_a_human_resource: This is an OpenID server endpoint, not a human readable resource.
   identity_verification_request_invalid: The identity verification request is invalid.
   service_provider_requires_reauthentication_last_login_too_long_ago: The Service Provider requires reauthentication, because your last login is too long ago.
   login_to_verify_identity: Please log in to verify your identity.

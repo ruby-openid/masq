@@ -1,99 +1,103 @@
-require 'test_helper'
+require "test_helper"
 
 module Masq
   class ServerControllerTest < ActionController::TestCase
-
     fixtures :accounts, :personas
 
     def test_should_redirect_to_safe_login_page_if_untrusted_domain
       login_as(:standard)
-      post :index, params: checkid_request_params
-      assert_redirected_to safe_login_path
-      assert_not_nil request.session[:return_to]
-      assert_not_nil request.session[:request_token]
+      post(:index, params: checkid_request_params)
+      assert_redirected_to(safe_login_path)
+      assert_not_nil(request.session[:return_to])
+      assert_not_nil(request.session[:request_token])
     end
 
     def test_should_redirect_to_login_page_if_trusted_domain
       login_as(:standard)
-      domain = Masq::Engine.config.masq['trusted_domains'].first
-      post :index, params: checkid_request_params.merge('openid.trust_root' => "http://#{domain}/", 'openid.realm' => "http://#{domain}/", 'openid.return_to' => "http://#{domain}/return")
-      assert_redirected_to login_path
-      assert_not_nil request.session[:return_to]
-      assert_not_nil request.session[:request_token]
+      domain = Masq::Engine.config.masq["trusted_domains"].first
+      post(:index, params: checkid_request_params.merge("openid.trust_root" => "http://#{domain}/", "openid.realm" => "http://#{domain}/", "openid.return_to" => "http://#{domain}/return"))
+      assert_redirected_to(login_path)
+      assert_not_nil(request.session[:return_to])
+      assert_not_nil(request.session[:request_token])
     end
 
     def test_should_save_site_if_user_chose_to_trust_always
       fake_checkid_request(:standard)
-      assert_difference('Site.count', 1) do
-        post :complete, params: {:always => 1,
-          :site => {
-            :persona_id => personas(:public).id,
-            :url => checkid_request_params['openid.trust_root'],
-            :properties => valid_properties }}
+      assert_difference("Masq::Site.count", 1) do
+        post(:complete, params: {
+          always: 1,
+          site: {
+            persona_id: personas(:public).id,
+            url: checkid_request_params["openid.trust_root"],
+            properties: valid_properties,
+          },
+        })
       end
-      assert_response :redirect
-      assert_match(checkid_request_params['openid.return_to'], response.redirect_url)
-      assert_match(/mode=id_res/,  response.redirect_url)
+      assert_response(:redirect)
+      assert_match(checkid_request_params["openid.return_to"], response.redirect_url)
+      assert_match(/mode=id_res/, response.redirect_url)
     end
 
     def test_should_not_save_site_if_user_chose_to_trust_temporary
       fake_checkid_request(:standard)
-      assert_no_difference('Site.count') do
-        post :complete, params: {:temporary => 1,
-          :site => valid_site_attributes.merge(:properties => valid_properties)}
+      assert_no_difference("Masq::Site.count") do
+        post(:complete, params: {
+          temporary: 1,
+          site: valid_site_attributes.merge(properties: valid_properties),
+        })
       end
-      assert_response :redirect
-      assert_match checkid_request_params['openid.return_to'], response.redirect_url
-      assert_match(/mode=id_res/,  response.redirect_url)
+      assert_response(:redirect)
+      assert_match(checkid_request_params["openid.return_to"], response.redirect_url)
+      assert_match(/mode=id_res/, response.redirect_url)
     end
 
     def test_should_redirect_to_openid_cancel_url_if_user_chose_to_cancel
       fake_checkid_request(:standard)
-      post :complete, params: {:cancel => 1}
-      assert_response :redirect
-      assert_match(checkid_request_params['openid.return_to'], response.redirect_url)
+      post(:complete, params: {cancel: 1})
+      assert_response(:redirect)
+      assert_match(checkid_request_params["openid.return_to"], response.redirect_url)
       assert_match(/mode=cancel/, response.redirect_url)
     end
 
     def test_should_ask_user_to_login_if_claimed_id_does_not_belong_to_current_account
       login_as(:standard)
       id_url = "http://notmine.com"
-      post :index, params: checkid_request_params.merge('openid.identity' => id_url, 'openid.claimed_id' => id_url)
-      assert_redirected_to safe_login_path
-      assert_not_nil request.session[:return_to]
-      assert_not_nil request.session[:request_token]
+      post(:index, params: checkid_request_params.merge("openid.identity" => id_url, "openid.claimed_id" => id_url))
+      assert_redirected_to(safe_login_path)
+      assert_not_nil(request.session[:return_to])
+      assert_not_nil(request.session[:request_token])
     end
 
     def test_should_clear_old_request_when_recieving_a_new_one
       fake_checkid_request(:standard)
       token_for_first_request = request.session[:request_token]
-      assert token_for_first_request
-      post :index
-      assert_not_equal request.session[:request_token], token_for_first_request
-      assert_nil OpenIdRequest.find_by(token: token_for_first_request)
+      assert(token_for_first_request)
+      post(:index)
+      assert_not_equal(request.session[:request_token], token_for_first_request)
+      assert_nil(OpenIdRequest.find_by(token: token_for_first_request))
     end
 
     def test_should_directly_answer_incoming_associate_requests
-      post :index, params: associate_request_params
-      assert_response :success
-      assert_match 'assoc_handle', response.body
-      assert_match 'assoc_type', response.body
-      assert_match 'session_type', response.body
-      assert_match 'expires_in', response.body
+      post(:index, params: associate_request_params)
+      assert_response(:success)
+      assert_match("assoc_handle", response.body)
+      assert_match("assoc_type", response.body)
+      assert_match("session_type", response.body)
+      assert_match("expires_in", response.body)
     end
 
     def test_should_require_login_for_proceed
-      get :proceed
+      get(:proceed)
       assert_login_required
     end
 
     def test_should_require_login_for_decide
-      get :decide
+      get(:decide)
       assert_login_required
     end
 
     def test_should_require_login_for_complete
-      get :complete
+      get(:complete)
       assert_login_required
     end
 
@@ -101,11 +105,10 @@ module Masq
 
     # Takes the name of an account fixture for which to fake the request
     def fake_checkid_request(account)
-      login_as account
-      id_url = identity_url(accounts(account), :host => Masq::Engine.config.masq['host'])
-      openid_params = checkid_request_params.merge('openid.identity' => id_url, 'openid.claimed_id' => id_url)
-      request.session[:request_token] = OpenIdRequest.create(:parameters => openid_params).token
+      login_as(account)
+      id_url = identity_url(accounts(account), host: Masq::Engine.config.masq["host"])
+      openid_params = checkid_request_params.merge("openid.identity" => id_url, "openid.claimed_id" => id_url)
+      request.session[:request_token] = OpenIdRequest.create(parameters: openid_params).token
     end
-
   end
 end

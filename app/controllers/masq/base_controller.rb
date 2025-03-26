@@ -5,21 +5,26 @@ module Masq
 
     protect_from_forgery
 
-    rescue_from ::ActiveRecord::RecordNotFound, :with => :render_404
-    rescue_from ::ActionController::InvalidAuthenticityToken, :with => :render_422
+    rescue_from ::ActiveRecord::RecordNotFound, with: :render_404
+    rescue_from ::ActionController::InvalidAuthenticityToken, with: :render_422
 
-    helper_method :extract_host, :extract_login_from_identifier, :checkid_request,
-      :identifier, :endpoint_url, :scheme, :email_as_login?
+    helper_method :extract_host,
+      :extract_login_from_identifier,
+      :checkid_request,
+      :identifier,
+      :endpoint_url,
+      :scheme,
+      :email_as_login?
 
     protected
 
     def endpoint_url
-      server_url(:protocol => scheme)
+      server_url(protocol: scheme)
     end
 
     # Returns the OpenID identifier for an account
     def identifier(account)
-      identity_url(:account => account, :protocol => scheme)
+      identity_url(account: account, protocol: scheme)
     end
 
     # Extracts the hostname from the given url, which is used to
@@ -29,11 +34,11 @@ module Masq
     end
 
     def extract_login_from_identifier(openid_url)
-      openid_url.gsub(/^https?:\/\/.*\//, '')
+      openid_url.gsub(/^https?:\/\/.*\//, "")
     end
 
     def checkid_request
-      unless (@checkid_request||=nil)
+      unless @checkid_request ||= nil
         req = openid_server.decode_request(current_openid_request.parameters) if current_openid_request
         @checkid_request = req.is_a?(OpenID::Server::CheckIDRequest) ? req : false
       end
@@ -57,17 +62,17 @@ module Masq
     end
 
     def render_error(status_code)
-      render :file => "#{Rails.root}/public/#{status_code}", :formats => [:html], :status => status_code, :layout => false
+      render(file: "#{Rails.root}/public/#{status_code}.html", formats: [:html], status: status_code, layout: false)
     end
 
     private
 
     def scheme
-      Masq::Engine.config.masq['use_ssl'] ? 'https' : 'http'
+      Masq::Engine.config.masq["use_ssl"] ? "https" : "http"
     end
 
     def email_as_login?
-      Masq::Engine.config.masq['email_as_login']
+      Masq::Engine.config.masq["email_as_login"]
     end
   end
 end

@@ -1,25 +1,35 @@
-.bundle
-.DS_Store
-.loadpath
-.project
-.ruby-version
-.rvmrc
-Capfile
-Thumbs.db
-db/*.sqlite3
-doc/*
-log/*.log
-pkg/
-public/cache/**/*
-run_tests.sh
-test/dummy/db/*.sqlite3
-test/dummy/log/*.log
-test/dummy/tmp
-test/dummy/.sass-cache
-tmp
-vendor/ruby
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/tmp/
 
-# Ignore uploaded files in development, if ever there are any from ActiveStorage
-/storage/*
+# Debugging
+.byebug_history
 
-/public/assets
+# rspec failure tracking
+.rspec_status
+
+# IDEs
+/.idea/
+
+# Packaging Artifacts
+*.gem
+gemfiles/*.gemfile.lock
+Appraisal.*.gemfile.lock
+
+# Engine stuff
+/db/*.sqlite
+/db/*.sqlite3
+/log/*.log
+/public/cache/**/*
+/vendor/
+
+# Dummy Rails App
+/test/internal/db/*.sqlite3
+/test/internal/db/*.sqlite
+/test/internal/log/*.log
+/test/internal/tmp
+/test/internal/.sass-cache

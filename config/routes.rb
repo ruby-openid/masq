@@ -6,11 +6,11 @@ Masq::Engine.routes.draw do
 
     resources :personas
     resources :sites
-    resource :yubikey_association, :only => [:create, :destroy]
+    resource :yubikey_association, only: [:create, :destroy]
   end
 
   resource :password
-  resource :session, :only => [:new, :create, :destroy]
+  resource :session, only: [:new, :create, :destroy]
 
   get "/help" => "info#help", :as => :help
   get "/safe-login" => "info#safe_login", :as => :safe_login
@@ -21,7 +21,7 @@ Masq::Engine.routes.draw do
   get "/login" => "sessions#new", :as => :login
   get "/logout" => "sessions#destroy", :as => :logout
   delete "/logout" => "sessions#destroy"
-  post '/resend_activation_email/*account' => 'accounts#resend_activation_email', :as => :resend_activation_email
+  post "/resend_activation_email/*account" => "accounts#resend_activation_email", :as => :resend_activation_email
 
   match "/server" => "server#index", :as => :server, :via => [:get, :post]
   match "/server/decide" => "server#decide", :as => :decide, :via => [:get, :post]
@@ -35,7 +35,7 @@ Masq::Engine.routes.draw do
   post "/consumer/start" => "consumer#start", :as => :consumer_start
   match "/consumer/complete" => "consumer#complete", :as => :consumer_complete, :via => [:get, :post]
 
-  get "/*account" => "accounts#show", :as => :identity,  :constraints => {:format => /\.xrds/}
+  get "/*account" => "accounts#show", :as => :identity, :constraints => {format: /\.xrds/}
 
-  root :to => "info#index"
+  root to: "info#index"
 end

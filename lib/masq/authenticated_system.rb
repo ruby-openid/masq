@@ -1,6 +1,7 @@
 module Masq
   module AuthenticatedSystem
     protected
+
     # Returns true or false if the account is logged in.
     # Preloads @current_account with the account model if they're logged in.
     def logged_in?
@@ -10,12 +11,12 @@ module Masq
     # Accesses the current account from the session.  Set it to :false if login fails
     # so that future calls do not hit the database.
     def current_account
-      @current_account ||= (login_from_session || login_from_basic_auth || login_from_cookie || :false)
+      @current_account ||= login_from_session || login_from_basic_auth || login_from_cookie || :false
     end
 
     # Store the given account id in the session.
     def current_account=(new_account)
-      if self.auth_type_used != :basic
+      if auth_type_used != :basic
         session[:account_id] = (new_account.nil? || new_account.is_a?(Symbol)) ? nil : new_account.id
       end
       @current_account = new_account || :false
@@ -67,10 +68,10 @@ module Masq
       respond_to do |format|
         format.html do
           store_location
-          redirect_to login_path
+          redirect_to(login_path)
         end
         format.any do
-          request_http_basic_authentication 'Web Password'
+          request_http_basic_authentication("Web Password")
         end
       end
     end
@@ -92,13 +93,13 @@ module Masq
     # Inclusion hook to make #current_account and #logged_in?
     # available as ActionView helper methods.
     def self.included(base)
-      base.send :helper_method, :current_account, :logged_in?, :auth_type_used
+      base.send(:helper_method, :current_account, :logged_in?, :auth_type_used)
     end
 
-    # Called from #current_account.  First attempt to login by the account id stored in the session.
+    # Called from #current_account.  First attempt to log in by the account id stored in the session.
     def login_from_session
       account = Account.find(session[:account_id]) if session[:account_id]
-      self.auth_type_used = :session if not account.nil?
+      self.auth_type_used = :session if !account.nil?
       self.current_account = account
     end
 
@@ -110,23 +111,23 @@ module Masq
       @auth_type_used = t
     end
 
-    # Called from #current_account.  Now, attempt to login by basic authentication information.
+    # Called from #current_account.  Now, attempt to log in by basic authentication information.
     def login_from_basic_auth
       authenticate_with_http_basic do |accountname, password|
         account = Account.authenticate(accountname, password, true)
-        self.auth_type_used = :basic if not account.nil?
+        self.auth_type_used = :basic if !account.nil?
         self.current_account = account
         account
       end
     end
 
-    # Called from #current_account.  Finaly, attempt to login by an expiring token in the cookie.
+    # Called from #current_account.  Finally, attempt to log in by an expiring token in the cookie.
     def login_from_cookie
       account = cookies[:auth_token] && Account.find_by(remember_token: cookies[:auth_token])
       if account && account.remember_token?
         account.remember_me
-        cookies[:auth_token] = { :value => account.remember_token, :expires => account.remember_token_expires_at }
-        self.auth_type_used = :cookie if not account.nil?
+        cookies[:auth_token] = {value: account.remember_token, expires: account.remember_token_expires_at}
+        self.auth_type_used = :cookie if !account.nil?
         self.current_account = account
         account
       end

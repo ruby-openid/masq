@@ -1,30 +1,27 @@
-require 'test_helper'
+require "test_helper"
 
 module Masq
   class YubikeyAssociationsControllerTest < ActionController::TestCase
-
-
     fixtures :accounts
 
     def test_should_associate_an_account_with_the_given_yubikey
       @account = accounts(:standard)
       login_as(:standard)
-      yubico_otp = 'x' * 44
-      Account.expects(:verify_yubico_otp).with(yubico_otp).returns(true)
-      post :create, params: {:yubico_otp => yubico_otp}
+      yubico_otp = "x" * 44
+      Masq::Account.expects(:verify_yubico_otp).with(yubico_otp).returns(true)
+      post(:create, params: {yubico_otp: yubico_otp})
       @account.reload
-      assert_equal 'x' * 12, @account.yubico_identity
-      assert_redirected_to edit_account_path
+      assert_equal("x" * 12, @account.yubico_identity)
+      assert_redirected_to(edit_account_path)
     end
 
     def test_should_remove_an_association
-      @account = accounts(:with_yubico_identity)
-      login_as(:with_yubico_identity)
-      delete :destroy
+      @account = accounts(:with_destroyable_yubico_identity)
+      login_as(:with_destroyable_yubico_identity)
+      delete(:destroy)
       @account.reload
-      assert_nil @account.yubico_identity
-      assert_redirected_to edit_account_path
+      assert_nil(@account.yubico_identity)
+      assert_redirected_to(edit_account_path)
     end
-
   end
 end
