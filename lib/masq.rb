@@ -11,17 +11,26 @@ module Masq
   # This gem must be loaded **after** Rails in order for the Engine to register itself automatically.
   # Otherwise, you'd have to manually require what you need from below.
   if defined?(::Rails) && defined?(::Rails::VERSION)
-    if defined?(::Rails::Engine)
-      require "masq/engine"
-    else
-      warn(<<~WARNING)
-        Unable to load masq2. Please check your configuration.
-        If you're using Rails 5.2 or later, you should add masq2 to your Gemfile and run `bundle install`.
-        Then add:
-          require "masq/engine"
-  
-        If unable to resolve, please report a bug to the issue tracker at https://github.com/oauth-xx/masq2
-      WARNING
+    begin
+      require_relative "masq/engine"
+      require_relative "masq/authenticated_system"
+      require_relative "masq/openid_server_system"
+      require_relative "masq/active_record_openid_store/association"
+      require_relative "masq/active_record_openid_store/nonce"
+      require_relative "masq/active_record_openid_store/openid_ar_store"
+    rescue StandardError, LoadError => e
+      if !defined?(::Rails::Engine)
+        warn("masq2 is a Rails engine, but Rails::Engine isn't defined.")
+      else
+        warn(<<~WARNING)
+          Unable to load masq2. Please check your configuration.
+          If you're using Rails 5.2 or later, you should add masq2 to your Gemfile and run `bundle install`.
+          Then add:
+            require "masq/engine"
+    
+          If unable to resolve, please report a bug to the issue tracker at https://github.com/oauth-xx/masq2
+        WARNING
+      end
     end
   else
     warn("masq2 was loaded before Rails. Please check your configuration.")
