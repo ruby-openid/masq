@@ -59,8 +59,7 @@ client-server communication (like requesting simple registration data).
 ### Introduction
 
 `masq2` adds ORACLE database support, as well as support for
-Rails 5.2, 6.0, 6.1, 7.0, 7.1, 7.2, 8.0,
-which `masq` never had.
+Rails 6.1, 7.0, 7.1, 7.2, 8.0, which `masq` never had.
 
 The main functionality is in the server controller, which is the endpoint for incoming
 OpenID requests. The server controller is supposed to only interact with relying parties
@@ -78,7 +77,6 @@ Rails 5.2.8.1 is a security patch release to fix CVE-2022-32224.
 See: https://discuss.rubyonrails.org/t/cve-2022-32224-possible-rce-escalation-bug-with-serialized-columns-in-active-record/81017
 
 The patch (Rails v5.2.8.1) causes an error with `masq` v0.3.4
-(... actually it doesn't work at all on Rails v5, but some forks have been fixed):
 
 ```
 Psych::DisallowedClass: Tried to load unspecified class: ActiveSupport::HashWithIndifferentAccess
@@ -91,14 +89,15 @@ serialize :parameters, Hash
 
 so we instead switch to serializing as JSON:
 ```ruby
-serialize :parameters, JSON
+# serialize :parameters, JSON # Would be for Rails 5.2/6.0, but this gem has already dropped support for Rails 5.2/6.0
+serialize :parameters, type: Hash, coder: JSON
 ```
 
 If an implementation needs to continue using the serialized Hash,
 you will need to override the definition by reopening the model, and adding:
 
 ```ruby
-serialize :parameters, Hash
+serialize :parameters, type: Hash, coder: Hash
 ```
 
 In addition, one of the following is also needed.

@@ -1,32 +1,5 @@
 # frozen_string_literal: true
 
-# Compat: Ruby >= 2.2.2
-# Test Matrix:
-#   - Ruby 2.7
-appraise "rails-5-2" do
-  # Load order is very important with combustion!
-  gem "combustion", "~> 1.5"
-  gem "sqlite3", "~> 1.4"
-
-  gem "rails", "~> 5.2.8.1"
-  gem "nokogiri"
-  eval_gemfile "modular/mini_testing.gemfile"
-  remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
-end
-
-# Compat: Ruby >= 2.5
-# Test Matrix:
-#   - Ruby 2.7
-appraise "rails-6-0" do
-  # Load order is very important with combustion!
-  gem "combustion", "~> 1.5"
-  gem "sqlite3", "~> 1.4"
-
-  gem "rails", "~> 6.0.6.1"
-  eval_gemfile "modular/mini_testing.gemfile"
-  remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
-end
-
 # Compat: Ruby >= 2.5
 # Test Matrix:
 #   - Ruby 2.7
