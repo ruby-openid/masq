@@ -77,6 +77,9 @@ Gem::Specification.new do |spec|
   spec.add_dependency("version_gem", "~> 1.1", ">= 1.1.6")
   spec.add_dependency("yubikey")
 
+  # Release Tasks
+  spec.add_development_dependency("stone_checksums", "~> 1.0")
+
   # Development Tasks
   spec.add_development_dependency("rake", "~> 13.0")                          # ruby >= 2.2
 
