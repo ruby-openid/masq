@@ -99,6 +99,11 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: ${{ matrix.experimental != 'false' }}
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
       - name: Upload test results to Codecov
         if: ${{ !cancelled() }}
         uses: codecov/test-results-action@v1
