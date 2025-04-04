@@ -352,8 +352,8 @@ or one of the others at the head of this README.
 [🔑codecovi♻️]: https://codecov.io/gh/oauth-xx/masq2/branch/main/graph/badge.svg?token=xqVPZjg76X
 [🔑coveralls]: https://coveralls.io/github/oauth-xx/masq2?branch=main
 [🔑coveralls-img]: https://coveralls.io/repos/github/oauth-xx/masq2/badge.svg?branch=main
-[🔑depfu]: https://depfu.com/github/oauth-xx/masq2
-[🔑depfui♻️]: https://badges.depfu.com/badges/85187dfdd2ecf7839b2ec78c64d2bf4e/count.svg
+[🔑depfu]: https://depfu.com/github/oauth-xx/masq2?project_id=60301
+[🔑depfui♻️]: https://badges.depfu.com/badges/c31817967a3a2467ee56d3e95c3a2802/count.svg
 [🖐codeQL]: https://github.com/oauth-xx/masq2/security/code-scanning
 [🖐codeQL-img]: https://github.com/oauth-xx/masq2/actions/workflows/codeql-analysis.yml/badge.svg
 [🚎1-an-wf]: https://github.com/oauth-xx/masq2/actions/workflows/ancient.yml

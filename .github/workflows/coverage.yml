@@ -1,11 +1,11 @@
 name: Test Coverage
 
 env:
-  K_SOUP_COV_MIN_BRANCH: 2
-  K_SOUP_COV_MIN_LINE: 46
+  K_SOUP_COV_MIN_BRANCH: 69
+  K_SOUP_COV_MIN_LINE: 88
   K_SOUP_COV_MIN_HARD: true
   K_SOUP_COV_DO: true
-  K_SOUP_COV_COMMAND_NAME: "RSpec Coverage"
+  K_SOUP_COV_COMMAND_NAME: "Minitest Coverage"
 
 on:
   push:
@@ -93,27 +93,31 @@ jobs:
           path: code-coverage-results.md
         continue-on-error: ${{ matrix.experimental != 'false' }}
 
-      - name: Coveralls
+      - name: Upload coverage to Coveralls
         uses: coverallsapp/github-action@master
+        if: ${{ github.event_name != 'pull_request' }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: ${{ matrix.experimental != 'false' }}
 
+      - name: Upload coverage to QLTY
+        uses: qltysh/qlty-action/coverage@main
+        with:
+          coverage-token: {{secrets.QLTY_COVERAGE_TOKEN}}
+          files: coverage/.resultset.json
+        if: ${{ github.event_name != 'pull_request' }}
+        continue-on-error: ${{ matrix.experimental != 'false' }}
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
+        if: ${{ github.event_name != 'pull_request' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+        continue-on-error: ${{ matrix.experimental != 'false' }}
 
       - name: Upload test results to Codecov
         if: ${{ !cancelled() }}
         uses: codecov/test-results-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-
-      - name: Upload results to QLTY
-        uses: qltysh/qlty-action/coverage@main
-        with:
-          coverage-token: {{secrets.QLTY_COVERAGE_TOKEN}}
-          files: coverage/.resultset.json
-        if: ${{ github.event_name != 'pull_request' }}
         continue-on-error: ${{ matrix.experimental != 'false' }}

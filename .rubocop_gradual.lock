@@ -22,12 +22,12 @@
   "lib/tasks/masq_tasks.rake:1483017689": [
     [39, 21, 42, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 4054527944]
   ],
-  "masq2.gemspec:491945488": [
+  "masq2.gemspec:321617937": [
     [72, 3, 26, "Gemspec/DependencyVersion: Dependency version specification is required.", 1260806891],
     [73, 3, 32, "Gemspec/DependencyVersion: Dependency version specification is required.", 855136127],
     [76, 3, 33, "Gemspec/DependencyVersion: Dependency version specification is required.", 3159729161],
     [78, 3, 30, "Gemspec/DependencyVersion: Dependency version specification is required.", 2010339150],
-    [92, 3, 72, "Gemspec/DependencyVersion: Dependency version specification is required.", 2491072344]
+    [93, 3, 72, "Gemspec/DependencyVersion: Dependency version specification is required.", 2491072344]
   ],
   "test/test_helper.rb:2496707493": [
     [206, 45, 1, "Lint/AssignmentInCondition: Wrap assignment in parentheses if intentional", 177560]

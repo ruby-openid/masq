@@ -84,6 +84,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency("rake", "~> 13.0")                          # ruby >= 2.2
 
   # Testing
+  spec.add_development_dependency("kettle-soup-cover", "~> 1.0", ">= 1.0.5")  # ruby >= 2.7
   spec.add_development_dependency("rails-controller-testing", "~> 1.0", ">= 1.0.5")
 
   # Linting - rubocop-lts v18 is a rubocop wrapper for Ruby >= 2.7,
