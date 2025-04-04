@@ -22,16 +22,18 @@ Please file a bug if you notice a violation of semantic versioning.
 ### Fixed
 ### Removed
 
-## [1.0.0] - 2025-02-25 ([tag][1.0.0t])
-- COVERAGE:  98.44% -- 63/64 lines in 6 files
-- BRANCH COVERAGE:  94.44% -- 17/18 branches in 6 files
-- 63.64% documented
+## [1.0.0] - 2025-04-04 ([tag][1.0.0t])
+- Line Coverage: 88.48% (776 / 877)
+- Branch Coverage: 69.42% (193 / 278)
+- 38.41% documented
 ### Added
 - Compatibility with Rails v5.2, v6.x, 7.x, 8.0
-- Compatibility with Ruby 2.7.8, 3.x
+- Compatibility with Ruby 2.7.8, 3.0, 3.1, 3.2, 3.3, 3.4, ruby-head
 ### Removed
 - Dropped compatibility with Rails < 5.2
 - Dropped compatibility with Ruby < 2.7.8
+
+# masq releases
 
 ## v0.3.4
 
@@ -76,6 +78,6 @@ Please file a bug if you notice a violation of semantic versioning.
 
 * [Security] Updated Rails to version 3.2.11
 
-[Unreleased]: https://github.com/oauth-xx/masq2/compare/v0.1.7...HEAD
-[0.1.7]: https://github.com/oauth-xx/masq2/compare/v0.1.16...v0.1.7
-[0.1.7t]: https://github.com/oauth-xx/masq2/tags/v0.1.6
+[Unreleased]: https://github.com/oauth-xx/masq2/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/oauth-xx/masq2/compare/bc6b6d84fe06811b9de19e7863c53c6bfad201fe...v1.0.0
+[1.0.0t]: https://github.com/oauth-xx/masq2/tags/v1.0.0

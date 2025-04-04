@@ -22,7 +22,7 @@ GIT
 PATH
   remote: .
   specs:
-    masq2 (1.0.0.pre.beta.1)
+    masq2 (1.0.0)
       erb
       i18n_data
       rails (>= 5.2.8.1)
