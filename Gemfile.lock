@@ -404,7 +404,7 @@ GEM
     unicode-emoji (4.0.4)
     uri (1.0.3)
     useragent (0.16.11)
-    version_gem (1.1.7)
+    version_gem (1.1.8)
     websocket-driver (0.7.7)
       base64
       websocket-extensions (>= 0.1.0)
