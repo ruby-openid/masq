@@ -31,12 +31,7 @@
 
 ---
 
-[![Liberapay Patrons][⛳liberapay-img]][⛳liberapay]
-[![Sponsor Me on Github][🖇sponsor-img]][🖇sponsor]
-[![Buy me a coffee][🖇buyme-small-img]][🖇buyme]
-[![Polar Shield][🖇polar-img]][🖇polar]
-[![Donate to my FLOSS or refugee efforts at ko-fi.com][🖇kofi-img]][🖇kofi]
-[![Donate to my FLOSS or refugee efforts using Patreon][🖇patreon-img]][🖇patreon]
+[![Liberapay Goal Progress][⛳liberapay-img]][⛳liberapay] [![Sponsor Me on Github][🖇sponsor-img]][🖇sponsor] [![Buy me a coffee][🖇buyme-small-img]][🖇buyme] [![Donate on Polar][🖇polar-img]][🖇polar] [![Donate to my FLOSS or refugee efforts at ko-fi.com][🖇kofi-img]][🖇kofi] [![Donate to my FLOSS or refugee efforts using Patreon][🖇patreon-img]][🖇patreon]
 
 Masq2 is a mountable Rails engine that provides OpenID server/identity provider functionality.
 It is the successor to the [masq gem](https://github.com/dennisreimann/masq), which in turn
@@ -287,14 +282,35 @@ See [LICENSE.txt][📄license] for the official [Copyright Notice][📄copyright
 
 ## 🤑 One more thing
 
-You made it to the bottom of the page,
-so perhaps you'll indulge me for another 20 seconds.
-I maintain many dozens of gems, including this one,
-because I want Ruby to be a great place for people to solve problems, big and small.
-Please consider supporting my efforts via the giant yellow link below,
-or one of the others at the head of this README.
+Having arrived at the bottom of the page, please endure a final supplication.
+The primary maintainer of this gem, Peter Boling, wants
+Ruby to be a great place for people to solve problems, big and small.
+Please consider supporting his efforts via the giant yellow link below,
+or one of smaller ones, depending on button size preference.
 
 [![Buy me a latte][🖇buyme-img]][🖇buyme]
+
+[![Liberapay Goal Progress][⛳liberapay-img]][⛳liberapay] [![Sponsor Me on Github][🖇sponsor-img]][🖇sponsor] [![Donate on Polar][🖇polar-img]][🖇polar] [![Donate to my FLOSS or refugee efforts at ko-fi.com][🖇kofi-img]][🖇kofi] [![Donate to my FLOSS or refugee efforts using Patreon][🖇patreon-img]][🖇patreon]
+
+P.S. Use the gem => Discord for help
+
+[![Live Chat on Discord][✉️discord-invite-img]][✉️discord-invite]
+
+[⛳liberapay-img]: https://img.shields.io/liberapay/goal/pboling.svg?logo=liberapay
+[⛳liberapay]: https://liberapay.com/pboling/donate
+[🖇sponsor-img]: https://img.shields.io/badge/Sponsor_Me!-pboling.svg?style=social&logo=github
+[🖇sponsor]: https://github.com/sponsors/pboling
+[🖇polar-img]: https://img.shields.io/badge/polar-donate-yellow.svg
+[🖇polar]: https://polar.sh/pboling
+[🖇kofi-img]: https://img.shields.io/badge/a_more_different_coffee-✓-yellow.svg
+[🖇kofi]: https://ko-fi.com/O5O86SNP4
+[🖇patreon-img]: https://img.shields.io/badge/patreon-donate-yellow.svg
+[🖇patreon]: https://patreon.com/galtzo
+[🖇buyme-small-img]: https://img.shields.io/badge/buy_me_a_coffee-✓-yellow.svg?style=flat
+[🖇buyme-img]: https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20latte&emoji=&slug=pboling&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff
+[🖇buyme]: https://www.buymeacoffee.com/pboling
+[✉️discord-invite]: https://discord.gg/3qme4XHNKN
+[✉️discord-invite-img]: https://img.shields.io/discord/1373797679469170758?style=for-the-badge
 
 [✇bundle-group-pattern]: https://gist.github.com/pboling/4564780
 [⛳️gem-namespace]: https://github.com/oauth-xx/masq2/blob/main/lib/masq.rb
@@ -374,16 +390,6 @@ or one of the others at the head of this README.
 [🚎8-ho-wfi]: https://github.com/oauth-xx/masq2/actions/workflows/hoary.yml/badge.svg
 [🚎11-c-wf]: https://github.com/oauth-xx/masq2/actions/workflows/current.yml
 [🚎11-c-wfi]: https://github.com/oauth-xx/masq2/actions/workflows/current.yml/badge.svg
-[⛳liberapay-img]: https://img.shields.io/liberapay/patrons/pboling.svg?logo=liberapay
-[⛳liberapay]: https://liberapay.com/pboling/donate
-[🖇sponsor-img]: https://img.shields.io/badge/Sponsor_Me!-pboling.svg?style=social&logo=github
-[🖇sponsor]: https://github.com/sponsors/pboling
-[🖇polar-img]: https://polar.sh/embed/seeks-funding-shield.svg?org=pboling
-[🖇polar]: https://polar.sh/pboling
-[🖇kofi-img]: https://img.shields.io/badge/buy_me_coffee-donate-yellow.svg
-[🖇kofi]: https://ko-fi.com/O5O86SNP4
-[🖇patreon-img]: https://img.shields.io/badge/patreon-donate-yellow.svg
-[🖇patreon]: https://patreon.com/galtzo
 [💎ruby-2.7i]: https://img.shields.io/badge/Ruby-2.7-DF00CA?style=for-the-badge&logo=ruby&logoColor=white
 [💎ruby-3.0i]: https://img.shields.io/badge/Ruby-3.0-CC342D?style=for-the-badge&logo=ruby&logoColor=white
 [💎ruby-3.1i]: https://img.shields.io/badge/Ruby-3.1-CC342D?style=for-the-badge&logo=ruby&logoColor=white
@@ -421,6 +427,3 @@ or one of the others at the head of this README.
 [📄ilo-declaration-img]: https://img.shields.io/badge/ILO_Fundamental_Principles-✓-brightgreen.svg?style=flat
 [🚎yard-current]: http://rubydoc.info/gems/masq2
 [🚎yard-head]: https://rubydoc.info/github/oauth-xx/masq2/main
-[🖇buyme-img]: https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20latte&emoji=&slug=pboling&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff
-[🖇buyme]: https://www.buymeacoffee.com/pboling
-[🖇buyme-small-img]: https://img.shields.io/badge/Buy--Me--A--Coffee-✓-brightgreen.svg?style=flat
